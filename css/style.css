@@ -4858,7 +4858,7 @@ blockquote {
   border-radius: 0;
 }
 
-.section-reproductor-la-negociadora {
+.hero-section-reproductor-la-negociadora {
   min-height: 550px;
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("/img/lanegociadorabanner.png");
   background-position: 0 0, 50%;
