@@ -178,8 +178,9 @@ td, th {
   padding: 0;
 }
 .svg{
-  width: 2rem;
-  height: 2rem;
+  color: white;
+  width: 2px;
+  height: 2px;
 }
 @font-face {
   font-family: webflow-icons;
