@@ -4876,7 +4876,7 @@ blockquote {
 
 .hero-section-reproductor-living {
   min-height: 550px;
-  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/livingbanner.png");
   background-position: 0 0, 50%;
   background-size: auto, cover;
   border-radius: 0;
