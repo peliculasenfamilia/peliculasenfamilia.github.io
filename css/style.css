@@ -4900,7 +4900,7 @@ blockquote {
 
 .hero-section-reproductor-cuidenamaya {
   min-height: 550px;
-  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/cuidenamaya.jpg");
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/cuidenamayabanner.jpg");
   background-position: 0 0, 50%;
   background-size: auto, cover;
   border-radius: 0;
