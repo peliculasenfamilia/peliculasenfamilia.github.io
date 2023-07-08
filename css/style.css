@@ -179,8 +179,8 @@ td, th {
 }
 .svg{
   color: white;
-  width: 2px;
-  height: 2px;
+  width: 2rem;
+  height: 2rem;
 }
 @font-face {
   font-family: webflow-icons;
