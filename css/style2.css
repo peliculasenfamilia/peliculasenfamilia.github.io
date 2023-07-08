@@ -3042,9 +3042,10 @@ h2 {
   line-height: 36px;
 }
 
+
 a {
   color: #eb5757;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 a:hover {
@@ -3068,7 +3069,7 @@ label {
 }
 
 blockquote {
-  border-left: 5px solid #eb5757;
+  border-left: 5px solid #1a161f;
   margin-bottom: 10px;
   padding: 10px 20px;
   font-size: 25px;
@@ -3115,14 +3116,7 @@ blockquote {
   padding-top: 20px;
 }
 
-.btn {
-  background-color: #eb5757;
-  border: 1px solid #eb5757;
-  border-radius: 5px;
-  padding: 5px 25px;
-  font-weight: 700;
-  transition: border-color .3s, background-color .3s;
-}
+
 
 .btn:hover {
   background-color: #222;
@@ -3140,7 +3134,7 @@ blockquote {
   color: #000;
   background-color: #f2ae00;
   border-style: none;
-  border-color: #eb5757;
+ 
   margin-top: 40px;
 }
 
@@ -3169,11 +3163,7 @@ blockquote {
   border-color: #f9f9f9;
 }
 
-.btn.light:hover {
-  color: #f9f9f9;
-  background-color: #eb5757;
-  border-color: #eb5757;
-}
+
 
 .btn.light.outline {
   color: #f9f9f9;
@@ -3192,21 +3182,9 @@ blockquote {
   margin-right: 10px;
 }
 
-.btn.outline {
-  color: #eb5757;
-  background-color: rgba(0, 0, 0, 0);
-}
 
-.btn.outline:hover {
-  color: #f9f9f9;
-  background-color: #eb5757;
-  border-color: #eb5757;
-}
 
-.btn.outline:focus {
-  border: 1px solid #eb5757;
-  box-shadow: 0 0 2px #eb5757;
-}
+
 
 .color-wrapper {
   justify-content: space-between;
@@ -3232,10 +3210,7 @@ blockquote {
   background-color: #222;
 }
 
-.color-block.secondary {
-  color: #f9f9f9;
-  background-color: #eb5757;
-}
+
 
 .color-block.white {
   background-color: #f9f9f9;
@@ -3346,9 +3321,7 @@ blockquote {
   border-radius: 5px;
 }
 
-.input:hover, .input:active, .input:focus, .input.-wfp-focus {
-  border-color: #eb5757;
-}
+
 
 .input::-ms-input-placeholder {
   color: #525252;
@@ -3444,10 +3417,6 @@ blockquote {
   border-radius: 0;
 }
 
-.pill.primary {
-  background-color: #eb5757;
-  font-size: 16px;
-}
 
 .hero-section {
   min-height: 550px;
@@ -3747,10 +3716,7 @@ blockquote {
   font-weight: 700;
 }
 
-.shop-item-price.compare {
-  color: #eb5757;
-  text-decoration: line-through;
-}
+
 
 .shop-local-section {
   padding-top: 65px;
@@ -4049,17 +4015,7 @@ blockquote {
   border-radius: 0;
 }
 
-.pill-2.badge.primary.sale {
-  text-transform: uppercase;
-  background-color: #eb5757;
-  border-radius: 5px;
-  font-size: 14px;
-  position: absolute;
-  top: 4%;
-  bottom: auto;
-  left: auto;
-  right: 2%;
-}
+
 
 .pill-2.badge.primary.featured {
   z-index: 10;
@@ -4117,10 +4073,7 @@ blockquote {
   font-weight: 700;
 }
 
-.shop-item-price-page.compare-at {
-  color: #eb5757;
-  text-decoration: line-through;
-}
+
 
 .page-price-wrapping {
   margin-bottom: 10px;
@@ -4257,16 +4210,7 @@ blockquote {
   padding: 30px 30px 10px;
 }
 
-.donate-link-block {
-  width: 100%;
-  color: #f9f9f9;
-  text-align: center;
-  background-color: #eb5757;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  text-decoration: none;
-  transition: background-color .3s;
-}
+
 
 .donate-link-block:hover {
   background-color: #222;
@@ -5152,7 +5096,16 @@ blockquote {
     background-color: #222;
     border-radius: 5px;
   }
+  @media screen and (max-width: 991px)
+  {
+    .nav-menu {
+      width: 100vw;
+      background-color: #1a161f;
+      padding-top: 140px;
+      padding-bottom: 30px;
+    }
 
+  }
   .nav-menu {
     width: 100vw;
     background-color: #1a161f;
