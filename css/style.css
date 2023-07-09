@@ -4918,6 +4918,78 @@ blockquote {
   border-radius: 0;
 }
 
+.hero-section-reproductor-supermariobros {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/supermariobrosbanner.webp");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-screamvi {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/screamvibanner.jpeg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-avatar2 {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/avatar2banner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-johnwick4 {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/johnwick4banner.webp");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-renfield {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/renfieldbanner.jpeg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-guardianesdelagalaxiavolumen3 {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/guardianesdelagalaxiabanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-misionrescate2 {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/misionrescate2banner.webp");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-shazamlafuriadelosdioses {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/shazam2banner.webp");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-quantummania {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/quantumaniabanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
 .hero-section-reproductor.about-hero {
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfe4_invasionsecreta.jpeg");
   background-position: 0 0, 50% 60%;
