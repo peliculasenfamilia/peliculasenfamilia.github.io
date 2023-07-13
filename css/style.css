@@ -5142,6 +5142,54 @@ blockquote {
   border-radius: 0;
 }
 
+.hero-section-reproductor-tn {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-ln+ {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-Canal26 {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-a24 {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-televisionpublicatv {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-reproductor-canalrural {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
 .hero-section-reproductor.about-hero {
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfe4_invasionsecreta.jpeg");
   background-position: 0 0, 50% 60%;
