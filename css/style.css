@@ -1327,7 +1327,7 @@ textarea.w-input, textarea.w-select {
   min-width: 100%;
   background: #ddd;
   display: none;
-  position: absolute;
+  
 }
 
 .w-dropdown-list.w--open {
@@ -5333,6 +5333,65 @@ blockquote {
   border-radius: 0;
 }
 
+.hero-section-reproductor-secuestroaereo {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+.dropdown {
+  color: #f9f9f9;
+  margin-left: 194px;
+  position: relative;
+  top: 0%;
+  bottom: 0%;
+  left: 0;
+  right: 0%;
+}
+
+.heading-7 {
+  color: #f9f9f9;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.text-block-3, .icon-2 {
+  color: #f9f9f9;
+}
+
+.dropdown-1 {
+  color: #f9f9f9;
+  display: block;
+  position: relative;
+}
+
+.dropdown-link {
+  color: #f9f9f9;
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+}
+
+.dropdown-list, .dropdown-list.w--open {
+  background-color: #201b27;
+}
+
+.dropdown-link-2, .dropdown-link-3 {
+  color: #f9f9f9;
+  font-family: Montserrat, sans-serif;
+}
+
+.dropdown-toggle {
+  background-color: #201b27;
+}
+
+.w-dropdown-list {
+  min-width: 100%;
+  background: #ddd;
+  display: none;
+ 
+}
 .hero-section-reproductor.about-hero {
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfe4_invasionsecreta.jpeg");
   background-position: 0 0, 50% 60%;
