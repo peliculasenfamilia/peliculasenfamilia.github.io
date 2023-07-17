@@ -5118,6 +5118,14 @@ blockquote {
   border-radius: 0;
 }
 
+.hero-section-reproductor-appletv {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/deportesbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
 .hero-section-reproductor-eltrece {
   min-height: 550px;
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/televisionbanner.jpg");
