@@ -75,6 +75,17 @@ sub {
   bottom: -.25em;
 }
 
+.arrowdown{
+  width: 1em;
+    height: 1em;
+    margin: auto 20px auto auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    color: white;
+}
+
 img {
   border: 0;
 }
@@ -5431,6 +5442,11 @@ blockquote {
     padding-bottom: 0;
   }
 
+  .container-peliculas {
+    grid-template-columns: .25fr .5fr .5fr 1fr;
+    margin-top: 19px;
+  }
+
   .heading-2 {
     text-decoration: none;
   }
@@ -5502,6 +5518,53 @@ blockquote {
   .section-canales-de-deportes, .section-series-destacadas {
     padding-bottom: 0;
   }
+
+  .dropdown-link, .dropdown-list.w--open {
+    display: block;
+  }
+
+  .temporada1, .capitulos {
+    grid-template-columns: .25fr .5fr .5fr;
+    margin-top: 19px;
+  }
+
+  .container-peliculas-copy {
+    grid-template-columns: .25fr .5fr .5fr 1fr;
+    margin-top: 19px;
+  }
+}
+
+.capitulos, .container-peliculas-copy {
+  grid-column-gap: 76px;
+  grid-row-gap: 16px;
+  grid-template-rows: auto auto;
+  grid-template-columns: .25fr .5fr .5fr;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: row;
+  justify-content: space-between;
+  margin-top: 25px;
+  padding-right: 0;
+  display: grid;
+}
+
+.temporada-1-copy {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0;
+  padding-right: 22px;
+}
+
+.temporada-1-copy.contact {
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+}
+
+.text-block-4 {
+  color: #f9f9f9;
 }
 
 @media screen and (max-width: 991px) {
@@ -5614,6 +5677,114 @@ blockquote {
   }
 
   @media screen and (max-width: 991px) {
+    .btn.light.outline {
+      justify-content: flex-start;
+      margin-left: 0;
+      display: inline-block;
+    }
+  
+    .container {
+      text-align: center;
+      align-self: center;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    .container.contact {
+      padding-bottom: 35px;
+      position: static;
+    }
+  
+    .nav-link {
+      text-align: center;
+      font-size: 30px;
+    }
+  
+    .hero-heading {
+      width: 60%;
+      align-self: center;
+    }
+  
+    .hero-paragraph {
+      width: 55%;
+      text-align: left;
+      align-self: center;
+    }
+  
+    .hero-button-wrapper {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    .titulo {
+      justify-content: center;
+    }
+  
+    .container-peliculas {
+      grid-column-gap: 14px;
+      grid-template-columns: .5fr;
+      grid-auto-flow: row;
+      justify-content: center;
+      justify-items: center;
+      position: static;
+    }
+  
+    .support-square {
+      min-height: 330px;
+    }
+  
+    .support-square-text {
+      font-size: 30px;
+    }
+  
+    .support-square-image.rectangle {
+      bottom: -35%;
+    }
+  
+    .safe-heading {
+      width: 60%;
+    }
+  
+    .safe-paragraph {
+      width: 55%;
+    }
+  
+    .shop-image.tumbler-1 {
+      min-height: 350px;
+      min-height: 350px;
+    }
+  
+    .shop-details-wrapper {
+      font-size: 14px;
+    }
+  
+    .shop-details-left {
+      margin-right: 25px;
+    }
+  
+    .shop-local-left {
+      top: 8%;
+    }
+  
+    .shop-local-content-wrapper {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  
+    .shop-local-heading {
+      margin-top: 0;
+    }
+  
+    .nav-button {
+      color: #f9f9f9;
+    }
+  
+    .nav-button.w--open {
+      z-index: 100;
+      background-color: #222;
+      border-radius: 5px;
+    }
+  
     .nav-menu {
       width: 100vw;
       background-color: #1a161f;
@@ -5621,135 +5792,179 @@ blockquote {
       padding-bottom: 30px;
     }
   
-
-  }
-
-  .nav-menu {
-    width: 100vw;
-    background-color: #1a161f;
-    padding-top: 140px;
-    padding-bottom: 30px;
-  }
-
-  .meet-the-owners-right {
-    padding-left: 145px;
-  }
-
-  .meet-the-owners-left {
-    background-position: 50% 100%;
-  }
-
-  .contact-wrapper {
-    flex-direction: column;
-  }
-
-  .contact-left {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .contact-right {
-    width: 100%;
-    padding-left: 0;
-  }
-
-  .contact-hero-bg-wrapper {
-    flex-direction: column-reverse;
-  }
-
-  .contact-image-div {
-    width: 100%;
-    height: 350px;
-    background-image: linear-gradient(to top, #222, rgba(34, 34, 34, .18) 76%), url("https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfcf_vinicius-amano-4mK2KVuYrDs-unsplash%20(1)%20(1).jpg");
-    background-position: 0 0, 50% 35%;
-    background-repeat: repeat, no-repeat;
-    background-size: auto, cover;
-  }
-
-  .contact-block-wrapper {
-    justify-content: space-between;
-  }
-
-  .contact-block {
-    width: 48%;
-    margin-right: 0;
-  }
-
-  .image-grid, .products-list {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .shop-page-wrapper {
-    flex-direction: column;
-  }
-
-  .shop-category-menu {
-    width: 100%;
-    margin-bottom: 25px;
-  }
-
-  .shop-list {
-    width: 100%;
-  }
-
-  .category-menu-heading {
-    line-height: 1.5;
-  }
-
-  .row {
-    flex-direction: column;
-  }
-
-  .iconoplay {
-    margin-left: -33px;
-    margin-right: -33px;
-  }
-
-  .div-block-3 {
-    width: 234px;
-    align-self: center;
-  }
-
-  .cell-2 {
-    flex-direction: column;
-    display: flex;
-  }
-
-  .container-2 {
-    max-width: 728px;
-  }
-
-  .footer-form-two {
-    padding: 40px;
-  }
-
-  .footer-form-title {
-    margin-right: 15px;
-  }
-
-  .footer-form-input {
-    width: 400px;
-    padding-right: 180px;
-  }
-
-  .footer-wrapper-three {
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-
-  .footer-social-block-three {
-    margin-top: 40px;
-  }
-
-  .container-canales-de-television, .container-canales-de-peliculas {
-    grid-column-gap: 14px;
-    grid-template-columns: .5fr;
-    grid-auto-flow: row;
-    justify-content: center;
-    justify-items: center;
-    position: static;
-  }
+    .meet-the-owners-right {
+      padding-left: 145px;
+    }
+  
+    .meet-the-owners-left {
+      background-position: 50% 100%;
+    }
+  
+    .contact-wrapper {
+      flex-direction: column;
+    }
+  
+    .contact-left {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  
+    .contact-right {
+      width: 100%;
+      padding-left: 0;
+    }
+  
+    .contact-hero-bg-wrapper {
+      flex-direction: column-reverse;
+    }
+  
+    .contact-image-div {
+      width: 100%;
+      height: 350px;
+      background-image: linear-gradient(to top, #222, rgba(34, 34, 34, .18) 76%), url("https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfcf_vinicius-amano-4mK2KVuYrDs-unsplash%20(1)%20(1).jpg");
+      background-position: 0 0, 50% 35%;
+      background-repeat: repeat, no-repeat;
+      background-size: auto, cover;
+    }
+  
+    .contact-block-wrapper {
+      justify-content: space-between;
+    }
+  
+    .contact-block {
+      width: 48%;
+      margin-right: 0;
+    }
+  
+    .image-grid, .products-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  
+    .shop-page-wrapper {
+      flex-direction: column;
+    }
+  
+    .shop-category-menu {
+      width: 100%;
+      margin-bottom: 25px;
+    }
+  
+    .shop-list {
+      width: 100%;
+    }
+  
+    .category-menu-heading {
+      line-height: 1.5;
+    }
+  
+    .row {
+      flex-direction: column;
+    }
+  
+    .iconoplay {
+      margin-left: -33px;
+      margin-right: -33px;
+    }
+  
+    .div-block-3 {
+      width: 234px;
+      align-self: center;
+    }
+  
+    .cell-2 {
+      flex-direction: column;
+      display: flex;
+    }
+  
+    .container-2 {
+      max-width: 728px;
+    }
+  
+    .footer-form-two {
+      padding: 40px;
+    }
+  
+    .footer-form-title {
+      margin-right: 15px;
+    }
+  
+    .footer-form-input {
+      width: 400px;
+      padding-right: 180px;
+    }
+  
+    .footer-wrapper-three {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+  
+    .footer-social-block-three {
+      margin-top: 40px;
+    }
+  
+    .container-canales-de-television, .container-canales-de-peliculas, .temporada1 {
+      grid-column-gap: 14px;
+      grid-template-columns: .5fr;
+      grid-auto-flow: row;
+      justify-content: center;
+      justify-items: center;
+      position: static;
+    }
+  
+    .temporada-1 {
+      text-align: center;
+      align-self: center;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    .temporada-1.contact {
+      padding-bottom: 35px;
+      position: static;
+    }
+  
+    .temporada-2 {
+      text-align: center;
+      align-self: center;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    .temporada-2.contact {
+      padding-bottom: 35px;
+      position: static;
+    }
+  
+    .capitulos {
+      grid-column-gap: 14px;
+      grid-template-columns: .5fr 1fr 1fr;
+      grid-auto-flow: row;
+      justify-content: center;
+      justify-items: center;
+      position: static;
+    }
+  
+    .container-peliculas-copy {
+      grid-column-gap: 14px;
+      grid-template-columns: .5fr;
+      grid-auto-flow: row;
+      justify-content: center;
+      justify-items: center;
+      position: static;
+    }
+  
+    .temporada-1-copy {
+      text-align: center;
+      align-self: center;
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  
+    .temporada-1-copy.contact {
+      padding-bottom: 35px;
+      position: static;
+    }
 }
 
 @media screen and (max-width: 767px) {
@@ -5993,9 +6208,30 @@ blockquote {
     line-height: 20px;
   }
 
-  .container-canales-de-television, .container-canales-de-peliculas {
+  .container-canales-de-television, .container-canales-de-peliculas, .temporada1 {
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .temporada-1.shop-local-container, .temporada-2.shop-local-container {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .capitulos {
+    flex-wrap: wrap;
+    grid-template-columns: .25fr 1fr;
+    justify-content: center;
+  }
+
+  .container-peliculas-copy {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .temporada-1-copy.shop-local-container {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
@@ -6288,6 +6524,10 @@ blockquote {
 
   .hero-section-series.contact-hero, .hero-section-copy.contact-hero, .hero-section-copy.contact-hero, .hero-section-copy.contact-hero, .hero-section-deportes.contact-hero, .hero-section-copy.contact-hero, .hero-section-copy.contact-hero, .hero-section-copy.contact-hero, .hero-section-copy.contact-hero, .hero-section-copy.contact-hero, .hero-section-reproductor.contact-hero {
     background-position: 0 0, 80%;
+  }
+
+  .temporada1, .capitulos, .container-peliculas-copy {
+    grid-template-columns: .5fr;
   }
 }
 
@@ -6702,6 +6942,224 @@ blockquote {
 }
 
 #w-node-e2c77dbd-68e3-8d00-da4c-2f266edcb182-f6dbdf6a, #w-node-e2c77dbd-68e3-8d00-da4c-2f266edcb18b-f6dbdf6a {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7be6-f6dbdf72, #w-node-_47ecece4-40c8-340e-3fee-2965756f7be9-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bea-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bec-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bf0-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bf2-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bf5-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bf6-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bf8-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bfb-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bfc-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7bfe-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c01-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c02-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c04-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c07-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c08-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c0a-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c0d-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c0e-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c10-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c13-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-_47ecece4-40c8-340e-3fee-2965756f7c14-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-dcaaf16a-95c8-97a4-3b27-5e06928cfd3a-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-dcaaf16a-95c8-97a4-3b27-5e06928cfd3d-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-dcaaf16a-95c8-97a4-3b27-5e06928cfd3e-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a85-f6dbdf72, #w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a88-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a89-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a8b-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a8f-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a91-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a94-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a95-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a97-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a9a-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a9b-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68a9d-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aa0-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aa1-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aa3-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aa6-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aa7-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aa9-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aac-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aad-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68aaf-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68ab2-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68ab3-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68ab5-f6dbdf72 {
+  grid-area: span 1 / span 1 / span 1 / span 1;
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68ab8-f6dbdf72 {
+  justify-self: center;
+}
+
+#w-node-b36c4e6c-9a92-4a10-5b90-42667ac68ab9-f6dbdf72 {
   grid-area: span 1 / span 1 / span 1 / span 1;
 }
 
