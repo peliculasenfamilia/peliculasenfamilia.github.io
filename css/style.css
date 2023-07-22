@@ -5373,6 +5373,13 @@ blockquote {
   right: 0%;
 }
 
+.heading-6 {
+  color: #f9f9f9;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .heading-7 {
   color: #f9f9f9;
   font-family: Montserrat, sans-serif;
