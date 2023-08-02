@@ -3411,8 +3411,10 @@ blockquote {
   background-image: none;
 }
 
+
+
 .nav-link.w--current {
-  color: #f9f9f9;
+  color: #f2ae00;
   background-color: rgba(34, 34, 34, 0);
 }
 
@@ -5394,13 +5396,13 @@ blockquote {
 }
 
 
-
 /* sección slider */
 
 .w-slider {
   height: 300px;
   text-align: center;
   clear: both;
+  
 
  
   position: relative;
