@@ -4980,6 +4980,14 @@ blockquote {
   border-radius: 0;
 }
 
+.hero-section-reproductor-elnombredelarosa {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/elnombredelarosabanner.jpeg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
 .hero-section-reproductor-tntsports {
   min-height: 550px;
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/deportesbanner.jpg");
@@ -5426,6 +5434,129 @@ blockquote {
   border-radius: 0;
 }
 
+
+
+/* botón búsqueda */
+.Search {
+  position: relative;
+  color: #007AFF;
+}
+
+
+.Search .Form-Icon {
+  position: relative;
+  padding: 0;
+  display: block
+}
+
+.Search .Form-Icon input {
+  border: 1px solid #f2ae00;
+  background-color: transparent;
+  color: #fff;
+  padding: .25rem 1rem;
+  border-radius: 2rem;
+}
+
+.Header .Search .Form-Icon input {
+  width: 11.5rem
+}
+
+.Search .Form-Icon input:focus {
+  border-color: #3D4F91;
+}
+
+.Search .Form-Icon button {
+  background-color: transparent!important;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding-right: 0.5rem;
+  color: #fff;
+}
+
+.Search .Form-Icon button:hover {
+  transform: scale(1.1)
+}
+
+.Result {
+  display: none
+}
+
+.Result.On {
+  display: block
+}
+
+.Result {
+  position: absolute;
+  min-width: 255px;
+  right: 0;
+  top: 100%;
+  margin-top: .5rem;
+  padding: 1rem;
+  background-color: #1E2747;
+  border-radius: .5rem
+}
+
+.Result .MovieList {
+  max-height: 250px
+}
+
+.Result .MovieList>li {
+  margin-bottom: 1rem
+}
+
+.Result .MovieList>li:last-child {
+  margin-bottom: 0
+}
+
+.Search .Form-Icon button:hover {
+  transform: scale(1.1);
+}
+.Search .Form-Icon button {
+  background-color: transparent!important;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding-right: 0.5rem;
+  color: #007AFF;}
+
+
+input,textarea,select {
+  border: 1px solid #1E2747;
+  background-color: #1E2747;
+  color: #8DA0BC;
+}
+
+input:focus,textarea:focus,select:focus {
+  background-color: #233160;
+  border-color: #233160;
+  color: #fff
+}
+
+.chk input:checked+label:before {
+  background-color: #007AFF
+}
+
+.chk label:before {
+  background-color: #ECF3F9
+}
+
+.Button,a.Button,button,[type='button'],[type='reset'],[type='submit'] {
+  color: #fff;
+  background-color: #007AFF
+}
+
+.Button:hover,a.Button:hover,button:hover,[type='button']:hover,[type='reset']:hover,[type='submit']:hover {
+  animation: zoom 300ms ease-in
+}
+
+/* botón búsqueda */
 
 /* sección slider */
 
