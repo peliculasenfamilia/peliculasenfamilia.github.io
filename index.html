@@ -32,8 +32,10 @@
         rel="shortcut icon" type="image/x-icon" />
     <link href="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfe2_favicon-256x256.png"
         rel="apple-touch-icon" />
+        <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <script
         type="text/javascript">window.__WEBFLOW_CURRENCY_SETTINGS = { "currencyCode": "USD", "symbol": "$", "decimal": ".", "fractionDigits": 2, "group": ",", "template": "{{wf {\"path\":\"symbol\",\"type\":\"PlainText\"} }} {{wf {\"path\":\"amount\",\"type\":\"CommercePrice\"} }} {{wf {\"path\":\"currencyCode\",\"type\":\"PlainText\"} }}", "hideDecimalForWholeNumbers": false };</script>
+
 </head>
 
 <body class="body">
@@ -48,7 +50,9 @@
                                 class="nav-link w-nav-link w--current">Películas</a><a href="series.html"
                                 class="nav-link w-nav-link">Series</a><a href="television.html"
                                 class="nav-link w-nav-link">Televisión</a><a href="deportes.html"
-                                class="nav-link w-nav-link">Deportes</a></nav>
+                                class="nav-link w-nav-link">Deportes</a>
+                        </nav>
+                        
                         <div class="nav-button w-nav-button">
                             <div class="boton menu">
                                 <svg  class="svg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
@@ -56,8 +60,20 @@
                                   </svg>
                             </div>
                         </div>
-                      
                         
+                        <div class="Search">
+                            <form method="get" action="/search.html" id="searchform">
+                                <span class="Form-Icon">
+                                    <div class="ep-autosuggest-container">
+                                        <input id="keysss" name="keyword" type="search" placeholder="Buscar películas..." autocomplete="off">
+                                        <div class="ep-autosuggest" style="display: none;"></div>
+                                        <div class="loader"></div>
+                                    </div>
+                                    <button id="searchsubmit" type="submit"><i class="fi fi-rr-search"></i></button>
+                                </span>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -80,20 +96,18 @@
     
    
 <main >
-    <div data-delay="5000" data-animation="slide" class="hero-section-reproductor-theflash w-slider" data-autoplay="true" data-easing="ease"
+    <div data-delay="5000" data-animation="slide" class="hero-section-reproductor-bluebeetle w-slider" data-autoplay="true" data-easing="ease"
         data-hide-arrows="false" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3"
         data-duration="500" data-infinite="true">
         <div class="w-slider-mask">
             <div class="w-slide">
                 <div class="container">
                     <div class="hero-wrapper">
-                        <h1 class="hero-heading">The Flash</h1>
-                        <p class="hero-paragraph">Cuando su intento de salvar a su familia altera el futuro sin darse cuenta, 
-                            Barry Allen queda atrapado en una realidad en la que el general Zod ha regresado y no hay superhéroes 
-                            a los que recurrir. En última instancia, para salvar el mundo en el que se encuentra y regresar al 
-                            futuro que conoce, la única esperanza de Barry es escapar de él para salvar su vida. Pero, 
-                            ¿será suficiente hacer el último sacrificio para reiniciar el universo?.</p>
-                        <div class="hero-button-wrapper"><a href="reproductor-theflash.html" class="btn light outline w-button">Ver
+                        <h1 class="hero-heading">Blue Beetle</h1>
+                        <p class="hero-paragraph">Jaime Reyes se encuentra en posesión de una antigua reliquia de biotecnología alienígena 
+                            llamada Escarabajo. Cuando el Escarabajo elige a Jaime como huésped simbiótico, le otorga una armadura 
+                            con poderes extraordinarios e impredecibles.</p>
+                        <div class="hero-button-wrapper"><a href="reproductor-bluebeetle.html" class="btn light outline w-button">Ver
                                 película</a></div>
                     </div>
                 </div>
@@ -108,7 +122,23 @@
                             camino. Ahora se enfrentan a su enemigo más letal: una amenaza aterradora que surge de las
                             sombras del pasado que está alimentado de una venganza sangrienta, y está decidido a
                             destruir a su familia y destruir todo, y a cualquier persona, a los que Dom ama.</p>
-                        <div class="hero-button-wrapper"><a href="/reproductor" class="btn light outline w-button">Ver
+                        <div class="hero-button-wrapper"><a href="/reproductor.html" class="btn light outline w-button">Ver
+                                película</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-section-reproductor-theflash w-slide">
+                
+                <div class="container">
+                    <div class="hero-wrapper">
+                        <h1 class="hero-heading">The Flash</h1>
+                        <p class="hero-paragraph">Cuando su intento de salvar a su familia altera el futuro sin darse cuenta, 
+                            Barry Allen queda atrapado en una realidad en la que el general Zod ha regresado y no hay superhéroes 
+                            a los que recurrir. En última instancia, para salvar el mundo en el que se encuentra y regresar al 
+                            futuro que conoce, la única esperanza de Barry es escapar de él para salvar su vida. Pero, 
+                            ¿será suficiente hacer el último sacrificio para reiniciar el universo?.</p>
+                        <div class="hero-button-wrapper"><a href="reproductor-theflash.html" class="btn light outline w-button">Ver
                                 película</a></div>
                     </div>
                 </div>
@@ -138,99 +168,96 @@
                     </div>
                     <div class="container-peliculas" >
                   
-                        <a href="reproductor-lanegociadora.html">
+                        <a href="reproductor-bluebeetle.html">
                             <div id="w-node-_57732558-41d3-2d7f-1f03-6b2c0522f633-f6dbdf66" class="div-block" >
                                 <div class="div-block-2"><img
                                         src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
                                         loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
-                                    src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb1_lanegociadora.jpg"
+                                    src="img/bluebeetle.webp"
                                     loading="lazy" id="w-node-dccbc454-775e-1301-c4d9-76d2f5a68fb9-f6dbdf66"
                                     alt="La Negociadora" class="image-2" />
-                                <h3 id="w-node-c8d787bc-fb8e-b21c-8c0d-4b5392bbcfa6-f6dbdf66" class="heading-3" >La
-                                    Negociadora</h3>
+                                <h3 id="w-node-c8d787bc-fb8e-b21c-8c0d-4b5392bbcfa6-f6dbdf66" class="heading-3" > Blue Beetle</h3>
                             </div>
                         </a>
-                        <a href="reproductor-hexsaltoletal.html">
-                            <div id="w-node-_36176d12-56e4-51d0-f26d-4f0fa605b06b-f6dbdf66" class="div-block">
+                        <a href="reproductor-megalodon2.html">
+                            <div id="w-node-_57732558-41d3-2d7f-1f03-6b2c0522f633-f6dbdf66" class="div-block">
                                 <div class="div-block-2"><img
                                         src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
                                         loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
-                                    src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb2_hexsaltoletal.jpg"
-                                    loading="lazy" alt="Hex Salto Letal" class="image-2" />
-                                <h3 id="w-node-_36176d12-56e4-51d0-f26d-4f0fa605b06d-f6dbdf66" class="heading-3">HEX: Salto
-                                    Letal</h3>
+                                    src="img/megalodon2.jpg"
+                                    loading="lazy" id="w-node-dccbc454-775e-1301-c4d9-76d2f5a68fb9-f6dbdf66"
+                                    alt="La Negociadora" class="image-2" />
+                                <h3 id="w-node-c8d787bc-fb8e-b21c-8c0d-4b5392bbcfa6-f6dbdf66" class="heading-3">Megalodón 2: El gran abismo</h3>
                             </div>
                         </a>
-                        <a href="reproductor-living.html">
-                            <div id="w-node-ca565ab5-f42a-b34a-e973-22cb3e49cd46-f6dbdf66" class="div-block">
-                                <div class="div-block-2"><img
-                                        src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
-                                        loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
-                                    src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb5_living.jpg"
-                                    loading="lazy" id="w-node-_7e4820b4-35de-459d-2550-2373d8625d20-f6dbdf66" alt="Living"
-                                    class="image-2" />
-                                <h3 id="w-node-ca565ab5-f42a-b34a-e973-22cb3e49cd48-f6dbdf66" class="heading-3">Living</h3>
-                            </div>
-                        </a>
-                        <a href="reproductor-guardianesdelagalaxiavolumen3.html">
-                            <div id="w-node-afbc16f7-90cd-9137-3560-1c7e820b3404-f6dbdf66" class="div-block">
-                                <div class="div-block-2"><img
-                                        src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
-                                        loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
-                                    src="img/guardianesdelagalaxia.png"
-                                    loading="lazy" id="w-node-afbc16f7-90cd-9137-3560-1c7e820b3405-f6dbdf66"
-                                    alt="El Maestro de las Sombras" class="image-2" />
-                                <h3 id="w-node-afbc16f7-90cd-9137-3560-1c7e820b3406-f6dbdf66" class="heading-3">Guardianes de la Galaxia Vol. 3</h3>
-                            </div>
-                        </a>
-                        <a href="reproductor-monstrous.html">
+                        <a href="reproductor-barbie.html">
                             <div id="w-node-ad770700-5836-5533-c173-c225f2cb1b1b-f6dbdf66" class="div-block">
                                 <div class="div-block-2"><img
                                         src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
                                         loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
-                                    src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb6_monstrous.jpg"
-                                    loading="lazy" id="w-node-ad770700-5836-5533-c173-c225f2cb1b1c-f6dbdf66" alt="Monstruos"
+                                    src="img/barbie.png"
+                                    loading="lazy" id="w-node-ad770700-5836-5533-c173-c225f2cb1b1c-f6dbdf66" alt="Barbie"
                                     class="image-2" />
-                                <h3 id="w-node-ad770700-5836-5533-c173-c225f2cb1b1d-f6dbdf66" class="heading-3">Monstrous
-                                </h3>
+                                <h3 id="w-node-ad770700-5836-5533-c173-c225f2cb1b1d-f6dbdf66" class="heading-3">Barbie</h3>
                             </div>
                         </a>
-                        <a href="reproductor-losdescendientes.html">
-                            <div id="w-node-_87a36cbe-719d-f890-f5bf-65b0975a2f6f-f6dbdf66" class="div-block" >
-                                <div class="div-block-2" ><img
-                                        src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
-                                        loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
-                                    src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfd7_losdescendientes.jpg"
-                                    loading="lazy" id="w-node-_87a36cbe-719d-f890-f5bf-65b0975a2f70-f6dbdf66"
-                                    alt="los descendientes" class="image-2" />
-                                <h3 id="w-node-_87a36cbe-719d-f890-f5bf-65b0975a2f71-f6dbdf66" class="heading-3">Los
-                                    Descendientes</h3>
-                            </div>
-                        </a>
-                        <a href="reproductor-cuidenamaya.html">
-                            <div id="w-node-_58446fde-faee-1237-aec7-8dd0abc439f4-f6dbdf66" class="div-block">
+                        <a href="reproductor-spidermanspiderverso.html">
+                            <div id="w-node-ad770700-5836-5533-c173-c225f2cb1b1b-f6dbdf66" class="div-block">
                                 <div class="div-block-2"><img
                                         src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
                                         loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
-                                    src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb8_cuidenamaya.jpg"
-                                    loading="lazy" id="w-node-_58446fde-faee-1237-aec7-8dd0abc439f5-f6dbdf66"
-                                    alt="Cuiden a Maya" class="image-2" />
-                                <h3 id="w-node-_58446fde-faee-1237-aec7-8dd0abc439f6-f6dbdf66" class="heading-3">Cuiden a
-                                    Maya</h3>
+                                    src="img/spidermanverso.png"
+                                    loading="lazy" id="w-node-ad770700-5836-5533-c173-c225f2cb1b1c-f6dbdf66" alt="Spider-Man: A través del Spider-Verso"
+                                    class="image-2" />
+                                <h3 id="w-node-ad770700-5836-5533-c173-c225f2cb1b1d-f6dbdf66" class="heading-3">Spider-Man: A través del Spider-Verso</h3>
                             </div>
                         </a>
-                        <a href="reproductor-amordericos2.html">
-                            <div id="w-node-d6b47531-bfeb-a3b7-f66c-33fe1ecac63d-f6dbdf66" class="div-block">
+                        <a href="reproductor-indianajonesyeldialdeldestino.html">
+                            <div id="w-node-ad770700-5836-5533-c173-c225f2cb1b1b-f6dbdf66" class="div-block">
                                 <div class="div-block-2"><img
                                         src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
                                         loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
-                                    src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfd6_ricosdeamor2.jpg"
-                                    loading="lazy" id="w-node-d6b47531-bfeb-a3b7-f66c-33fe1ecac63e-f6dbdf66"
-                                    alt="Ricos de Amor 2" class="image-2" />
-                                <h3 id="w-node-d6b47531-bfeb-a3b7-f66c-33fe1ecac63f-f6dbdf66" class="heading-3">Ricos de
-                                    amor 2</h3>
+                                    src="img/indianajones.png"
+                                    loading="lazy" id="w-node-ad770700-5836-5533-c173-c225f2cb1b1c-f6dbdf66" alt="Indiana Jones y el dial del destino"
+                                    class="image-2" />
+                                <h3 id="w-node-ad770700-5836-5533-c173-c225f2cb1b1d-f6dbdf66" class="heading-3">Indiana Jones y el dial del destino</h3>
                             </div>
                         </a>
+                        <a href="reproductor-amillonesdekilometros.html">
+                            <div id="w-node-ad770700-5836-5533-c173-c225f2cb1b1b-f6dbdf66" class="div-block">
+                                <div class="div-block-2"><img
+                                        src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
+                                        loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
+                                    src="img/amillonesdekilometros.png"
+                                    loading="lazy" id="w-node-ad770700-5836-5533-c173-c225f2cb1b1c-f6dbdf66" alt="A millones de kilómetros"
+                                    class="image-2" />
+                                <h3 id="w-node-ad770700-5836-5533-c173-c225f2cb1b1d-f6dbdf66" class="heading-3">A millones de kilómetros</h3>
+                            </div>
+                        </a>
+                        <a href="reproductor-theflash.html">
+                            <div id="w-node-_57732558-41d3-2d7f-1f03-6b2c0522f633-f6dbdf66" class="div-block">
+                                <div class="div-block-2"><img
+                                        src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
+                                        loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
+                                    src="img/theflash.jpg"
+                                    loading="lazy" id="w-node-dccbc454-775e-1301-c4d9-76d2f5a68fb9-f6dbdf66"
+                                    alt="The Flash" class="image-2" />
+                                <h3 id="w-node-c8d787bc-fb8e-b21c-8c0d-4b5392bbcfa6-f6dbdf66" class="heading-3">The Flash</h3>
+                            </div>
+                        </a>
+                        <a href="reproductor.html">
+                            <div id="w-node-_57732558-41d3-2d7f-1f03-6b2c0522f633-f6dbdf66" class="div-block">
+                                <div class="div-block-2"><img
+                                        src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png"
+                                        loading="lazy" alt="bodon de play" class="iconoplay" /></div><img
+                                    src="img/rapidosyfuriososx.jpg"
+                                    loading="lazy" id="w-node-dccbc454-775e-1301-c4d9-76d2f5a68fb9-f6dbdf66"
+                                    alt="Rápidos y Furiosos X" class="image-2" />
+                                <h3 id="w-node-c8d787bc-fb8e-b21c-8c0d-4b5392bbcfa6-f6dbdf66" class="heading-3">Rápidos y Furiosos X</h3>
+                            </div>
+                        </a>
+                      
+                       
                     </div>
                 
                     <div class="shop-more"><a href="ultimaspeliculas.html" class="btn dark w-button">Ver más</a></div>
@@ -374,7 +401,7 @@
         type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
         crossorigin="anonymous"></script>
     <script src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/js/webflow.abbeacb1e.js" type="text/javascript"></script>
-    <script src="js/buscador.js"></script>
+   
     <script src="js/jquery.js"></script>
     <script src="js/load.js"></script>
     <script src="js/jquery.dataTables.min.js"></script>
