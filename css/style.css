@@ -5171,7 +5171,7 @@ blockquote {
   border-radius: 0;
 }
 
-.hero-section-reproductor-goltv {
+.hero-section-reproductor-goltv  {
   min-height: 550px;
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/deportesbanner.jpg");
   background-position: 0 0, 50%;
