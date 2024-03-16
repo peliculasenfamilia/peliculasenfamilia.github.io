@@ -4675,7 +4675,7 @@ blockquote {
 }
 
 .hero-section-series.about-hero {
-  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfe4_invasionsecreta.jpeg");
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/anggrande.webp");
   background-position: 0 0, 50% 60%;
   background-size: auto, cover;
 }
