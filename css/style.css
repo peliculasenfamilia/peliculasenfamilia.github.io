@@ -4680,6 +4680,9 @@ blockquote {
   background-size: auto, cover;
 }
 
+
+
+
 .hero-section-series.contact-hero {
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfd2_adam-solomon-WHUDOzd5IYU-unsplash%20(1)%20(1).jpg");
   background-position: 0 0, 50%;
@@ -5562,6 +5565,14 @@ blockquote {
 .hero-section-reproductor-lacasadeldragon {
   min-height: 550px;
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/lacasadeldragonbanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
+.hero-section-ultimasseries {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/anggrande.webp");
   background-position: 0 0, 50%;
   background-size: auto, cover;
   border-radius: 0;
