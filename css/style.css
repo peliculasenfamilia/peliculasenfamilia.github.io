@@ -5578,6 +5578,14 @@ blockquote {
   border-radius: 0;
 }
 
+.hero-section-reproductor-ang {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/anggrande.webp");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
 
 
 
