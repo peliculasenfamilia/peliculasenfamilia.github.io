@@ -1,9 +1,12 @@
-// Bloquea anuncios de YouTube
-function blockYouTubeAds() {
-  var ads = document.querySelectorAll(".ad-container");
-  for (var i = 0; i < ads.length; i++) {
-    ads[i].style.display = "none";
-  }
-}
-
-blockYouTubeAds();
+// Bloquea el evento "click" en enlaces que abren nuevas pestañas
+document.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A' && e.target.target === '_blank') {
+      e.preventDefault();
+    }
+  });
+  
+  // Bloquea el método `window.open()`
+  window.open = function() {
+    return false;
+  };
+  
