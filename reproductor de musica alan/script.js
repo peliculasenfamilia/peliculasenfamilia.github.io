@@ -9,20 +9,43 @@ const menuClose = document.getElementById('menu-close');
 const sidebar = document.querySelector('.container .sidebar');
 const musicPlayer = document.querySelector('.music-player');
 const musicFolder = '../reproductor de musica/musica';
+const musicFolder = '/api/music'
 
 // Get a list of music files in the folder
 fetch(musicFolder)
   .then(response => response.json())
   .then(musicFiles => {
-    const musicList = musicFiles.map(file => {
-      const fileName = file.name;
-      const fileUrl = `${musicFolder}/${fileName}`;
-      return {
-        name: fileName.replace('.mp3', ''),
-        url: fileUrl,
-        cover: `${musicFolder}/${fileName.replace('.mp3', '.jpg')}`,
-      };
-    });
+    // ...
+  });
+
+// server.js (Node.js example)
+const express = require('express');
+const app = express();
+const fs = require('fs');
+
+app.get('/api/music', (req, res) => {
+  const musicFolder = '../reproductor de musica/musica';
+  fs.readdir(musicFolder, (err, files) => {
+    if (err) {
+      res.status(500).json({ error: 'Failed to read music folder' });
+    } else {
+      const musicFiles = files.map(file => {
+        const fileName = file;
+        const fileUrl = `/music/${fileName}`;
+        return {
+          name: fileName.replace('.mp3', ''),
+          url: fileUrl,
+          cover: `/music/${fileName.replace('.mp3', '.jpg')}`,
+        };
+      });
+      res.json(musicFiles);
+    }
+  });
+});
+
+app.listen(3000, () => {
+  console.log('Server listening on port 3000');
+});
 
     // Create a list of music items in the sidebar
     const musicListHtml = musicList.map(musicItem => {
