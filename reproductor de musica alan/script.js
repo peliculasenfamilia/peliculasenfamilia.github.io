@@ -8,7 +8,7 @@ const menuOpen = document.getElementById('menu-open');
 const menuClose = document.getElementById('menu-close');
 const sidebar = document.querySelector('.container .sidebar');
 const musicPlayer = document.querySelector('.music-player');
-const musicFolder = '/reproductor de musica/musica';
+const musicFolder = '../reproductor de musica/musica';
 
 // Get a list of music files in the folder
 fetch(musicFolder)
