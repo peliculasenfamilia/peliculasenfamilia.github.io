@@ -7,6 +7,28 @@
  *   Webflow.push(readyFunction);
  */
 
+/* para carrusel*/
+const carrusel = document.querySelector('.carrusel');
+const carruselInner = document.querySelector('.carrusel-inner');
+const carruselPrev = document.querySelector('.carrusel-prev');
+const carruselNext = document.querySelector('.carrusel-next');
+
+let translateX = 0;
+
+carruselPrev.addEventListener('click', () => {
+  translateX += 200; // Ajusta el ancho de cada película
+  carruselInner.style.transform = `translateX(${translateX}px)`;
+});
+
+carruselNext.addEventListener('click', () => {
+  translateX -= 200; // Ajusta el ancho de cada película
+  carruselInner.style.transform = `translateX(${translateX}px)`;
+});
+
+/* para carrusel*/
+
+
+
 (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;

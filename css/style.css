@@ -8403,5 +8403,37 @@ blockquote {
 	line-height: 40px;
 	width: 0px;
   }
-
- 
+/* para carrusel */
+  .carrusel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .carrusel-inner {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  .carrusel .div-block {
+    margin: 10px;
+    flex: 0 0 200px; /* Ajusta el ancho de cada película */
+  }
+  
+  .carrusel-prev, .carrusel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .carrusel-prev {
+    left: 0;
+  }
+  
+  .carrusel-next {
+    right: 0;
+  }
