@@ -1,4 +1,31 @@
-// Objeto que relaciona los alt con las imágenes
+// Obtener el formulario de búsqueda
+const searchForm = document.getElementById('searchform');
+const peliculasLista = document.getElementById('peliculas-lista');
+
+// Agregar un evento de envío al formulario
+searchForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  // Obtener el valor de la búsqueda
+  const searchValue = document.getElementById('keysss').value;
+
+  // Buscar las películas y series en la lista
+  const peliculas = [
+    { title: 'Blue Beetle', url: 'reproductor-bluebeetle.html' },
+    { title: 'Megalodón 2: El gran abismo', url: 'reproductor-megalodon2.html' },
+    { title: 'Barbie', url: 'reproductor-barbie.html' },
+    { title: 'Spiderman: Across', url: 'reproductor-spidermanacross.html' },
+    { title: 'Wolf Pack', url: 'reproductor-wolfpack.html' },
+    { title: 'megalodon', url: 'reproductor-wolfpack.html' },
+    // Agregar más películas y series aquí...
+  ];
+
+  // Filtrar las películas y series según el valor de búsqueda
+  const filteredPeliculas = peliculas.filter((pelicula) => {
+    return pelicula.title.toLowerCase().includes(searchValue.toLowerCase());
+  });
+
+  // Objeto que relaciona los alt con las imágenes
 const imagenes = {
   "bluebeetle": "img/bluebeetle.jpg",
   "megalodon2": "img/megalodon2.jpg",
@@ -28,4 +55,5 @@ filteredPeliculas.forEach((pelicula) => {
     </a>
   `;
   peliculasLista.insertAdjacentHTML('beforeend', peliculaHTML);
+});
 });
