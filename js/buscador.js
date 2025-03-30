@@ -16,6 +16,7 @@ searchForm.addEventListener('submit', (e) => {
     { title: 'Barbie', url: 'reproductor-barbie.html' },
     { title: 'Spiderman: Across', url: 'reproductor-spidermanacross.html' },
     { title: 'Wolf Pack', url: 'reproductor-wolfpack.html' },
+    { title: 'megalodon', url: 'reproductor-wolfpack.html' },
     // Agregar más películas y series aquí...
   ];
 
@@ -27,6 +28,7 @@ searchForm.addEventListener('submit', (e) => {
   // Mostrar las películas y series filtradas
   peliculasLista.innerHTML = '';
   filteredPeliculas.forEach((pelicula) => {
+    const imagenUrl = getImagenUrl(pelicula);
     const peliculaHTML = `
       <a href="${pelicula.url}">
         <div class="div-block">
