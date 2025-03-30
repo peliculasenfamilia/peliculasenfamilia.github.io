@@ -15,7 +15,7 @@ searchForm.addEventListener('submit', (e) => {
     { title: 'Megalodón 2: El gran abismo', url: 'reproductor-megalodon2.html' },
     { title: 'Barbie', url: 'reproductor-barbie.html' },
     { title: 'Spiderman: Across', url: 'reproductor-spidermanacross.html' },
-    { title: 'Wolfpack', url: 'reproductor-wolfpack.html' },
+    { title: 'Wolf Pack', url: 'reproductor-wolfpack.html' },
     // Agregar más películas y series aquí...
   ];
 
