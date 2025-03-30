@@ -20,28 +20,23 @@ searchForm.addEventListener('submit', (e) => {
     // Agregar más películas y series aquí...
   ];
 
+  const imagenes = {
+    "bluebeetle": "img/bluebeetle.jpg",
+    "megalodon2": "img/megalodon2.jpg",
+    "barbie": "img/barbie.jpg",
+    // ...
+  };
+  function getImagenUrl(pelicula) {
+    const alt = pelicula.title.toLowerCase().replace(' ', '');
+    return imagenes[alt] || 'img/default.jpg'; // Ruta de la imagen por defecto si no se encuentra
+  }
+
   // Filtrar las películas y series según el valor de búsqueda
   const filteredPeliculas = peliculas.filter((pelicula) => {
     return pelicula.title.toLowerCase().includes(searchValue.toLowerCase());
   });
 
-  // Objeto que relaciona los alt con las imágenes
-const imagenes = {
-  "bluebeetle": "img/bluebeetle.jpg",
-  "megalodon2": "img/megalodon2.jpg",
-  "barbie": "img/barbie.jpg",
-  // ...
-};
-
-// Función para encontrar la imagen por el alt
-function getImagenUrl(pelicula) {
-  const alt = pelicula.title.toLowerCase().replace(' ', '');
-  return imagenes[alt] || 'img/default.jpg'; // Ruta de la imagen por defecto si no se encuentra
-}
-
-// ...
-
-// Mostrar las películas y series filtradas
+  // Mostrar las películas y series filtradas
 peliculasLista.innerHTML = '';
 filteredPeliculas.forEach((pelicula) => {
   const imagenUrl = getImagenUrl(pelicula);
