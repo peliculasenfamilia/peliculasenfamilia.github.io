@@ -8411,4 +8411,85 @@ blockquote {
 	width: 0px;
   }
 
- 
+ /* para nuevo busacador */
+ #searchform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#keysss {
+  width: 70%;
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#keysss:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+button[type="submit"] {
+  width: 30%;
+  padding: 10px;
+  font-size: 18px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+#peliculas-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+
+.div-block {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.div-block-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.iconoplay {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.image-2 {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.heading-3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
