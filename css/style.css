@@ -22,8 +22,6 @@ audio:not([controls]) {
   display: none;
 }
 
-
-
 [hidden], template {
   display: none;
 }
