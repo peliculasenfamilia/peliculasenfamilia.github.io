@@ -5875,12 +5875,13 @@ blockquote {
 }
 
 @media screen and (min-width: 1920px) {
-
+  /* yo modifique esto recien */
   .container-peliculas {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
   }
+  /* yo modifique esto recien */
   .section-ultimas-peliculas {
     padding-bottom: 0;
   }
