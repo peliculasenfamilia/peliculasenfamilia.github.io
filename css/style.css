@@ -5880,6 +5880,7 @@ blockquote {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-left: auto;
   }
   /* yo modifique esto recien */
   .section-ultimas-peliculas {
