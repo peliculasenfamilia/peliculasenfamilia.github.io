@@ -5875,6 +5875,12 @@ blockquote {
 }
 
 @media screen and (min-width: 1920px) {
+
+  .container-peliculas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
   .section-ultimas-peliculas {
     padding-bottom: 0;
   }
