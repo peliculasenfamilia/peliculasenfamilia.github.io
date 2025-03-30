@@ -21,7 +21,7 @@ searchForm.addEventListener('submit', (e) => {
   ];
 
   const imagenes = {
-    "bluebeetle": "bluebeetle.webp",
+    "bluebeetle": "img/bluebeetle.webp",
     "megalodon2": "img/megalodon2.jpg",
     "barbie": "img/barbie.jpg",
     // ...
