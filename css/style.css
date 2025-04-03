@@ -5887,10 +5887,10 @@ blockquote {
     padding-bottom: 0;
   }
 
-  .container-peliculas {
+  /* .container-peliculas {
     grid-template-columns: .25fr .5fr .5fr 1fr;
     margin-top: 19px;
-  }
+  } */
 
   .heading-2 {
     text-decoration: none;
