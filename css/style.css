@@ -5884,6 +5884,11 @@ blockquote {
   
   }  */
   /* yo modifique esto recien */
+  .container-peliculas {
+    max-width: 1200px; /* o el ancho que desees */
+    margin: 0 auto; /* o el margen que desees */
+    padding: 20px; /* o el padding que desees */}
+    
   .section-ultimas-peliculas {
     padding-bottom: 0;
   }
