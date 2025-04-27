@@ -193,6 +193,15 @@ td, th {
   width: 2rem;
   height: 2rem;
 }
+
+.contenedor-peliculas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  padding: 20px;
+  max-width: 1200px; /* Ajusta el tamaño de la rejilla */
+}
+
 /* parabuscador */
 .Search {
   position: relative
