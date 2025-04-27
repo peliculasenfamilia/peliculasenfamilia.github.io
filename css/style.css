@@ -5875,19 +5875,19 @@ blockquote {
 }
 
 @media screen and (min-width: 1920px) {
-  /* yo modifique esto recien */
-   /* .container-peliculas {
+   /*yo modifique esto recien */
+  .container-peliculas {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 
   
-  }  */
+  }  
   /* yo modifique esto recien */
-  .container-peliculas {
-    max-width: 1200px; /* o el ancho que desees */
-    margin: 0 auto; /* o el margen que desees */
-    padding: 20px; /* o el padding que desees */}
+  /* .container-peliculas {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 20px; } */
     
   .section-ultimas-peliculas {
     padding-bottom: 0;
