@@ -5995,7 +5995,7 @@ blockquote {
   grid-template-columns: .25fr .5fr .5fr;
   grid-auto-columns: 1fr;
   grid-auto-flow: row;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 25px;
   padding-right: 0;
   display: grid;
