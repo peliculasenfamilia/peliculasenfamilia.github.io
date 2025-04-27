@@ -5883,8 +5883,8 @@ blockquote {
   }  
 
   .container-peliculas > * {
-    flex-basis: 20%; /* Establece un ancho mínimo para cada elemento */
-    flex-grow: 1; /* Permite que los elementos crezcan y se ajusten al ancho disponible */
+    flex-basis: 10%; /* Establece un ancho mínimo para cada elemento */
+    flex-grow: 3; /* Permite que los elementos crezcan y se ajusten al ancho disponible */
   }
   /* yo modifique esto recien */
   /* .container-peliculas {
