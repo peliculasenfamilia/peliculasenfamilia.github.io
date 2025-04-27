@@ -5877,15 +5877,20 @@ blockquote {
 @media screen and (min-width: 1920px) {
    /*yo modifique esto recien */
   .container-peliculas {
-    display: flex;
-    flex-wrap: wrap;
+    grid-column-gap: 76px;
+    grid-row-gap: 16px;
+    grid-template-rows: auto auto;
+    grid-template-columns: .5fr .5fr .5fr .5fr;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: row;
+    justify-content: space-between;
+    padding-right: 0;
+    display: grid
+;
   
   }  
 
-  .container-peliculas > * {
-    flex-basis: 10%; /* Establece un ancho mínimo para cada elemento */
-    flex-grow: 3; /* Permite que los elementos crezcan y se ajusten al ancho disponible */
-  }
+  
   /* yo modifique esto recien */
   /* .container-peliculas {
     max-width: 1200px; 
