@@ -5875,15 +5875,8 @@ blockquote {
 }
 
 @media screen and (min-width: 1920px) {
-   /*yo modifique esto recien */
-  .container-peliculas {
-    flex-wrap: wrap;
-    justify-content: space-around;
+ 
 
-    max-width: 1200px; /* ajusta el ancho máximo */
-    margin: 0 auto; /* centra el contenido */
-  
-  }  
 
   
   /* yo modifique esto recien */
@@ -5896,10 +5889,10 @@ blockquote {
     padding-bottom: 0;
   }
 
-   /* .container-peliculas {
+  .container-peliculas {
     grid-template-columns: .25fr .5fr .5fr 1fr;
     margin-top: 19px;
-  }  */
+  }  
 
   .heading-2 {
     text-decoration: none;
