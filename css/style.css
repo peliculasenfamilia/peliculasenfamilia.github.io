@@ -5877,11 +5877,11 @@ blockquote {
 @media screen and (min-width: 1920px) {
    /*yo modifique esto recien */
   .container-peliculas {
-    display: flex;
     flex-wrap: wrap;
-    grid-column-gap: 76px;
-    grid-row-gap: 16px;
-    padding-right: 0;
+    justify-content: space-around;
+
+    max-width: 1200px; /* ajusta el ancho máximo */
+    margin: 0 auto; /* centra el contenido */
   
   }  
 
