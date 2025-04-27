@@ -5877,16 +5877,10 @@ blockquote {
 @media screen and (min-width: 1920px) {
    /*yo modifique esto recien */
   .container-peliculas {
+    display: flex;
+    flex-wrap: wrap;
     grid-column-gap: 76px;
     grid-row-gap: 16px;
-    grid-template-rows: auto auto;
-    grid-template-columns: .5fr .5fr .5fr .5fr;
-    grid-auto-columns: 1fr;
-    grid-auto-flow: row;
-    justify-content: space-between;
-    padding-right: 0;
-    display: grid
-;
   
   }  
 
