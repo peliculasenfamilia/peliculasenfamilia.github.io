@@ -5877,6 +5877,14 @@ blockquote {
   padding-bottom: 65px;
 }
 
+@media (min-width: 1920px) {
+  /* Estilos para una resolución de 1920px */
+  .contenedor {
+    width: 1200px;
+    margin: 0 auto;
+  }
+}
+
 @media screen and (min-width: 1920px) {
  
   .contenedor-peliculas {
