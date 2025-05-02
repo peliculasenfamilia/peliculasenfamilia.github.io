@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Spotify Clone - Reproductor Google Drive</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  header {
+    padding: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    border-bottom: 1px solid #282828;
+    text-align: center;
+    background: linear-gradient(90deg, #1db954, #1ed760);
+  }
+  main {
+    flex: 1;
+    display: flex;
+    background-color: #181818;
+    overflow: hidden;
+  }
+  .playlist {
+    flex: 1.2;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .playlist h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+  }
+  .track {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  .track:hover {
+    background-color: #282828;
+  }
+  .track.active {
+    background-color: #1db954;
+    color: #000;
+  }
+  .track img {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-right: 14px;
+  }
+  .track-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .track-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .track-artist {
+    font-size: 14px;
+    color: #b3b3b3;
+  }
+
+  .player {
+    flex-basis: 350px;
+    background-color: #282828;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .cover-art {
+    width: 250px;
+    height: 250px;
+    background-color: #000;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  }
+  .cover-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .player-info {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .player-info .title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .player-info .artist {
+    font-size: 16px;
+    color: #b3b3b3;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1db954;
+    transition: color 0.3s ease;
+  }
+  .btn:hover {
+    color: #1ed760;
+  }
+  .btn svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .progress-container {
+    width: 100%;
+    max-width: 300px;
+  }
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #404040;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+    margin: 0;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: #1db954;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -5px;
+    transition: background 0.3s ease;
+  }
+  input[type="range"]:hover::-webkit-slider-thumb {
+    background: #1ed760;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #1db954;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  input[type="range"]:hover::-moz-range-thumb {
+    background: #1ed760;
+  }
+  .time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #b3b3b3;
+    margin-top: 4px;
+  }
+
+  /* Scrollbar for playlist */
+  .playlist::-webkit-scrollbar {
+    width: 8px;
+  }
+  .playlist::-webkit-scrollbar-track {
+    background: #181818;
+  }
+  .playlist::-webkit-scrollbar-thumb {
+    background: #1db954;
+    border-radius: 4px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    main {
+      flex-direction: column;
+    }
+    .playlist {
+      flex: none;
+      height: 300px;
+      order: 2;
+    }
+    .player {
+      flex-basis: auto;
+      order: 1;
+      padding-bottom: 40px;
+    }
+    .cover-art {
+      width: 60vw;
+      height: 60vw;
+      max-width: 300px;
+      max-height: 300px;
+      margin: auto;
+      margin-bottom: 16px;
+    }
+  }
+</style>
+</head>
+<body>
+<header>
+  Mi Spotify Clone - Reproductor Google Drive
+</header>
+<main>
+  <section class="playlist" aria-label="Lista de canciones">
+    <h2>Playlist</h2>
+    <div id="tracks-list">
+      <!-- Las canciones se generarán aquí con JS -->
+    </div>
+  </section>
+  <section class="player" aria-label="Reproductor de música">
+    <div class="cover-art" id="cover-art">
+      <img src="" alt="Portada de la canción" />
+    </div>
+    <div class="player-info">
+      <div class="title" id="track-title">-</div>
+      <div class="artist" id="track-artist">-</div>
+    </div>
+    <div class="controls">
+      <button class="btn" id="prev-btn" aria-label="Anterior">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M6 18V6h2v12H6zm3-6l8.5 6V6L9 12z"/>
+        </svg>
+      </button>
+      <button class="btn" id="play-btn" aria-label="Reproducir/Pausar">
+        <svg fill="currentColor" id="play-icon" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        <svg fill="currentColor" id="pause-icon" viewBox="0 0 24 24" style="display:none;">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+      </button>
+      <button class="btn" id="next-btn" aria-label="Siguiente">
+        <svg fill="currentColor" viewBox="0 0 24 24">
+          <path d="M16 6v12h-2V6h2zm-3 6L4.5 6v12L13 12z"/>
+        </svg>
+      </button>
+    </div>
+    <div class="progress-container">
+      <input type="range" id="progress" value="0" min="0" max="100" step="1" aria-label="Barra de progreso" />
+      <div class="time">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+    <audio id="audio"></audio>
+  </section>
+</main>
+<script>
+  // Lista de canciones con enlaces directos de Google Drive (reemplazar URLs)
+  const songs = [
+    {
+      title: "Canción Ejemplo 1",
+      artist: "Artista 1",
+      cover: "https://images.pexels.com/photos/164879/pexels-photo-164879.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=250", // Imagen portada de álbum ejemplo
+      url: "https://drive.google.com/uc?export=download&id=TU_ID_DE_ARCHIVO_1"
+    },
+    {
+      title: "Canción Ejemplo 2",
+      artist: "Artista 2",
+      cover: "https://images.pexels.com/photos/216024/pexels-photo-216024.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=250",
+      url: "https://drive.google.com/uc?export=download&id=TU_ID_DE_ARCHIVO_2"
+    },
+    {
+      title: "Canción Ejemplo 3",
+      artist: "Artista 3",
+      cover: "https://images.pexels.com/photos/302743/pexels-photo-302743.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=250",
+      url: "https://drive.google.com/uc?export=download&id=TU_ID_DE_ARCHIVO_3"
+    }
+  ];
+
+  // Variables DOM
+  const tracksList = document.getElementById("tracks-list");
+  const audio = document.getElementById("audio");
+  const coverArt = document.getElementById("cover-art").querySelector("img");
+  const trackTitle = document.getElementById("track-title");
+  const trackArtist = document.getElementById("track-artist");
+  const playBtn = document.getElementById("play-btn");
+  const prevBtn = document.getElementById("prev-btn");
+  const nextBtn = document.getElementById("next-btn");
+  const progress = document.getElementById("progress");
+  const currentTimeEl = document.getElementById("current-time");
+  const durationEl = document.getElementById("duration");
+
+  let currentIndex = 0;
+  let isPlaying = false;
+
+  // Formato de tiempo mm:ss
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60) || 0;
+    const secs = Math.floor(seconds % 60) || 0;
+    return mins + ":" + (secs < 10 ? "0" : "") + secs;
+  }
+
+  // Cargar una canción
+  function loadSong(index) {
+    const song = songs[index];
+    audio.src = song.url;
+    coverArt.src = song.cover;
+    coverArt.alt = "Portada de " + song.title;
+    trackTitle.textContent = song.title;
+    trackArtist.textContent = song.artist;
+    updateActiveTrack();
+  }
+
+  // Actualizar clase active en la lista de canciones
+  function updateActiveTrack() {
+    const tracks = document.querySelectorAll(".track");
+    tracks.forEach((track, idx) => {
+      track.classList.toggle("active", idx === currentIndex);
+    });
+  }
+
+  // Play
+  function playSong() {
+    audio.play();
+    isPlaying = true;
+    playBtn.querySelector("#play-icon").style.display = "none";
+    playBtn.querySelector("#pause-icon").style.display = "inline";
+  }
+
+  // Pause
+  function pauseSong() {
+    audio.pause();
+    isPlaying = false;
+    playBtn.querySelector("#pause-icon").style.display = "none";
+    playBtn.querySelector("#play-icon").style.display = "inline";
+  }
+
+  // Toggle play/pause
+  playBtn.addEventListener("click", () => {
+    if (isPlaying) {
+      pauseSong();
+    } else {
+      playSong();
+    }
+  });
+
+  // Siguiente canción
+  function nextSong() {
+    currentIndex = (currentIndex + 1) % songs.length;
+    loadSong(currentIndex);
+    playSong();
+  }
+
+  // Canción anterior
+  function prevSong() {
+    currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+    loadSong(currentIndex);
+    playSong();
+  }
+  nextBtn.addEventListener("click", nextSong);
+  prevBtn.addEventListener("click", prevSong);
+
+  // Actualizar barra de progreso
+  audio.addEventListener("timeupdate", () => {
+    if (audio.duration) {
+      const progressPercent = (audio.currentTime / audio.duration) * 100;
+      progress.value = progressPercent;
+      currentTimeEl.textContent = formatTime(audio.currentTime);
+      durationEl.textContent = formatTime(audio.duration);
+    }
+  });
+
+  // Cambiar posición de la canción con la barra
+  progress.addEventListener("input", (e) => {
+    if(audio.duration){
+      const seekTime = (progress.value / 100) * audio.duration;
+      audio.currentTime = seekTime;
+    }
+  });
+
+  // Cuando la canción acaba, pasa la siguiente
+  audio.addEventListener("ended", nextSong);
+
+  // Generar lista de canciones en HTML
+  function renderTrackList() {
+    tracksList.innerHTML = "";
+    songs.forEach((song, index) => {
+      const trackDiv = document.createElement("div");
+      trackDiv.classList.add("track");
+      if(index === currentIndex) {
+        trackDiv.classList.add("active");
+      }
+      trackDiv.innerHTML = `
+        <img src="${song.cover}" alt="Portada de ${song.title}" />
+        <div class="track-info">
+          <div class="track-title">${song.title}</div>
+          <div class="track-artist">${song.artist}</div>
+        </div>
+      `;
+      trackDiv.addEventListener("click", () => {
+        currentIndex = index;
+        loadSong(currentIndex);
+        playSong();
+      });
+      tracksList.appendChild(trackDiv);
+    });
+  }
+
+  // Inicialización
+  renderTrackList();
+  loadSong(currentIndex);
+</script>
+</body>
+</html>
