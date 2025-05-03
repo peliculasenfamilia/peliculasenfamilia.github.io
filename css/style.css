@@ -5477,6 +5477,14 @@ blockquote {
   border-radius: 0;
 }
 
+.hero-section-reproductor-eternauta {
+  min-height: 550px;
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/eternautabanner.jpg");
+  background-position: 0 0, 50%;
+  background-size: auto, cover;
+  border-radius: 0;
+}
+
 .hero-section-reproductor-transformerseldespertar {
   min-height: 550px;
   background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/transformerseldespertargrande.webp");
@@ -8430,5 +8438,6 @@ blockquote {
 	line-height: 40px;
 	width: 0px;
   }
+
 
 }

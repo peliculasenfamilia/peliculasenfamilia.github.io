@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<title>Pelis en familia</title>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Plataforma de Películas y Series</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #1a161f;
+      color: #eee;
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #1a161f;
+      padding: 15px 20px;
+      text-align: center;
+      border-bottom: 2px solid #f2ae00;
+      flex-shrink: 0;
+    }
+
+    header h1 {
+      color: #f2ae00;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+    }
+
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 15px 30px 15px;
+      scroll-behavior: smooth;
+    }
+
+    .search-bar {
+      max-width: 400px;
+      margin: 10px auto 25px auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 25px;
+      border: none;
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      outline: none;
+      background-color: #2e2936;
+      color: #eee;
+      box-shadow: 0 0 8px #f2ae00aa;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-bar input::placeholder {
+      color: #bbb;
+    }
+
+    .search-bar input:focus {
+      box-shadow: 0 0 16px #f2ae00ee;
+    }
+
+    section.category {
+      margin-bottom: 30px;
+    }
+
+    section.category h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f2ae00;
+      margin-bottom: 10px;
+      padding-left: 5px;
+      border-left: 5px solid #f2ae00;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .item-card {
+      background-color: #2e2936;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px #0008;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .item-card:hover,
+    .item-card:focus {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px #f2ae00cc;
+      outline: none;
+    }
+
+    .item-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .item-info {
+      padding: 8px 10px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .item-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      color: #f2ae00;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-subtitle {
+      font-size: 0.85rem;
+      color: #ccc;
+      opacity: 0.9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+ 
+
+    /* Responsive */
+
+    @media (min-width: 600px) {
+      main {
+        padding: 20px 40px 40px 40px;
+      }
+
+      .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 18px;
+      }
+
+      .item-card {
+        border-radius: 12px;
+      }
+
+      .item-image {
+        height: 220px;
+      }
+
+      header h1 {
+        font-size: 2.8rem;
+      }
+    }
+
+    /* Scrollbar styling for modern browsers */
+    main::-webkit-scrollbar {
+      width: 8px;
+    }
+    main::-webkit-scrollbar-thumb {
+      background-color: #f2ae00aa;
+      border-radius: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pelis en familia</h1>
+  </header>
+  <main>
+    <div class="search-bar">
+      <input id="searchInput" type="search" placeholder="Buscar películas o series..." aria-label="Buscar películas o series" />
+    </div>
+
+    <section class="category" aria-labelledby="featured-title">
+      <h2 id="featured-title">Destacados</h2>
+      <div class="items-grid" id="featuredItems">
+        <!-- Featured items will be inserted by JS -->
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="movies-title">
+      <h2 id="movies-title">Películas</h2>
+      <div class="items-grid" id="moviesItems">
+        <!-- Movies items will be inserted by JS -->
+      </div>
+    </section>
+
+    <section class="category" aria-labelledby="series-title">
+      <h2 id="series-title">Series</h2>
+      <div class="items-grid" id="seriesItems">
+        <!-- Series items will be inserted by JS -->
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const featured = [
+      {
+        id: 1,
+        title: "Conclave",
+        subtitle: "Película - Drama",
+        image: "https://image.tmdb.org/t/p/w342//ftIJ42zwuFvUFVEWZQbFq1vcV5U.jpg",
+      },
+      {
+        id: 2,
+        title: "Stranger Things",
+        subtitle: "Serie - Fantasía",
+        image: "https://images.pexels.com/photos/2923355/pexels-photo-2923355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 3,
+        title: "La Gran Estafa",
+        subtitle: "Película - Suspenso",
+        image: "https://images.pexels.com/photos/326052/pexels-photo-326052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+    ];
+
+    const movies = [
+      {
+        id: 101,
+        title: "Interstellar",
+        subtitle: "Película - Ciencia ficción",
+        image: "https://images.pexels.com/photos/787517/pexels-photo-787517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 102,
+        title: "Gladiador",
+        subtitle: "Película - Acción",
+        image: "https://images.pexels.com/photos/746105/pexels-photo-746105.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 103,
+        title: "La La Land",
+        subtitle: "Película - Musical",
+        image: "https://images.pexels.com/photos/196667/pexels-photo-196667.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 104,
+        title: "The Dark Knight",
+        subtitle: "Película - Acción/Drama",
+        image: "https://images.pexels.com/photos/4709280/pexels-photo-4709280.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 105,
+        title: "El Club de la Pelea",
+        subtitle: "Película - Drama",
+        image: "https://images.pexels.com/photos/739407/pexels-photo-739407.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+    ];
+
+    const series = [
+      {
+        id: 201,
+        title: "El Eternauta",
+        subtitle: "Serie - Drama y acción",
+        ImageUrl: "https://image.tmdb.org/t/p/w342//9Krv5NvKa5a3Q3b1l2B3rP9Bj8E.jpg",
+      },
+      {
+        id: 202,
+        title: "Wynonna Earp",
+        subtitle: "Aacción - Aventura",
+        image: "https://image.tmdb.org/t/p/w342//qnIaDelA81dmFaXrhpz6M6dpGSD.jpg",
+      },
+      {
+        id: 203,
+        title: "Rumbo al Infierno",
+        subtitle: "Serie - Comedia",
+        image: "https://image.tmdb.org/t/p/w342//5veiuXxIy3NFsm7LMqLGs4A2vgt.jpg",
+      },
+      {
+        id: 204,
+        title: "The Witcher",
+        subtitle: "Serie - Fantasía",
+        image: "https://images.pexels.com/photos/3768589/pexels-photo-3768589.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      }
+    ];
+
+    const featuredContainer = document.getElementById('featuredItems');
+    const moviesContainer = document.getElementById('moviesItems');
+    const seriesContainer = document.getElementById('seriesItems');
+    const searchInput = document.getElementById('searchInput');
+
+    function createItemCard(item) {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `${item.title}, ${item.subtitle}`);
+
+      const img = document.createElement('img');
+      img.className = 'item-image';
+      img.src = item.image;
+      img.alt = item.title;
+
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'item-info';
+
+      const title = document.createElement('div');
+      title.className = 'item-title';
+      title.textContent = item.title;
+
+      const subtitle = document.createElement('div');
+      subtitle.className = 'item-subtitle';
+      subtitle.textContent = item.subtitle;
+
+      infoDiv.appendChild(title);
+      infoDiv.appendChild(subtitle);
+
+      card.appendChild(img);
+      card.appendChild(infoDiv);
+
+      // Placeholder for click behavior: Open a modal or play video. Currently alerts.
+      card.addEventListener('click', () => {
+        alert(`Has seleccionado: ${item.title}`);
+      });
+      card.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          alert(`Has seleccionado: ${item.title}`);
+        }
+      });
+
+      return card;
+    }
+
+    function renderItems(container, items) {
+      container.innerHTML = '';
+      items.forEach(item => {
+        container.appendChild(createItemCard(item));
+      });
+    }
+
+    // Initial render
+    renderItems(featuredContainer, featured);
+    renderItems(moviesContainer, movies);
+    renderItems(seriesContainer, series);
+
+    // Search filter
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+
+      if (query === '') {
+        renderItems(featuredContainer, featured);
+        renderItems(moviesContainer, movies);
+        renderItems(seriesContainer, series);
+        return;
+      }
+
+      function filterItems(items) {
+        return items.filter(item =>
+          item.title.toLowerCase().includes(query) ||
+          item.subtitle.toLowerCase().includes(query)
+        );
+      }
+
+      renderItems(featuredContainer, filterItems(featured));
+      renderItems(moviesContainer, filterItems(movies));
+      renderItems(seriesContainer, filterItems(series));
+    });
+  </script>
+</body>
+</html>
