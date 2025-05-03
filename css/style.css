@@ -194,40 +194,24 @@ td, th {
   height: 2rem;
 }
 
-/* para nuevas pelis */
-.peliculas-container {
+------------------------
+container-peliculas {
   position: relative;
-  width: 100%;
-  height: 300px; /* Ajusta el alto según sea necesario */
   overflow: hidden;
 }
 
-.peliculas-slider {
+.peliculas-lista {
   display: flex;
   flex-wrap: nowrap;
-  width: 100%;
-  height: 100%;
-  transition: transform 0.5s ease-in-out;
+  overflow-x: auto;
+  padding: 20px;
 }
 
-.pelicula {
-  width: 100%;
-  height: 100%;
-  margin-right: 20px; /* Ajusta el margen según sea necesario */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.peliculas-lista::-webkit-scrollbar {
+  display: none;
 }
 
-.pelicula img {
-  width: 100%;
-  height: 200px; /* Ajusta el alto según sea necesario */
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.peliculas-nav {
+.navegacion {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -236,22 +220,56 @@ td, th {
   justify-content: space-between;
 }
 
-.peliculas-prev, .peliculas-next {
-  background-color: #fff;
+.flecha-izquierda,
+.flecha-derecha {
+  background-color: transparent;
   border: none;
   padding: 10px;
-  font-size: 24px;
   cursor: pointer;
 }
 
-.peliculas-prev {
-  margin-left: 20px; /* Ajusta el margen según sea necesario */
+.flecha-izquierda svg,
+.flecha-derecha svg {
+  width: 24px;
+  height: 24px;
+  fill: #fff;
 }
 
-.peliculas-next {
-  margin-right: 20px; /* Ajusta el margen según sea necesario */
+.flecha-izquierda {
+  margin-left: -20px;
 }
 
+.flecha-derecha {
+  margin-right: -20px;
+}
+
+/* Estilos para la navegación en Smart TV */
+@media (min-width: 1024px) and (min-height: 768px) {
+  .container-peliculas {
+    width: 100%;
+    height: 100vh;
+  }
+
+  .peliculas-lista {
+    width: 100%;
+    height: 100%;
+  }
+
+  .navegacion {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .flecha-izquierda,
+  .flecha-derecha {
+    font-size: 24px;
+    padding: 20px;
+  }
+}
+------------------------
 /* parabuscador */
 .Search {
   position: relative

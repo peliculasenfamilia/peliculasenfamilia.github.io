@@ -1,22 +1,22 @@
-const peliculasSlider = document.querySelector('.peliculas-slider');
-const peliculasPrev = document.querySelector('.peliculas-prev');
-const peliculasNext = document.querySelector('.peliculas-next');
+const peliculasLista = document.querySelector('.peliculas-lista');
+const flechaIzquierda = document.querySelector('.flecha-izquierda');
+const flechaDerecha = document.querySelector('.flecha-derecha');
 
-let currentSlide = 0;
-const slideWidth = peliculasSlider.children[0].offsetWidth;
+let currentIndex = 0;
+let peliculas = Array.from(peliculasLista.children);
 
-peliculasPrev.addEventListener('click', () => {
-  currentSlide--;
-  if (currentSlide < 0) {
-    currentSlide = peliculasSlider.children.length - 1;
+flechaIzquierda.addEventListener('click', () => {
+  currentIndex--;
+  if (currentIndex < 0) {
+    currentIndex = peliculas.length - 1;
   }
-  peliculasSlider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+  peliculasLista.scrollLeft = peliculas[currentIndex].offsetLeft;
 });
 
-peliculasNext.addEventListener('click', () => {
-  currentSlide++;
-  if (currentSlide >= peliculasSlider.children.length) {
-    currentSlide = 0;
+flechaDerecha.addEventListener('click', () => {
+  currentIndex++;
+  if (currentIndex >= peliculas.length) {
+    currentIndex = 0;
   }
-  peliculasSlider.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+  peliculasLista.scrollLeft = peliculas[currentIndex].offsetLeft;
 });
