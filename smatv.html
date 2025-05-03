@@ -4,260 +4,386 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
 <title>Movie Browser - Netflix Style</title>
-<style>
-  /* Reset & base */
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    background-color: #1a161f;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #ccc;
-    overflow-x: hidden;
-  }
-  h2 {
-    color: #f2ae00;
-    margin: 0 0 10px 20px;
-    font-weight: 700;
-    font-size: 1.8rem;
-  }
-  /* Featured Section */
-  .featured {
-    position: relative;
-    color: #f2ae00;
-    padding: 20px;
-    background: linear-gradient(90deg, rgba(242,174,0,0.6) 0%, rgba(26,22,31,0.9) 70%);
-    margin-bottom: 30px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-  }
-  .featured img {
-    max-width: 300px;
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(242,174,0,0.7);
-  }
-  .featured-info {
-    max-width: 600px;
-    margin-left: 25px;
-  }
-  .featured-info h1 {
-    margin: 0 0 15px;
-    font-size: 2.8rem;
-  }
-  .featured-info p {
-    font-size: 1.1rem;
-    color: #d6d6d6;
-  }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Plataforma de Películas y Series</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* Movie Rows */
-  .movie-row {
-    margin-bottom: 40px;
-    position: relative;
-  }
-  .movie-list-container {
-    position: relative;
-  }
-  .movie-list {
-    display: flex;
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    padding-left: 20px;
-    scroll-snap-type: x mandatory;
-  }
-  .movie-item {
-    flex: 0 0 auto;
-    width: 180px;
-    margin-right: 15px;
-    scroll-snap-align: start;
-    cursor: pointer;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.7);
-    background-color: #222;
-    transition: transform 0.3s ease;
-  }
-  .movie-item:hover, .movie-item:focus {
-    transform: scale(1.08);
-    box-shadow: 0 6px 20px rgba(242,174,0,0.8);
-    outline: none;
-  }
-  .movie-item img {
-    width: 100%;
-    height: 270px;
-    object-fit: cover;
-    display: block;
-  }
-  .movie-title {
-    padding: 8px 10px;
-    font-weight: 600;
-    font-size: 1rem;
-    color: #f2ae00;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  /* Navigation Arrows */
-  .arrow-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(242,174,0,0.7);
-    border: none;
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    cursor: pointer;
-    z-index: 10;
-    transition: background-color 0.25s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .arrow-btn:hover {
-    background-color: rgba(242,174,0,0.9);
-  }
-  .arrow-left {
-    left: 10px;
-  }
-  .arrow-right {
-    right: 10px;
-  }
-  .arrow-btn svg {
-    fill: #1a161f;
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Responsive for smart TV */
-  @media (max-width: 960px) {
-    .movie-item {
-      width: 140px;
-    }
-    .movie-item img {
-      height: 210px;
-    }
-    .featured-info h1 {
-      font-size: 2rem;
-    }
-    .featured img {
-      max-width: 200px;
-    }
-  }
-  @media (max-width: 600px) {
-    .movie-item {
-      width: 120px;
-    }
-    .movie-item img {
-      height: 180px;
-    }
-    .featured {
+    body {
+      background-color: #1a161f;
+      color: #eee;
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
       flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: #1a161f;
+      padding: 15px 20px;
       text-align: center;
+      border-bottom: 2px solid #f2ae00;
+      flex-shrink: 0;
     }
-    .featured-info {
-      margin-left: 0;
-      margin-top: 20px;
-      max-width: 100%;
+
+    header h1 {
+      color: #f2ae00;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
     }
-    .arrow-btn {
-      width: 38px;
-      height: 38px;
+
+    main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 15px 30px 15px;
+      scroll-behavior: smooth;
     }
-  }
-</style>
+
+    .search-bar {
+      max-width: 400px;
+      margin: 10px auto 25px auto;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 25px;
+      border: none;
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+      outline: none;
+      background-color: #2e2936;
+      color: #eee;
+      box-shadow: 0 0 8px #f2ae00aa;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .search-bar input::placeholder {
+      color: #bbb;
+    }
+
+    .search-bar input:focus {
+      box-shadow: 0 0 16px #f2ae00ee;
+    }
+
+    section.category {
+      margin-bottom: 30px;
+    }
+
+    section.category h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #f2ae00;
+      margin-bottom: 10px;
+      padding-left: 5px;
+      border-left: 5px solid #f2ae00;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+
+    .item-card {
+      background-color: #2e2936;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px #0008;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .item-card:hover,
+    .item-card:focus {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px #f2ae00cc;
+      outline: none;
+    }
+
+    .item-image {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .item-info {
+      padding: 8px 10px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .item-title {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+      color: #f2ae00;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-subtitle {
+      font-size: 0.85rem;
+      color: #ccc;
+      opacity: 0.9;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Responsive */
+
+    @media (min-width: 600px) {
+      main {
+        padding: 20px 40px 40px 40px;
+      }
+
+      .items-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 18px;
+      }
+
+      .item-card {
+        border-radius: 12px;
+      }
+
+      .item-image {
+        height: 220px;
+      }
+
+      header h1 {
+        font-size: 2.8rem;
+      }
+    }
+
+    /* Scrollbar styling for modern browsers */
+    main::-webkit-scrollbar {
+      width: 8px;
+    }
+    main::-webkit-scrollbar-thumb {
+      background-color: #f2ae00aa;
+      border-radius: 10px;
+    }
+
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Mi Streamflix</h1>
+  </header>
   <main>
-    <!-- Featured movie -->
-    <section class="featured" aria-label="Featured movie or series">
-      <img src="img/conclavebanner.png" alt="Featured movie poster" />
-      <div class="featured-info">
-        <h1>Golden Horizon</h1>
-        <p>A thrilling adventure across uncharted lands where heroes rise to challenge fate. Dive into excitement, mystery, and the ultimate battle between light and shadow.</p>
+    <div class="search-bar">
+      <input id="searchInput" type="search" placeholder="Buscar películas o series..." aria-label="Buscar películas o series" />
+    </div>
+
+    <section class="category" aria-labelledby="featured-title">
+      <h2 id="featured-title">Destacados</h2>
+      <div class="items-grid" id="featuredItems">
+        <!-- Featured items will be inserted by JS -->
       </div>
     </section>
 
-    <!-- Movie Row 1 -->
-    <section class="movie-row" aria-label="Popular movies">
-      <h2>Popular Movies</h2>
-      <div class="movie-list-container">
-        <button class="arrow-btn arrow-left" aria-label="Scroll left Popular Movies" onclick="scrollRow('popular-movies', -1)">
-          <svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-        </button>
-        <div id="popular-movies" class="movie-list" tabindex="0">
-        <a href="reproductor-conclave.html">
-          <div class="movie-item" tabindex="0" aria-label="Movie: The City Lights">
-            <img src="img/conclave.webp" alt="conclave" />
-            <div class="movie-title">The City Lights</div>
-          </div>
-        </a>
-          <div class="movie-item" tabindex="0" aria-label="Movie: Ocean's Secret">
-            <img src="https://images.pexels.com/photos/1476619/pexels-photo-1476619.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Ocean's Secret poster" />
-            <div class="movie-title">Ocean's Secret</div>
-          </div>
-          <div class="movie-item" tabindex="0" aria-label="Movie: Nightfall">
-            <img src="https://images.pexels.com/photos/462353/pexels-photo-462353.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Nightfall poster" />
-            <div class="movie-title">Nightfall</div>
-          </div>
-          <div class="movie-item" tabindex="0" aria-label="Movie: Rising Dawn">
-            <img src="https://images.pexels.com/photos/1550088/pexels-photo-1550088.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Rising Dawn poster" />
-            <div class="movie-title">Rising Dawn</div>
-          </div>
-          <div class="movie-item" tabindex="0" aria-label="Movie: Silent Echo">
-            <img src="https://images.pexels.com/photos/799443/pexels-photo-799443.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Silent Echo poster" />
-            <div class="movie-title">Silent Echo</div>
-          </div>
-        </div>
-        <button class="arrow-btn arrow-right" aria-label="Scroll right Popular Movies" onclick="scrollRow('popular-movies', 1)">
-          <svg viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-        </button>
+    <section class="category" aria-labelledby="movies-title">
+      <h2 id="movies-title">Películas</h2>
+      <div class="items-grid" id="moviesItems">
+        <!-- Movies items will be inserted by JS -->
       </div>
     </section>
 
-    <!-- Movie Row 2 -->
-    <section class="movie-row" aria-label="Top rated series">
-      <h2>Top Rated Series</h2>
-      <div class="movie-list-container">
-        <button class="arrow-btn arrow-left" aria-label="Scroll left Top Rated Series" onclick="scrollRow('top-series', -1)">
-          <svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-        </button>
-        <a href="reproductor-conclave.html">
-          <div class="movie-item" tabindex="0" aria-label="Conclave">
-            <img src="img/conclave.webp" alt="Conclave" />
-            <div class="movie-title">Conclave</div>
-          </div>
-        </a>
-          <div class="movie-item" tabindex="0" aria-label="Series: Hidden Truth">
-            <img src="https://images.pexels.com/photos/631229/pexels-photo-631229.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Hidden Truth poster" />
-            <div class="movie-title">Hidden Truth</div>
-          </div>
-          <div class="movie-item" tabindex="0" aria-label="Series: Silver Line">
-            <img src="https://images.pexels.com/photos/1933232/pexels-photo-1933232.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Silver Line poster" />
-            <div class="movie-title">Silver Line</div>
-          </div>
-        </div>
-        <button class="arrow-btn arrow-right" aria-label="Scroll right Top Rated Series" onclick="scrollRow('top-series', 1)">
-          <svg viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-        </button>
+    <section class="category" aria-labelledby="series-title">
+      <h2 id="series-title">Series</h2>
+      <div class="items-grid" id="seriesItems">
+        <!-- Series items will be inserted by JS -->
       </div>
     </section>
   </main>
 
-<script>
-  // Scroll a movie row left or right by one movie width + margin
-  function scrollRow(rowId, direction) {
-    const container = document.getElementById(rowId);
-    if (!container) return;
-    const item = container.querySelector('.movie-item');
-    if (!item) return;
-    const scrollAmount = (item.offsetWidth + 15) * direction; // 15px margin right
-    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  }
-</script>
+  <script>
+    const featured = [
+      {
+        id: 1,
+        title: "El Origen",
+        subtitle: "Película - Ciencia ficción",
+        image: "https://images.pexels.com/photos/7991589/pexels-photo-7991589.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 2,
+        title: "Stranger Things",
+        subtitle: "Serie - Fantasía",
+        image: "https://images.pexels.com/photos/2923355/pexels-photo-2923355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 3,
+        title: "La Gran Estafa",
+        subtitle: "Película - Suspenso",
+        image: "https://images.pexels.com/photos/326052/pexels-photo-326052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+    ];
+
+    const movies = [
+      {
+        id: 101,
+        title: "Interstellar",
+        subtitle: "Película - Ciencia ficción",
+        image: "https://images.pexels.com/photos/787517/pexels-photo-787517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 102,
+        title: "Gladiador",
+        subtitle: "Película - Acción",
+        image: "https://images.pexels.com/photos/746105/pexels-photo-746105.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 103,
+        title: "La La Land",
+        subtitle: "Película - Musical",
+        image: "https://images.pexels.com/photos/196667/pexels-photo-196667.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 104,
+        title: "The Dark Knight",
+        subtitle: "Película - Acción/Drama",
+        image: "https://images.pexels.com/photos/4709280/pexels-photo-4709280.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 105,
+        title: "El Club de la Pelea",
+        subtitle: "Película - Drama",
+        image: "https://images.pexels.com/photos/739407/pexels-photo-739407.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+    ];
+
+    const series = [
+      {
+        id: 201,
+        title: "Breaking Bad",
+        subtitle: "Serie - Drama/Crime",
+        image: "https://images.pexels.com/photos/3099697/pexels-photo-3099697.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 202,
+        title: "Juego de Tronos",
+        subtitle: "Serie - Fantasía",
+        image: "https://images.pexels.com/photos/356378/pexels-photo-356378.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 203,
+        title: "Friends",
+        subtitle: "Serie - Comedia",
+        image: "https://images.pexels.com/photos/2923354/pexels-photo-2923354.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      },
+      {
+        id: 204,
+        title: "The Witcher",
+        subtitle: "Serie - Fantasía",
+        image: "https://images.pexels.com/photos/3768589/pexels-photo-3768589.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
+      }
+    ];
+
+    const featuredContainer = document.getElementById('featuredItems');
+    const moviesContainer = document.getElementById('moviesItems');
+    const seriesContainer = document.getElementById('seriesItems');
+    const searchInput = document.getElementById('searchInput');
+
+    function createItemCard(item) {
+      const card = document.createElement('div');
+      card.className = 'item-card';
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-label', `${item.title}, ${item.subtitle}`);
+
+      const img = document.createElement('img');
+      img.className = 'item-image';
+      img.src = item.image;
+      img.alt = item.title;
+
+      const infoDiv = document.createElement('div');
+      infoDiv.className = 'item-info';
+
+      const title = document.createElement('div');
+      title.className = 'item-title';
+      title.textContent = item.title;
+
+      const subtitle = document.createElement('div');
+      subtitle.className = 'item-subtitle';
+      subtitle.textContent = item.subtitle;
+
+      infoDiv.appendChild(title);
+      infoDiv.appendChild(subtitle);
+
+      card.appendChild(img);
+      card.appendChild(infoDiv);
+
+      // Placeholder for click behavior: Open a modal or play video. Currently alerts.
+      card.addEventListener('click', () => {
+        alert(`Has seleccionado: ${item.title}`);
+      });
+      card.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          alert(`Has seleccionado: ${item.title}`);
+        }
+      });
+
+      return card;
+    }
+
+    function renderItems(container, items) {
+      container.innerHTML = '';
+      items.forEach(item => {
+        container.appendChild(createItemCard(item));
+      });
+    }
+
+    // Initial render
+    renderItems(featuredContainer, featured);
+    renderItems(moviesContainer, movies);
+    renderItems(seriesContainer, series);
+
+    // Search filter
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase().trim();
+
+      if (query === '') {
+        renderItems(featuredContainer, featured);
+        renderItems(moviesContainer, movies);
+        renderItems(seriesContainer, series);
+        return;
+      }
+
+      function filterItems(items) {
+        return items.filter(item =>
+          item.title.toLowerCase().includes(query) ||
+          item.subtitle.toLowerCase().includes(query)
+        );
+      }
+
+      renderItems(featuredContainer, filterItems(featured));
+      renderItems(moviesContainer, filterItems(movies));
+      renderItems(seriesContainer, filterItems(series));
+    });
+  </script>
 </body>
 </html>
