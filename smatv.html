@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+<title>Movie Browser - Netflix Style</title>
+<style>
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background-color: #1a161f;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #ccc;
+    overflow-x: hidden;
+  }
+  h2 {
+    color: #f2ae00;
+    margin: 0 0 10px 20px;
+    font-weight: 700;
+    font-size: 1.8rem;
+  }
+  /* Featured Section */
+  .featured {
+    position: relative;
+    color: #f2ae00;
+    padding: 20px;
+    background: linear-gradient(90deg, rgba(242,174,0,0.6) 0%, rgba(26,22,31,0.9) 70%);
+    margin-bottom: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .featured img {
+    max-width: 300px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(242,174,0,0.7);
+  }
+  .featured-info {
+    max-width: 600px;
+    margin-left: 25px;
+  }
+  .featured-info h1 {
+    margin: 0 0 15px;
+    font-size: 2.8rem;
+  }
+  .featured-info p {
+    font-size: 1.1rem;
+    color: #d6d6d6;
+  }
+
+  /* Movie Rows */
+  .movie-row {
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .movie-list-container {
+    position: relative;
+  }
+  .movie-list {
+    display: flex;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding-left: 20px;
+    scroll-snap-type: x mandatory;
+  }
+  .movie-item {
+    flex: 0 0 auto;
+    width: 180px;
+    margin-right: 15px;
+    scroll-snap-align: start;
+    cursor: pointer;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+    background-color: #222;
+    transition: transform 0.3s ease;
+  }
+  .movie-item:hover, .movie-item:focus {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(242,174,0,0.8);
+    outline: none;
+  }
+  .movie-item img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    display: block;
+  }
+  .movie-title {
+    padding: 8px 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #f2ae00;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  /* Navigation Arrows */
+  .arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(242,174,0,0.7);
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .arrow-btn:hover {
+    background-color: rgba(242,174,0,0.9);
+  }
+  .arrow-left {
+    left: 10px;
+  }
+  .arrow-right {
+    right: 10px;
+  }
+  .arrow-btn svg {
+    fill: #1a161f;
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Responsive for smart TV */
+  @media (max-width: 960px) {
+    .movie-item {
+      width: 140px;
+    }
+    .movie-item img {
+      height: 210px;
+    }
+    .featured-info h1 {
+      font-size: 2rem;
+    }
+    .featured img {
+      max-width: 200px;
+    }
+  }
+  @media (max-width: 600px) {
+    .movie-item {
+      width: 120px;
+    }
+    .movie-item img {
+      height: 180px;
+    }
+    .featured {
+      flex-direction: column;
+      text-align: center;
+    }
+    .featured-info {
+      margin-left: 0;
+      margin-top: 20px;
+      max-width: 100%;
+    }
+    .arrow-btn {
+      width: 38px;
+      height: 38px;
+    }
+  }
+</style>
+</head>
+<body>
+  <main>
+    <!-- Featured movie -->
+    <section class="featured" aria-label="Featured movie or series">
+      <img src="https://images.pexels.com/photos/799157/pexels-photo-799157.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Featured movie poster" />
+      <div class="featured-info">
+        <h1>Golden Horizon</h1>
+        <p>A thrilling adventure across uncharted lands where heroes rise to challenge fate. Dive into excitement, mystery, and the ultimate battle between light and shadow.</p>
+      </div>
+    </section>
+
+    <!-- Movie Row 1 -->
+    <section class="movie-row" aria-label="Popular movies">
+      <h2>Popular Movies</h2>
+      <div class="movie-list-container">
+        <button class="arrow-btn arrow-left" aria-label="Scroll left Popular Movies" onclick="scrollRow('popular-movies', -1)">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <div id="popular-movies" class="movie-list" tabindex="0">
+          <div class="movie-item" tabindex="0" aria-label="Movie: The City Lights">
+            <img src="https://images.pexels.com/photos/799443/pexels-photo-799443.jpeg?auto=compress&cs=tinysrgb&h=600" alt="The City Lights poster" />
+            <div class="movie-title">The City Lights</div>
+          </div>
+          <div class="movie-item" tabindex="0" aria-label="Movie: Ocean's Secret">
+            <img src="https://images.pexels.com/photos/1476619/pexels-photo-1476619.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Ocean's Secret poster" />
+            <div class="movie-title">Ocean's Secret</div>
+          </div>
+          <div class="movie-item" tabindex="0" aria-label="Movie: Nightfall">
+            <img src="https://images.pexels.com/photos/462353/pexels-photo-462353.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Nightfall poster" />
+            <div class="movie-title">Nightfall</div>
+          </div>
+          <div class="movie-item" tabindex="0" aria-label="Movie: Rising Dawn">
+            <img src="https://images.pexels.com/photos/1550088/pexels-photo-1550088.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Rising Dawn poster" />
+            <div class="movie-title">Rising Dawn</div>
+          </div>
+          <div class="movie-item" tabindex="0" aria-label="Movie: Silent Echo">
+            <img src="https://images.pexels.com/photos/799443/pexels-photo-799443.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Silent Echo poster" />
+            <div class="movie-title">Silent Echo</div>
+          </div>
+        </div>
+        <button class="arrow-btn arrow-right" aria-label="Scroll right Popular Movies" onclick="scrollRow('popular-movies', 1)">
+          <svg viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <!-- Movie Row 2 -->
+    <section class="movie-row" aria-label="Top rated series">
+      <h2>Top Rated Series</h2>
+      <div class="movie-list-container">
+        <button class="arrow-btn arrow-left" aria-label="Scroll left Top Rated Series" onclick="scrollRow('top-series', -1)">
+          <svg viewBox="0 0 24 24"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </button>
+        <a href="reproductor-conclave.html">
+          <div class="movie-item" tabindex="0" aria-label="Conclave">
+            <img src="img/conclave.webp" alt="Conclave" />
+            <div class="movie-title">Conclave</div>
+          </div>
+        </a>
+          <div class="movie-item" tabindex="0" aria-label="Series: Hidden Truth">
+            <img src="https://images.pexels.com/photos/631229/pexels-photo-631229.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Hidden Truth poster" />
+            <div class="movie-title">Hidden Truth</div>
+          </div>
+          <div class="movie-item" tabindex="0" aria-label="Series: Silver Line">
+            <img src="https://images.pexels.com/photos/1933232/pexels-photo-1933232.jpeg?auto=compress&cs=tinysrgb&h=600" alt="Silver Line poster" />
+            <div class="movie-title">Silver Line</div>
+          </div>
+        </div>
+        <button class="arrow-btn arrow-right" aria-label="Scroll right Top Rated Series" onclick="scrollRow('top-series', 1)">
+          <svg viewBox="0 0 24 24"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+        </button>
+      </div>
+    </section>
+  </main>
+
+<script>
+  // Scroll a movie row left or right by one movie width + margin
+  function scrollRow(rowId, direction) {
+    const container = document.getElementById(rowId);
+    if (!container) return;
+    const item = container.querySelector('.movie-item');
+    if (!item) return;
+    const scrollAmount = (item.offsetWidth + 15) * direction; // 15px margin right
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
