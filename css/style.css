@@ -194,7 +194,63 @@ td, th {
   height: 2rem;
 }
 
+/* para nuevas pelis */
+.peliculas-container {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Ajusta el alto según sea necesario */
+  overflow: hidden;
+}
 
+.peliculas-slider {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.pelicula {
+  width: 100%;
+  height: 100%;
+  margin-right: 20px; /* Ajusta el margen según sea necesario */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pelicula img {
+  width: 100%;
+  height: 200px; /* Ajusta el alto según sea necesario */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.peliculas-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.peliculas-prev, .peliculas-next {
+  background-color: #fff;
+  border: none;
+  padding: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.peliculas-prev {
+  margin-left: 20px; /* Ajusta el margen según sea necesario */
+}
+
+.peliculas-next {
+  margin-right: 20px; /* Ajusta el margen según sea necesario */
+}
 
 /* parabuscador */
 .Search {
@@ -8430,5 +8486,6 @@ blockquote {
 	line-height: 40px;
 	width: 0px;
   }
+
 
 }
