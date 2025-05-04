@@ -14,7 +14,7 @@ searchInput.addEventListener('input', (e) => {
     { title: 'Spiderman: Across', url: 'reproductor-spidermanacross.html' },
     { title: 'Wolf Pack', url: 'reproductor-wolfpack.html' },
     { title: 'series', url: 'series.html' },
-    { title: ' el eternauta', url: 'reproductor-eleternauta.html' },
+    { title: 'el elternauta', url: 'reproductor-eleternauta.html' },
     // Agregar más películas y series aquí...
   ];
   // Filtrar las películas y series según el valor de búsqueda
@@ -27,8 +27,8 @@ searchInput.addEventListener('input', (e) => {
     const peliculaHTML = `
       <a href="${pelicula.url}">
         <div class="div-block">
-          
-         
+          <div class="div-block-2"><img src="https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbdfb4_botonplay.png" loading="lazy" alt="bodon de play" class="iconoplay" /></div>
+          // <img src="img/${pelicula.title.toLowerCase().replace(' ', '')}.jpg" loading="lazy" alt="${pelicula.title}" class="image-2" />
           <h3>${pelicula.title}</h3>
         </div>
       </a>
