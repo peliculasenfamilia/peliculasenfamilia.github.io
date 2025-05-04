@@ -4689,6 +4689,12 @@ blockquote {
   background-size: auto, cover;
 }
 
+.hero-section-series-eternauta.about-hero {
+  background-image: linear-gradient(360deg, #222, rgba(34, 34, 34, 0)), url("../img/eternautabanner.jpg");
+  background-position: 0 0, 50% 60%;
+  background-size: auto, cover;
+}
+
 
 
 
