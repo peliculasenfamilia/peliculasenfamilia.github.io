@@ -15,6 +15,8 @@ searchInput.addEventListener('input', (e) => {
     { title: 'Wolf Pack', url: 'reproductor-wolfpack.html' },
     { title: 'series', url: 'series.html' },
     { title: 'el elternauta', url: 'reproductor-eleternauta.html' },
+    { title: 'wellwood', url: 'reproductor-wellwood.html' },
+    { title: 'sobreviviendo', url: 'reproductor-sobreviviendo.html' },
     // Agregar más películas y series aquí...
   ];
   // Filtrar las películas y series según el valor de búsqueda
