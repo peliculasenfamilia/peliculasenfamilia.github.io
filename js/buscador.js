@@ -17,6 +17,7 @@ searchInput.addEventListener('input', (e) => {
     { title: 'el elternauta', url: 'reproductor-eleternauta.html' },
     { title: 'wellwood', url: 'reproductor-wellwood.html' },
     { title: 'sobreviviendo', url: 'reproductor-sobreviviendo.html' },
+    { title: 'superman', url: 'superman.html' },
     // Agregar más películas y series aquí...
   ];
   // Filtrar las películas y series según el valor de búsqueda
