@@ -1,391 +1,996 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-<title>Pelis en familia</title>
-<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>Plataforma de Películas y Series</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    /* Reset */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Streaming</title>
+    <!-- Incluye una fuente de Google Fonts para un diseño atractivo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Enlace a la biblioteca de iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --primary-color: #ffc107; /* Amarillo para acentos */
+            --text-color: #f0f0f0;
+            --secondary-text-color: #a0a0a0;
+            --card-bg-color: #2a2a2a;
+            --card-hover-color: #3a3a3a;
+            --horizontal-padding: 1rem; /* Variable para espaciado horizontal */
+            --section-padding-y: 3rem; /* Nuevo: Variable para el padding vertical de las secciones */
+        }
 
-    body {
-      background-color: #1a161f;
-      color: #eee;
-      font-family: 'Montserrat', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Evita el desplazamiento horizontal general */
+            scroll-behavior: smooth;
+            font-size: 16px; /* Tamaño de fuente base para rem */
+        }
 
-    header {
-      background-color: #1a161f;
-      padding: 15px 20px;
-      text-align: center;
-      border-bottom: 2px solid #f2ae00;
-      flex-shrink: 0;
-    }
+        /* El contenedor principal para alinear el contenido */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--horizontal-padding); /* Eliminado el padding vertical para manejarlo por sección */
+        }
+        
+        /* Asegura que el contenedor dentro de header tenga el padding correcto */
+        header .container {
+            padding: 1.5rem var(--horizontal-padding);
+        }
 
-    header h1 {
-      color: #f2ae00;
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 2px;
-    }
+        /* Estilos del encabezado (Header) */
+        header {
+            background-color: var(--bg-color);
+            border-bottom: 1px solid var(--card-bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    main {
-      flex: 1;
-      overflow-y: auto;
-      padding: 10px 15px 30px 15px;
-      scroll-behavior: smooth;
-    }
+        header .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
 
-    .search-bar {
-      max-width: 400px;
-      margin: 10px auto 25px auto;
-      display: flex;
-      justify-content: center;
-    }
+        .logo {
+            flex-grow: 1;
+        }
+        
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+        }
 
-    .search-bar input {
-      width: 100%;
-      padding: 10px 15px;
-      border-radius: 25px;
-      border: none;
-      font-size: 1rem;
-      font-family: 'Montserrat', sans-serif;
-      outline: none;
-      background-color: #2e2936;
-      color: #eee;
-      box-shadow: 0 0 8px #f2ae00aa;
-      transition: box-shadow 0.3s ease;
-    }
+        .search-bar {
+            position: relative;
+            width: 300px;
+            flex-shrink: 1;
+            margin-left: auto;
+        }
 
-    .search-bar input::placeholder {
-      color: #bbb;
-    }
+        .search-bar input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            padding-left: 3rem;
+            background-color: var(--card-bg-color);
+            border: none;
+            border-radius: 2rem;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-bar input::placeholder {
+            color: var(--secondary-text-color);
+        }
 
-    .search-bar input:focus {
-      box-shadow: 0 0 16px #f2ae00ee;
-    }
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
 
-    section.category {
-      margin-bottom: 30px;
-    }
+        .search-bar .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary-text-color);
+        }
 
-    section.category h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #f2ae00;
-      margin-bottom: 10px;
-      padding-left: 5px;
-      border-left: 5px solid #f2ae00;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-    }
+        /* Estilos del menú de navegación */
+        .nav-menu {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            margin: 0;
+            padding: 0;
+            flex-grow: 2;
+            justify-content: center;
+        }
+        
+        .nav-menu::-webkit-scrollbar {
+            display: none;
+        }
 
-    .items-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      gap: 12px;
-    }
+        .nav-menu a {
+            color: var(--secondary-text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
 
-    .item-card {
-      background-color: #2e2936;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 4px 8px #0008;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
 
-    .item-card:hover,
-    .item-card:focus {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px #f2ae00cc;
-      outline: none;
-    }
+        .nav-menu .active {
+            color: var(--primary-color);
+        }
 
-    .item-image {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
+        .nav-menu .active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
 
-    .item-info {
-      padding: 8px 10px;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
+        /* Estilos de las secciones de contenido (listas de películas) */
+        .content-section {
+            padding: var(--section-padding-y) 0;
+        }
 
-    .item-title {
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 4px;
-      color: #f2ae00;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
 
-    .item-subtitle {
-      font-size: 0.85rem;
-      color: #ccc;
-      opacity: 0.9;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+        .section-header .line {
+            width: 5px;
+            height: 30px;
+            background-color: var(--primary-color);
+            margin-right: 1rem;
+            border-radius: 2px;
+        }
 
- 
+        .section-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+        
+        /* Estilos del Hero */
+        .hero {
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex; /* Mantenemos flex para que el contenedor interior se pueda alinear */
+            align-items: flex-start; /* CORRECCIÓN CLAVE: Alinear al inicio (arriba) */
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
 
-    /* Responsive */
+        .hero .container {
+            padding-top: var(--section-padding-y); /* CORRECCIÓN: Agregar padding superior igual al de las secciones */
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin: 0 0 1rem; 
+        }
 
-    @media (min-width: 600px) {
-      main {
-        padding: 20px 40px 40px 40px;
-      }
+        .hero p {
+            max-width: 600px; /* Ancho máximo para la legibilidad */
+            color: var(--secondary-text-color);
+            line-height: 1.6;
+            margin: 1rem 0 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
 
-      .items-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 18px;
-      }
+        .hero .play-btn {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
 
-      .item-card {
-        border-radius: 12px;
-      }
+        .hero .play-btn:hover {
+            background-color: #e6b800;
+            transform: scale(1.05);
+        }
 
-      .item-image {
-        height: 220px;
-      }
+        /* Contenedor de la lista con botones de navegación */
+        .movie-list-container {
+            position: relative;
+        }
 
-      header h1 {
-        font-size: 2.8rem;
-      }
-    }
+        .movie-list {
+            display: flex;
+            overflow-x: scroll;
+            -ms-overflow-style: none; /* Oculta la barra de desplazamiento en IE y Edge */
+            scrollbar-width: none; /* Oculta la barra de desplazamiento en Firefox */
+            scroll-behavior: smooth; /* Hace que el desplazamiento sea suave */
+            gap: 1.5rem;
+            padding-bottom: 1rem;
+        }
+        
+        /* Oculta la barra de desplazamiento en navegadores WebKit (Chrome, Safari) */
+        .movie-list::-webkit-scrollbar {
+            display: none;
+        }
 
-    /* Scrollbar styling for modern browsers */
-    main::-webkit-scrollbar {
-      width: 8px;
-    }
-    main::-webkit-scrollbar-thumb {
-      background-color: #f2ae00aa;
-      border-radius: 10px;
-    }
+        .movie-card {
+            flex-shrink: 0;
+            width: 220px;
+            border-radius: 1rem;
+            overflow: hidden;
+            background-color: var(--card-bg-color);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
 
-  </style>
+        .movie-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .movie-card .info {
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .movie-card .info h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Animación para los botones de las tarjetas */
+        .movie-card-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            border: 2px solid white;
+            transition: transform 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .movie-card:hover .movie-card-btn {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Estilos para los botones de navegación */
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 1.5rem 1rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        
+        .nav-btn:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .nav-btn-prev {
+            left: 0;
+            border-radius: 0 1rem 1rem 0;
+        }
+
+        .nav-btn-next {
+            right: 0;
+            border-radius: 1rem 0 0 1rem;
+        }
+
+        /* Estilos del Modal */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            z-index: 1001; /* Por encima de todo lo demás */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding-top: 50px;
+            /* Flexbox para centrar el contenido */
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            margin: auto;
+            padding: 20px;
+            border-radius: 1rem;
+            width: 90%;
+            max-width: 800px;
+            position: relative;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .close-btn {
+            color: var(--secondary-text-color);
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.3s;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 10; 
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: var(--primary-color);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-content .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-content .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--secondary-text-color);
+        }
+
+        /* Estilos del pie de página (Footer) */
+        footer {
+            background-color: var(--card-bg-color);
+            border-top: 1px solid var(--card-hover-color);
+            text-align: center;
+        }
+        
+        footer .container {
+            padding: 2rem var(--horizontal-padding);
+        }
+        
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--secondary-text-color);
+        }
+
+        .social-links {
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--secondary-text-color);
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Estilos para el mensaje de no resultados */
+        .no-results {
+            text-align: center;
+            padding: 50px 0;
+            font-size: 1.5rem;
+            color: var(--secondary-text-color);
+            display: none;
+        }
+
+        /* MEDIA QUERIES PARA RESPONSIVIDAD */
+        /* Estilos para pantallas más pequeñas (móviles) */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+
+            .nav-menu {
+                justify-content: flex-start;
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .search-bar {
+                width: 100%;
+                margin-top: 1rem;
+                margin-left: 0;
+            }
+            
+            .hero {
+                height: 350px;
+            }
+
+            .hero .container {
+                padding-top: var(--horizontal-padding);
+                max-width: 100%;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                max-width: 100%;
+            }
+
+            .movie-card {
+                width: 180px;
+            }
+            
+            .movie-card img {
+                height: 250px;
+            }
+
+            .nav-btn {
+                padding: 1rem 0.5rem;
+            }
+        }
+        
+        /* Estilos para pantallas aún más pequeñas (móviles pequeños) */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.5rem;
+            }
+            
+            .section-header h3 {
+                font-size: 1.5rem;
+            }
+            
+            .movie-list {
+                gap: 1rem;
+            }
+
+            .movie-card {
+                width: 150px;
+            }
+            
+            .movie-card img {
+                height: 200px;
+            }
+
+            .nav-menu a {
+                font-size: 0.9rem;
+                padding: 0.5rem 0.75rem;
+            }
+
+            .nav-menu .active::after {
+                bottom: -0.75rem;
+                height: 2px;
+            }
+
+            .modal-content {
+                padding: 10px;
+            }
+
+            .close-btn {
+                font-size: 24px;
+                top: 5px;
+                right: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Pelis en familia</h1>
-  </header>
-  <main>
-    <div class="search-bar">
-      <input id="searchInput" type="search" placeholder="Buscar películas o series..." aria-label="Buscar películas o series" />
+    
+    <!-- Encabezado de la página -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Películas en familia</h1>
+            </div>
+            <!-- Menú de navegación se mueve aquí, dentro del header -->
+            <nav class="nav-menu">
+                <a href="#" data-page="peliculas" class="nav-link active">Películas</a>
+                <a href="#" data-page="series" class="nav-link">Series</a>
+                <a href="#" data-page="television" class="nav-link">Televisión</a>
+                <a href="#" data-page="deportes" class="nav-link">Deportes</a>
+            </nav>
+            <div class="search-bar">
+                <input id="search-input" type="text" placeholder="Buscar por título o género...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenedor donde se cargará el contenido dinámicamente -->
+    <main id="content-container"></main>
+
+    <!-- El Modal (oculto por defecto) -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="video-container">
+                <iframe id="movie-player" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+        </div>
     </div>
 
-    <section class="category" aria-labelledby="featured-title">
-      <h2 id="featured-title">Destacados</h2>
-      <div class="items-grid" id="featuredItems">
-        <!-- Featured items will be inserted by JS -->
-      </div>
-    </section>
+    <!-- Pie de página (Footer) -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+            <p>&copy; 2024 Películas en familia. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
-    <section class="category" aria-labelledby="movies-title">
-      <h2 id="movies-title">Películas</h2>
-      <div class="items-grid" id="moviesItems">
-        <!-- Movies items will be inserted by JS -->
-      </div>
-    </section>
-
-    <section class="category" aria-labelledby="series-title">
-      <h2 id="series-title">Series</h2>
-      <div class="items-grid" id="seriesItems">
-        <!-- Series items will be inserted by JS -->
-      </div>
-    </section>
-  </main>
-
-  <script>
-    const featured = [
-      {
-        id: 1,
-        title: "Conclave",
-        subtitle: "Película - Drama",
-        image: "https://image.tmdb.org/t/p/w342//ftIJ42zwuFvUFVEWZQbFq1vcV5U.jpg",
-      },
-      {
-        id: 2,
-        title: "Stranger Things",
-        subtitle: "Serie - Fantasía",
-        image: "https://images.pexels.com/photos/2923355/pexels-photo-2923355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
-      },
-      {
-        id: 3,
-        title: "La Gran Estafa",
-        subtitle: "Película - Suspenso",
-        image: "https://images.pexels.com/photos/326052/pexels-photo-326052.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
-      },
-    ];
-
-    const movies = [
-      {
-        id: 101,
-        title: "Interstellar",
-        subtitle: "Película - Ciencia ficción",
-        image: "https://images.pexels.com/photos/787517/pexels-photo-787517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
-      },
-      {
-        id: 102,
-        title: "Gladiador",
-        subtitle: "Película - Acción",
-        image: "https://images.pexels.com/photos/746105/pexels-photo-746105.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
-      },
-      {
-        id: 103,
-        title: "La La Land",
-        subtitle: "Película - Musical",
-        image: "https://images.pexels.com/photos/196667/pexels-photo-196667.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
-      },
-      {
-        id: 104,
-        title: "The Dark Knight",
-        subtitle: "Película - Acción/Drama",
-        image: "https://images.pexels.com/photos/4709280/pexels-photo-4709280.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
-      },
-      {
-        id: 105,
-        title: "El Club de la Pelea",
-        subtitle: "Película - Drama",
-        image: "https://images.pexels.com/photos/739407/pexels-photo-739407.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
-      },
-    ];
-
-    const series = [
-      {
-        id: 201,
-        title: "El Eternauta",
-        subtitle: "Serie - Drama y acción",
-        ImageUrl: "https://image.tmdb.org/t/p/w342//9Krv5NvKa5a3Q3b1l2B3rP9Bj8E.jpg",
-      },
-      {
-        id: 202,
-        title: "Wynonna Earp",
-        subtitle: "Aacción - Aventura",
-        image: "https://image.tmdb.org/t/p/w342//qnIaDelA81dmFaXrhpz6M6dpGSD.jpg",
-      },
-      {
-        id: 203,
-        title: "Rumbo al Infierno",
-        subtitle: "Serie - Comedia",
-        image: "https://image.tmdb.org/t/p/w342//5veiuXxIy3NFsm7LMqLGs4A2vgt.jpg",
-      },
-      {
-        id: 204,
-        title: "The Witcher",
-        subtitle: "Serie - Fantasía",
-        image: "https://images.pexels.com/photos/3768589/pexels-photo-3768589.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=300",
-      }
-    ];
-
-    const featuredContainer = document.getElementById('featuredItems');
-    const moviesContainer = document.getElementById('moviesItems');
-    const seriesContainer = document.getElementById('seriesItems');
-    const searchInput = document.getElementById('searchInput');
-
-    function createItemCard(item) {
-      const card = document.createElement('div');
-      card.className = 'item-card';
-      card.setAttribute('tabindex', '0');
-      card.setAttribute('role', 'button');
-      card.setAttribute('aria-label', `${item.title}, ${item.subtitle}`);
-
-      const img = document.createElement('img');
-      img.className = 'item-image';
-      img.src = item.image;
-      img.alt = item.title;
-
-      const infoDiv = document.createElement('div');
-      infoDiv.className = 'item-info';
-
-      const title = document.createElement('div');
-      title.className = 'item-title';
-      title.textContent = item.title;
-
-      const subtitle = document.createElement('div');
-      subtitle.className = 'item-subtitle';
-      subtitle.textContent = item.subtitle;
-
-      infoDiv.appendChild(title);
-      infoDiv.appendChild(subtitle);
-
-      card.appendChild(img);
-      card.appendChild(infoDiv);
-
-      // Placeholder for click behavior: Open a modal or play video. Currently alerts.
-      card.addEventListener('click', () => {
-        alert(`Has seleccionado: ${item.title}`);
-      });
-      card.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          alert(`Has seleccionado: ${item.title}`);
+    <script>
+        // Función para manejar el desplazamiento de las listas
+        function scrollList(listId, direction) {
+            const list = document.getElementById(listId);
+            const scrollDistance = 250;
+            if (direction === 'next') {
+                list.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+            } else if (direction === 'prev') {
+                list.scrollBy({ left: -scrollDistance, behavior: 'smooth' });
+            }
         }
-      });
+        
+        // Mapeo de datos para el contenido de cada página
+        const pageContent = {
+            "peliculas": {
+                hero: {
+                    title: "El Caballero Oscuro",
+                    description: "Con la ayuda del teniente Jim Gordon y el fiscal de distrito Harvey Dent, Batman se propone desmantelar las organizaciones criminales restantes que plagan las calles de Gotham.",
+                    poster: "https://placehold.co/1200x600/1a1a1a/ffc107?text=El+Caballero+Oscuro",
+                    videoUrl: "https://www.youtube.com/embed/EXe-h6Q_W9s"
+                },
+                sections: [
+                    {
+                        title: "Acción",
+                        items: [
+                            { title: "Gladiador", videoUrl: "https://www.youtube.com/embed/owf_6gI-684" },
+                            { title: "Mad Max", videoUrl: "https://www.youtube.com/embed/hEJnMQG9ev8" },
+                            { title: "V de Venganza", videoUrl: "https://www.youtube.com/embed/EXe-h6Q_W9s" },
+                            { title: "Los Vengadores", videoUrl: "https://www.youtube.com/embed/e_I68gH2C-c" },
+                            { title: "John Wick", videoUrl: "https://www.youtube.com/embed/C0jA7u0u6-I" },
+                            { title: "Matrix", videoUrl: "https://www.youtube.com/embed/vKQi3bBA1y8" }
+                        ]
+                    },
+                    {
+                        title: "Comedia",
+                        items: [
+                            { title: "Súper Cool", videoUrl: "https://www.youtube.com/embed/B_mS28-N2oM" },
+                            { title: "Un Detective Suelto en Hollywood", videoUrl: "https://www.youtube.com/embed/7V3p-J4s9vM" },
+                            { title: "Los Cazafantasmas", videoUrl: "https://www.youtube.com/embed/vWcM3gH2XTY" },
+                            { title: "Deadpool", videoUrl: "https://www.youtube.com/embed/fW4Pz7j1eXg" }
+                        ]
+                    },
+                    {
+                        title: "Ciencia Ficción",
+                        items: [
+                            { title: "Interestelar", videoUrl: "https://www.youtube.com/embed/zSWdZVtXT7E" },
+                            { title: "Blade Runner 2049", videoUrl: "https://www.youtube.com/embed/gCcx85fzGiw" },
+                            { title: "Dune", videoUrl: "https://www.youtube.com/embed/8g18jJgYp1w" },
+                            { title: "Arrival", videoUrl: "https://www.youtube.com/embed/rN_bU3mYqQY" }
+                        ]
+                    },
+                    {
+                        title: "Terror",
+                        items: [
+                            { title: "El Exorcista", videoUrl: "https://www.youtube.com/embed/YDGw1MTEe-4" },
+                            { title: "Hereditary", videoUrl: "https://www.youtube.com/embed/V6s1K0h7N1M" },
+                            { title: "Get Out", videoUrl: "https://www.youtube.com/embed/DzfpyUB60ts" },
+                            { title: "La Bruja", videoUrl: "https://www.youtube.com/embed/iQd9w1uC0m0" }
+                        ]
+                    }
+                ]
+            },
+            "series": {
+                hero: {
+                    title: "Breaking Bad",
+                    description: "Un profesor de química de secundaria con cáncer de pulmón inoperable se asocia con un antiguo alumno para asegurar el futuro de su familia, cocinando y vendiendo metanfetamina.",
+                    poster: "https://placehold.co/1200x600/1a1a1a/ffc107?text=Breaking+Bad",
+                    videoUrl: "https://www.youtube.com/embed/H0Gk-y7cQ7o"
+                },
+                sections: [
+                    {
+                        title: "Dramas de Crimen",
+                        items: [
+                            { title: "Stranger Things", videoUrl: "https://www.youtube.com/embed/b9EkMcx7qCA" },
+                            { title: "The Witcher", videoUrl: "https://www.youtube.com/embed/szX7z4j6964" },
+                            { title: "Ozark", videoUrl: "https://www.youtube.com/embed/HjY2k8iFmJ4" },
+                            { title: "The Last of Us", videoUrl: "https://www.youtube.com/embed/uG5yW_yN1H0" },
+                            { title: "The Crown", videoUrl: "https://www.youtube.com/embed/JWtnJj-B-S8" },
+                            { title: "Game of Thrones", videoUrl: "https://www.youtube.com/embed/K81dOa9iX5w" }
+                        ]
+                    },
+                    {
+                        title: "Acción y Aventura",
+                        items: [
+                            { title: "The Mandalorian", videoUrl: "https://www.youtube.com/embed/Z0o8r348GkM" },
+                            { title: "Loki", videoUrl: "https://www.youtube.com/embed/V4QJ94o9W-k" },
+                            { title: "Falcon y el Soldado de Invierno", videoUrl: "https://www.youtube.com/embed/yQxG4X_M8a4" },
+                            { title: "Vikings", videoUrl: "https://www.youtube.com/embed/EXe-h6Q_W9s" },
+                            { title: "Cobra Kai", videoUrl: "https://www.youtube.com/embed/J7Y1eN1U8oI" }
+                        ]
+                    },
+                    {
+                        title: "Fantasía",
+                        items: [
+                            { title: "Arcane", videoUrl: "https://www.youtube.com/embed/fXwD2d93eWc" },
+                            { title: "Sombra y Hueso", videoUrl: "https://www.youtube.com/embed/F6Jm6_vB9t4" },
+                            { title: "El Señor de los Anillos", videoUrl: "https://www.youtube.com/embed/D3eP1e9aIas" },
+                            { title: "La Rueda del Tiempo", videoUrl: "https://www.youtube.com/embed/e_I68gH2C-c" }
+                        ]
+                    },
+                    {
+                        title: "Comedia",
+                        items: [
+                            { title: "Friends", videoUrl: "https://www.youtube.com/embed/tM78J0qjX6Y" },
+                            { title: "The Office", videoUrl: "https://www.youtube.com/embed/Lz1X1P4V1kI" },
+                            { title: "Modern Family", videoUrl: "https://www.youtube.com/embed/b5_v63_mC7Y" },
+                            { title: "Brooklyn Nine-Nine", videoUrl: "https://www.youtube.com/embed/sYv_y5_u9yM" }
+                        ]
+                    }
+                ]
+            },
+            "television": {
+                hero: {
+                    title: "Noticias 24/7",
+                    description: "Mantente informado con las últimas noticias de todo el mundo, las 24 horas del día.",
+                    poster: "https://placehold.co/1200x600/1a1a1a/ffc107?text=Noticias+24/7",
+                    videoUrl: "https://www.youtube.com/embed/Z0o8r348GkM"
+                },
+                sections: [
+                    {
+                        title: "Canales de Noticias (Nacionales)",
+                        items: [
+                            { title: "CNN", videoUrl: "https://www.youtube.com/embed/lCg-8f9-y3s" },
+                            { title: "Fox News", videoUrl: "https://www.youtube.com/embed/E-0t47G9_XU" },
+                            { title: "RTVE", videoUrl: "https://www.youtube.com/embed/N-Yy9H_vj0c" },
+                            { title: "Televisa", videoUrl: "https://www.youtube.com/embed/qg_n0SgG1_M" }
+                        ]
+                    },
+                    {
+                        title: "Canales de Películas (Internacionales)",
+                        items: [
+                            { title: "Universal TV", videoUrl: "https://www.youtube.com/embed/qg_n0SgG1_M" },
+                            { title: "Warner Channel", videoUrl: "https://www.youtube.com/embed/WJ6B_r283j8" },
+                            { title: "AXN", videoUrl: "https://www.youtube.com/embed/s3y_1iG-iL0" },
+                            { title: "HBO", videoUrl: "https://www.youtube.com/embed/Rk0H3tM1P8M" }
+                        ]
+                    },
+                    {
+                        title: "Entretenimiento en Vivo",
+                        items: [
+                            { title: "Late Night Show", videoUrl: "https://www.youtube.com/embed/V6s1K0h7N1M" },
+                            { title: "Reality Show de Cocina", videoUrl: "https://www.youtube.com/embed/e_I68gH2C-c" },
+                            { title: "Documentales de Naturaleza", videoUrl: "https://www.youtube.com/embed/rV3d2i96MTE" },
+                            { title: "Concierto en Vivo", videoUrl: "https://www.youtube.com/embed/vKQi3bBA1y8" }
+                        ]
+                    }
+                ]
+            },
+            "deportes": {
+                hero: {
+                    title: "Lo Mejor del Fútbol",
+                    description: "Sigue la acción de los equipos más grandes y las estrellas del fútbol mundial. Partidos en vivo y los mejores momentos.",
+                    poster: "https://placehold.co/1200x600/1a1a1a/ffc107?text=Fútbol",
+                    videoUrl: "https://www.youtube.com/embed/2_N1F7R558g"
+                },
+                sections: [
+                    {
+                        title: "Canales de Deportes (Internacionales)",
+                        items: [
+                            { title: "ESPN", videoUrl: "https://www.youtube.com/embed/i_R4U1N_e_M" },
+                            { title: "Fox Sports", videoUrl: "https://www.youtube.com/embed/J7Y1eN1U8oI" },
+                            { title: "DAZN", videoUrl: "https://www.youtube.com/embed/tM78J0qjX6Y" },
+                            { title: "TNT Sports", videoUrl: "https://www.youtube.com/embed/fW4Pz7j1eXg" }
+                        ]
+                    },
+                    {
+                        title: "Canales de Deportes (Nacionales)",
+                        items: [
+                            { title: "TUDN", videoUrl: "https://www.youtube.com/embed/rV3d2i96MTE" },
+                            { title: "TyC Sports", videoUrl: "https://www.youtube.com/embed/vKQi3bBA1y8" },
+                            { title: "GolTV", videoUrl: "https://www.youtube.com/embed/8g18jJgYp1w" },
+                            { title: "Claro Sports", videoUrl: "https://www.youtube.com/embed/gCcx85fzGiw" }
+                        ]
+                    },
+                    {
+                        title: "En Vivo y en Diferido",
+                        items: [
+                            { title: "Baloncesto", videoUrl: "https://www.youtube.com/embed/WJ6B_r283j8" },
+                            { title: "Tenis", videoUrl: "https://www.youtube.com/embed/s3y_1iG-iL0" },
+                            { title: "Boxeo", videoUrl: "https://www.youtube.com/embed/Rk0H3tM1P8M" },
+                            { title: "Automovilismo", videoUrl: "https://www.youtube.com/embed/V6s1K0h7N1M" }
+                        ]
+                    }
+                ]
+            }
+        };
 
-      return card;
-    }
+        // Función para manejar el desplazamiento de las listas
+        function scrollList(listId, direction) {
+            const list = document.getElementById(listId);
+            const scrollDistance = 250;
+            if (direction === 'next') {
+                list.scrollBy({ left: scrollDistance, behavior: 'smooth' });
+            } else if (direction === 'prev') {
+                list.scrollBy({ left: -scrollDistance, behavior: 'smooth' });
+            }
+        }
+        
+        // Función para crear una tarjeta de contenido
+        function createCard(item) {
+            return `
+                <div class="movie-card" data-title="${item.title}" data-video-url="${item.videoUrl}">
+                    <img src="https://placehold.co/220x300/1a1a1a/ffc107?text=${encodeURIComponent(item.title)}" alt="Póster de ${item.title}">
+                    <div class="info">
+                        <h4>${item.title}</h4>
+                    </div>
+                    <div class="movie-card-btn">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+            `;
+        }
 
-    function renderItems(container, items) {
-      container.innerHTML = '';
-      items.forEach(item => {
-        container.appendChild(createItemCard(item));
-      });
-    }
+        // Función para crear una sección de contenido
+        function createSection(section) {
+            const cardHtml = section.items.map(createCard).join('');
+            const sectionId = section.title.toLowerCase().replace(/\s/g, '-').replace(/\(|\)/g, '');
+            return `
+                <div class="content-section" id="${sectionId}">
+                    <div class="container">
+                        <div class="section-header">
+                            <div class="line"></div>
+                            <h3>${section.title}</h3>
+                        </div>
+                        <div class="movie-list-container">
+                            <div class="movie-list" id="${sectionId}-list">
+                                ${cardHtml}
+                            </div>
+                            <button class="nav-btn nav-btn-prev" onclick="scrollList('${sectionId}-list', 'prev')">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="nav-btn nav-btn-next" onclick="scrollList('${sectionId}-list', 'next')">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-    // Initial render
-    renderItems(featuredContainer, featured);
-    renderItems(moviesContainer, movies);
-    renderItems(seriesContainer, series);
+        // Función principal para renderizar la página
+        function renderPage(pageName) {
+            const container = document.getElementById('content-container');
+            const data = pageContent[pageName];
+            if (!data) return;
 
-    // Search filter
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase().trim();
+            // Limpiar el contenido anterior
+            container.innerHTML = '';
+            
+            // Renderizar el Hero
+            const heroHtml = `
+                <div class="hero" style="background-image: url('${data.hero.poster}')">
+                    <div class="container"> <!-- Este contenedor asegura la alineación con el resto de la página -->
+                        <!-- Los elementos ahora son hijos directos del .container -->
+                        <h2>${data.hero.title}</h2>
+                        <p>${data.hero.description}</p>
+                        <button class="play-btn" data-title="${data.hero.title}" data-video-url="${data.hero.videoUrl}">
+                            <i class="fas fa-play"></i> Reproducir
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.innerHTML += heroHtml;
 
-      if (query === '') {
-        renderItems(featuredContainer, featured);
-        renderItems(moviesContainer, movies);
-        renderItems(seriesContainer, series);
-        return;
-      }
+            // Renderizar las secciones de contenido
+            data.sections.forEach(section => {
+                container.innerHTML += createSection(section);
+            });
 
-      function filterItems(items) {
-        return items.filter(item =>
-          item.title.toLowerCase().includes(query) ||
-          item.subtitle.toLowerCase().includes(query)
-        );
-      }
+            // Agregar el mensaje de "no resultados"
+            container.innerHTML += '<div class="no-results">No se encontraron resultados.</div>';
 
-      renderItems(featuredContainer, filterItems(featured));
-      renderItems(moviesContainer, filterItems(movies));
-      renderItems(seriesContainer, filterItems(series));
-    });
-  </script>
+            // Actualizar la clase activa en la navegación
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if (link.dataset.page === pageName) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+
+            // Agregar oyentes de eventos a las nuevas tarjetas
+            addCardEventListeners();
+        }
+
+        // Función para agregar oyentes de eventos a todas las tarjetas y botones
+        function addCardEventListeners() {
+            const modal = document.getElementById('movie-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            const moviePlayer = document.getElementById('movie-player');
+            const closeBtn = document.querySelector('.close-btn');
+
+            const playableElements = document.querySelectorAll('.movie-card, .play-btn');
+            playableElements.forEach(element => {
+                element.addEventListener('click', () => {
+                    const title = element.getAttribute('data-title');
+                    const videoUrl = element.getAttribute('data-video-url');
+                    
+                    const data = Object.values(pageContent).flatMap(page => page.sections.flatMap(section => section.items)).find(item => item.title === title);
+                    const heroData = Object.values(pageContent).map(page => page.hero).find(hero => hero.title === title);
+                    
+                    const itemData = data || heroData;
+
+                    if (itemData) {
+                        modalTitle.textContent = itemData.title;
+                        modalDescription.textContent = itemData.description || "No se encontró descripción para este contenido.";
+                        moviePlayer.src = itemData.videoUrl;
+                        modal.style.display = 'flex';
+                    }
+                });
+            });
+
+            // Lógica para cerrar el modal
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+                moviePlayer.src = ''; // Detener la reproducción del video
+            });
+            window.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    moviePlayer.src = '';
+                }
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Manejar los clics en los enlaces de navegación
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const pageName = link.dataset.page;
+                    renderPage(pageName);
+                    // Opcional: para cambiar la URL y que el botón de 'atrás' funcione
+                    // history.pushState(null, '', `?page=${pageName}`);
+                });
+            });
+
+            // Cargar la página inicial
+            renderPage('peliculas');
+            
+            // Lógica del buscador
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+                const movieCards = document.querySelectorAll('.movie-card');
+                let foundResults = false;
+
+                movieCards.forEach(card => {
+                    const title = card.getAttribute('data-title').toLowerCase();
+                    if (title.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        foundResults = true;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                const noResultsMessage = document.querySelector('.no-results');
+                if (foundResults || searchTerm === '') {
+                    noResultsMessage.style.display = 'none';
+                } else {
+                    noResultsMessage.style.display = 'block';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
