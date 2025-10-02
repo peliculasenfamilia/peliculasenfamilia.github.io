@@ -165,10 +165,8 @@
         </div>
 
         <div id="movies-view" class="view-container hidden pt-2">
-            <section id="movies-hero-section" class="hero-section flex items-end rounded-xl overflow-hidden mb-8"><div class="hero-content p-8 max-w-4xl"><h2 class="text-6xl font-extrabold tracking-tight">Dune: Parte Dos</h2></div></section>
             <div id="movies-carousels">
-                <section id="section-action-movies" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas de Acción</h3><div class="relative"><div id="movies-grid-action" class="movie-row"><div class="movie-row-inner" id="action-movies-inner"></div></div></div></section>
-                <section id="section-scifi-movies" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Ciencia Ficción</h3><div class="relative"><div id="movies-grid-scifi" class="movie-row"><div class="movie-row-inner" id="scifi-movies-inner"></div></div></div></section>
+                <section id="section-all-movies" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Todas las Películas</h3><div class="relative"><div id="movies-grid-all" class="movie-row"><div class="movie-row-inner" id="all-movies-inner"></div></div></div></section>
             </div>
         </div>
 
@@ -234,9 +232,8 @@
         const allSeriesContent = [
             { title: "Surface", rating: 7.2, year: 2005, type: 'Serie', image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" }, 
             { title: "La Brea", rating: 5.8, year: 2021, type: 'Serie', image: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg" }, 
-           
-        ];
-        const allMoviesContent = [{ title: "Dune: Parte Dos", rating: 8.9, year: 2024, type: 'Película', image: "https://placehold.co/300x450/D2B48C/black?text=DUNE+2" }, { title: "The Batman", rating: 8.5, year: 2022, type: 'Película', image: "https://placehold.co/300x450/8B0000/white?text=THE+BATMAN" }];
+            ];
+        const allMoviesContent = Array.from(new Map([...allNewReleases, ...allPopularMovies].map(movie => [movie.title, movie])).values());
         const allTvContent = [{ title: "Noticias 24/7", rating: 7.5, year: 2024, type: 'TV', image: "https://placehold.co/300x450/00008B/white?text=NOTICIAS" }, { title: "La Casa del Dragón", rating: 8.9, year: 2024, type: 'TV', image: "https://placehold.co/300x450/A52A2A/white?text=HOTD" }];
         const allSportsContent = [{ title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL" }, { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET" }];
         const myListContent = [allPopularMovies[0], allSeriesContent[0], allMoviesContent[1], allSportsContent[0]];
@@ -262,7 +259,7 @@
         function renderAllViews() {
             renderView('home-view', [...allNewReleases, ...allPopularMovies, ...allSeriesContent], { 'new-releases-inner': item => allNewReleases.includes(item), 'popular-movies-inner': item => allPopularMovies.includes(item), 'popular-series-inner': item => allSeriesContent.includes(item) });
             renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.rating > 8.5, 'comedy-series-inner': s => s.title.includes('Lasso'), 'drama-series-inner': s => s.rating <= 8.5 });
-            renderView('movies-view', allMoviesContent, { 'action-movies-inner': m => true, 'scifi-movies-inner': m => m.title.includes('Dune') });
+            renderView('movies-view', allMoviesContent, { 'all-movies-inner': m => true });
             renderView('tv-view', allTvContent, { 'live-tv-inner': t => t.title.includes('Noticias'), 'reality-tv-inner': t => true });
             renderView('sports-view', allSportsContent, { 'live-sports-inner': s => true, 'replay-sports-inner': s => true });
             renderSection('mylist-grid', myListContent);
@@ -354,6 +351,14 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
 
