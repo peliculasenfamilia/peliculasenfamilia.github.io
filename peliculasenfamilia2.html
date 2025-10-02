@@ -166,7 +166,12 @@
 
         <div id="movies-view" class="view-container hidden pt-2">
             <div id="movies-carousels">
-                <section id="section-all-movies" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Todas las Películas</h3><div class="relative"><div id="movies-grid-all" class="movie-row"><div class="movie-row-inner" id="all-movies-inner"></div></div></div></section>
+                <section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Destacadas</h3><div class="relative"><div class="movie-row"><div class="movie-row-inner" id="featured-movies-inner"></div></div></div></section>
+                <section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas de Comedia</h3><div class="relative"><div class="movie-row"><div class="movie-row-inner" id="comedy-movies-inner"></div></div></div></section>
+                <section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Dramáticas</h3><div class="relative"><div class="movie-row"><div class="movie-row-inner" id="drama-movies-inner"></div></div></div></section>
+                <section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Fantasía y Ciencia Ficción</h3><div class="relative"><div class="movie-row"><div class="movie-row-inner" id="fantasy-scifi-movies-inner"></div></div></div></section>
+                <section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Familiares</h3><div class="relative"><div class="movie-row"><div class="movie-row-inner" id="family-movies-inner"></div></div></div></section>
+                <section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Románticas</h3><div class="relative"><div class="movie-row"><div class="movie-row-inner" id="romance-movies-inner"></div></div></div></section>
             </div>
         </div>
 
@@ -207,33 +212,35 @@
         lucide.createIcons();
         
         // --- DATOS SIMULADOS ---
-        const allNewReleases = [
-          { title: "F1 La Película", rating: 7.7, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//yKIG63pXN89EfbTA7yKpwxAU1rf.jpg" },
-          { title: "Superman", rating: 7.2, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//lfMKNOaaS2jGT3QKUaiFA8cO7DC.jpg" },
-            { title: "mision imposible 8", rating: 7.2, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//haOjJGUV00dKlZaJWgjM1UD1cJV.jpg" },
-            { title: "Los Cuatro Fantásticos", rating: 7.1, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//ckfiXWGEMWrUP53cc6QyHijLlhl.jpg" },
-            { title: "Elio", rating: 6.7, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//fGjwHlv8bCjZypi2bHbbSmyIGMV.jpg" },
-            { title: "Destino Final: Lazos de Sangre", rating: 6.7, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//frNkbclQpexf3aUzZrnixF3t5Hw.jpg" },
-            { title: "Karate Kid: Leyendas", rating: 6.3, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//bwNAjGUsHt35eqT0Aj8NHU02WPl.jpg" },
-            { title: "Jurassic World: Renace", rating: 5.9, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//Aw1FSO4gWk2Zjr2sfuyQ4lnK3Gc.jpg" },
-            { title: "Primitive War", rating: 5.9, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//egDAs0vh2SzTR07eUzdcC1XYkTS.jpg" },
-            { title: "Hipnosis: Arma Invisible", rating: 5.5, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//3IhGkkalwXguTlceGSl8XUJZOVI.jpg" },
+        const allMoviesSource = [
+            { title: "F1 La Película", rating: 7.7, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//yKIG63pXN89EfbTA7yKpwxAU1rf.jpg", genres: ['drama', 'accion'] },
+            { title: "Superman", rating: 7.2, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//lfMKNOaaS2jGT3QKUaiFA8cO7DC.jpg", genres: ['fantasia', 'scifi', 'accion', 'destacada'] },
+            { title: "mision imposible 8", rating: 7.2, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//haOjJGUV00dKlZaJWgjM1UD1cJV.jpg", genres: ['accion', 'destacada'] },
+            { title: "Los Cuatro Fantásticos", rating: 7.1, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//ckfiXWGEMWrUP53cc6QyHijLlhl.jpg", genres: ['fantasia', 'scifi', 'accion', 'destacada'] },
+            { title: "Elio", rating: 6.7, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//fGjwHlv8bCjZypi2bHbbSmyIGMV.jpg", genres: ['fantasia', 'scifi', 'familiar'] },
+            { title: "Destino Final: Lazos de Sangre", rating: 6.7, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//frNkbclQpexf3aUzZrnixF3t5Hw.jpg", genres: ['horror'] },
+            { title: "Karate Kid: Leyendas", rating: 6.3, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//bwNAjGUsHt35eqT0Aj8NHU02WPl.jpg", genres: ['accion', 'familiar', 'drama'] },
+            { title: "Jurassic World: Renace", rating: 5.9, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//Aw1FSO4gWk2Zjr2sfuyQ4lnK3Gc.jpg", genres: ['scifi', 'accion'] },
+            { title: "Primitive War", rating: 5.9, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//egDAs0vh2SzTR07eUzdcC1XYkTS.jpg", genres: ['scifi', 'horror'] },
+            { title: "Hipnosis: Arma Invisible", rating: 5.5, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//3IhGkkalwXguTlceGSl8XUJZOVI.jpg", genres: ['accion', 'thriller'] },
+            { title: "La Guerra del Mañana", rating: 6.6, year: 2021, type: 'Película', image: "https://image.tmdb.org/t/p/w342//tzp6VzED2TBc02bkYoYnQa6r2OK.jpg", genres: ['scifi', 'accion', 'drama'] },
+            { title: "Mi Villano Favorito 4", rating: 7.8, year: 2024, type: 'Película', image: "https://image.tmdb.org/t/p/w342//vS5f2n7J5S9gT3lF3Ex33S1aXTo.jpg", genres: ['comedia', 'familiar'] },
+            { title: "Amigos Imaginarios", rating: 7.5, year: 2024, type: 'Película', image: "https://image.tmdb.org/t/p/w342//i3sV3px8BYi2Iu22a2L1sxg6fde.jpg", genres: ['comedia', 'familiar', 'fantasia'] },
+            { title: "Cualquiera Menos Tú", rating: 7.1, year: 2023, type: 'Película', image: "https://image.tmdb.org/t/p/w342//iwsMu0FN8Qe2a2u0lGg2b8g6LhK.jpg", genres: ['romantica', 'comedia'] }
         ];
-        const allPopularMovies = [
-             { title: "Superman", rating: 7.2, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//lfMKNOaaS2jGT3QKUaiFA8cO7DC.jpg" },
-            { title: "mision imposible 8", rating: 7.2, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//haOjJGUV00dKlZaJWgjM1UD1cJV.jpg" },
-            { title: "Los Cuatro Fantásticos", rating: 7.1, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//ckfiXWGEMWrUP53cc6QyHijLlhl.jpg" },
-            { title: "Destino Final: Lazos de Sangre", rating: 6.7, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//frNkbclQpexf3aUzZrnixF3t5Hw.jpg" },
-            { title: "La Guerra del Mañana", rating: 6.6, year: 2021, type: 'Película', image: "https://image.tmdb.org/t/p/w342//tzp6VzED2TBc02bkYoYnQa6r2OK.jpg" },
-            { title: "Karate Kid: Leyendas", rating: 6.3, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//bwNAjGUsHt35eqT0Aj8NHU02WPl.jpg" },
-            { title: "Jurassic World: Renace", rating: 5.9, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//Aw1FSO4gWk2Zjr2sfuyQ4lnK3Gc.jpg" },
-            { title: "Hipnosis: Arma Invisible", rating: 5.5, year: 2025, type: 'Película', image: "https://image.tmdb.org/t/p/w342//3IhGkkalwXguTlceGSl8XUJZOVI.jpg" },
-        ];
+
+        const newReleasesTitles = ["F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible"];
+        const popularMoviesTitles = ["Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Destino Final: Lazos de Sangre", "La Guerra del Mañana", "Karate Kid: Leyendas", "Jurassic World: Renace", "Hipnosis: Arma Invisible"];
+
+        const allNewReleases = allMoviesSource.filter(m => newReleasesTitles.includes(m.title));
+        const allPopularMovies = allMoviesSource.filter(m => popularMoviesTitles.includes(m.title));
+        const allMoviesContent = Array.from(new Map(allMoviesSource.map(movie => [movie.title, movie])).values());
+        
         const allSeriesContent = [
             { title: "Surface", rating: 7.2, year: 2005, type: 'Serie', image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg" }, 
             { title: "La Brea", rating: 5.8, year: 2021, type: 'Serie', image: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg" }, 
-            ];
-        const allMoviesContent = Array.from(new Map([...allNewReleases, ...allPopularMovies].map(movie => [movie.title, movie])).values());
+        ];
+
         const allTvContent = [{ title: "Noticias 24/7", rating: 7.5, year: 2024, type: 'TV', image: "https://placehold.co/300x450/00008B/white?text=NOTICIAS" }, { title: "La Casa del Dragón", rating: 8.9, year: 2024, type: 'TV', image: "https://placehold.co/300x450/A52A2A/white?text=HOTD" }];
         const allSportsContent = [{ title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL" }, { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET" }];
         const myListContent = [allPopularMovies[0], allSeriesContent[0], allMoviesContent[1], allSportsContent[0]];
@@ -259,7 +266,14 @@
         function renderAllViews() {
             renderView('home-view', [...allNewReleases, ...allPopularMovies, ...allSeriesContent], { 'new-releases-inner': item => allNewReleases.includes(item), 'popular-movies-inner': item => allPopularMovies.includes(item), 'popular-series-inner': item => allSeriesContent.includes(item) });
             renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.rating > 8.5, 'comedy-series-inner': s => s.title.includes('Lasso'), 'drama-series-inner': s => s.rating <= 8.5 });
-            renderView('movies-view', allMoviesContent, { 'all-movies-inner': m => true });
+            renderView('movies-view', allMoviesContent, { 
+                'featured-movies-inner': m => m.genres.includes('destacada'),
+                'comedy-movies-inner': m => m.genres.includes('comedia'),
+                'drama-movies-inner': m => m.genres.includes('drama'),
+                'fantasy-scifi-movies-inner': m => m.genres.includes('fantasia') || m.genres.includes('scifi'),
+                'family-movies-inner': m => m.genres.includes('familiar'),
+                'romance-movies-inner': m => m.genres.includes('romantica'),
+            });
             renderView('tv-view', allTvContent, { 'live-tv-inner': t => t.title.includes('Noticias'), 'reality-tv-inner': t => true });
             renderView('sports-view', allSportsContent, { 'live-sports-inner': s => true, 'replay-sports-inner': s => true });
             renderSection('mylist-grid', myListContent);
@@ -351,9 +365,6 @@
     </script>
 </body>
 </html>
-
-
-
 
 
 
