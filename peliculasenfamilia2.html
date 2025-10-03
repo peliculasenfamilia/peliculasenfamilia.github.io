@@ -259,10 +259,20 @@
                     <p id="modal-cast" class="text-gray-400 text-sm"></p>
                 </div>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <button class="flex items-center justify-center space-x-2 px-6 py-3 bg-primary-blue hover:bg-blue-600 text-white font-bold rounded-full transition duration-200 shadow-lg shadow-primary-blue/50 w-full sm:w-auto"><i data-lucide="play" class="w-5 h-5 fill-white"></i><span>Reproducir</span></button>
+                    <button id="modal-play-button" class="flex items-center justify-center space-x-2 px-6 py-3 bg-primary-blue hover:bg-blue-600 text-white font-bold rounded-full transition duration-200 shadow-lg shadow-primary-blue/50 w-full sm:w-auto"><i data-lucide="play" class="w-5 h-5 fill-white"></i><span>Reproducir</span></button>
                     <button class="flex items-center justify-center space-x-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full transition duration-200 w-full sm:w-auto"><i data-lucide="bookmark" class="w-5 h-5"></i><span>Mi Lista</span></button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Video Player Modal -->
+    <div id="video-player-modal" class="modal-overlay hidden fixed inset-0 z-[60] flex items-center justify-center bg-black p-4">
+        <button onclick="closePlayerModal()" class="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/80 rounded-full p-2 transition-colors z-10">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div class="w-full max-w-5xl aspect-video">
+            <iframe id="video-player-iframe" class="w-full h-full rounded-lg" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
     </div>
 
@@ -282,7 +292,7 @@
             { title: "Jurassic World: Renace", rating: 5.9, year: 2025, duration: "2h 20m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//Aw1FSO4gWk2Zjr2sfuyQ4lnK3Gc.jpg", genres: ['scifi', 'accion'], description: "Una nueva era de dinosaurios comienza, y un grupo de científicos y aventureros debe enfrentarse a nuevas amenazas en un mundo donde los humanos ya no son la especie dominante.", cast: "Scarlett Johansson, Jonathan Bailey, Mahershala Ali" },
             { title: "Primitive War", rating: 5.9, year: 2025, duration: "1h 40m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//egDAs0vh2SzTR07eUzdcC1XYkTS.jpg", genres: ['scifi', 'horror'], description: "Un equipo de soldados de élite es enviado a una jungla remota para una misión de rescate, solo para descubrir que están siendo cazados por dinosaurios modificados genéticamente.", cast: "Ryan Kwanten, Tricia Helfer, Jeff Fahey" },
             { title: "Hipnosis: Arma Invisible", rating: 5.5, year: 2025, duration: "2h 00m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//3IhGkkalwXguTlceGSl8XUJZOVI.jpg", genres: ['accion', 'thriller'], description: "Un detective debe resolver una serie de atracos de alto riesgo mientras se enfrenta a un misterioso villano que utiliza la hipnosis para controlar a la gente.", cast: "Ben Affleck, Alice Braga, William Fichtner" },
-            { title: "La Guerra del Mañana", rating: 6.6, year: 2021, duration: "2h 18m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//tzp6VzED2TBc02bkYoYnQa6r2OK.jpg", genres: ['scifi', 'accion', 'drama'], description: "Un grupo de viajeros en el tiempo llega desde el año 2051 para entregar un mensaje urgente: 30 años en el futuro, la humanidad está perdiendo una guerra global contra una mortal especie alienígena.", cast: "Chris Pratt, Yvonne Strahovski, J.K. Simmons" },
+            { title: "La Guerra del Mañana", rating: 6.6, year: 2021, duration: "2h 18m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//tzp6VzED2TBc02bkYoYnQa6r2OK.jpg", genres: ['scifi', 'accion', 'drama'], description: "Un grupo de viajeros en el tiempo llega desde el año 2051 para entregar un mensaje urgente: 30 años en el futuro, la humanidad está perdiendo una guerra global contra una mortal especie alienígena.", cast: "Chris Pratt, Yvonne Strahovski, J.K. Simmons", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" },
             { title: "Mi Villano Favorito 4", rating: 7.8, year: 2024, duration: "1h 35m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//vS5f2n7J5S9gT3lF3Ex33S1aXTo.jpg", genres: ['comedia', 'familiar', 'animacion'], description: "Gru se enfrenta a un nuevo némesis, Maxime Le Mal, y su novia Valentina, por lo cual la familia se ve obligada a huir.", cast: "Steve Carell, Kristen Wiig, Will Ferrell" },
             { title: "Amigos Imaginarios", rating: 7.5, year: 2024, duration: "1h 44m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//i3sV3px8BYi2Iu22a2L1sxg6fde.jpg", genres: ['comedia', 'familiar', 'fantasia'], description: "Una niña que puede ver a los amigos imaginarios de todo el mundo se embarca en una aventura mágica para reconectar a los amigos imaginarios olvidados con sus niños.", cast: "Cailey Fleming, Ryan Reynolds, John Krasinski" },
             { title: "Cualquiera Menos Tú", rating: 7.1, year: 2023, duration: "1h 43m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//iwsMu0FN8Qe2a2u0lGg2b8g6LhK.jpg", genres: ['romantica', 'comedia'], description: "Después de una primera cita increíble, la ardiente atracción entre Bea y Ben se enfría. Pero cuando se reencuentran inesperadamente en una boda en Australia, fingen ser la pareja perfecta para mantener las apariencias.", cast: "Sydney Sweeney, Glen Powell, Alexandra Shipp" }
@@ -444,6 +454,8 @@
 
         // --- Lógica del Modal ---
         const modal = document.getElementById('movie-detail-modal');
+        const playerModal = document.getElementById('video-player-modal');
+        const playerIframe = document.getElementById('video-player-iframe');
 
         function openModal(index, type) {
             const source = type === 'Película' ? allMoviesSource : allSeriesContent; // Simplificado, necesita más lógica para otros tipos
@@ -469,6 +481,17 @@
                 });
             }
             
+            const playButton = document.getElementById('modal-play-button');
+            if (item.videoUrl) {
+                playButton.onclick = () => openPlayerModal(item.videoUrl);
+                playButton.disabled = false;
+                playButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                playButton.onclick = null;
+                playButton.disabled = true;
+                playButton.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
             lucide.createIcons();
@@ -477,7 +500,9 @@
 
         function closeModal() {
             modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
+            if (playerModal.classList.contains('hidden')) {
+                document.body.style.overflow = 'auto';
+            }
         }
         window.closeModal = closeModal;
         
@@ -487,6 +512,21 @@
                 closeModal();
             }
         });
+
+        function openPlayerModal(url) {
+            closeModal();
+            playerIframe.src = url;
+            playerModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        window.openPlayerModal = openPlayerModal;
+
+        function closePlayerModal() {
+            playerModal.classList.add('hidden');
+            playerIframe.src = '';
+            document.body.style.overflow = 'auto';
+        }
+        window.closePlayerModal = closePlayerModal;
 
         window.onload = () => {
              renderAllViews();
