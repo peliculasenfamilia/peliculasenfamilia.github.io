@@ -117,6 +117,18 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(to top, rgba(18, 24, 32, 1) 10%, rgba(18, 24, 32, 0.7) 50%, rgba(18, 24, 32, 1) 100%);
         }
+        
+        #episodes-list::-webkit-scrollbar { width: 6px; }
+        #episodes-list::-webkit-scrollbar-track { background: #1B2433; border-radius: 3px; }
+        #episodes-list::-webkit-scrollbar-thumb { background: #4A5568; border-radius: 3px; }
+        #episodes-list::-webkit-scrollbar-thumb:hover { background: #718096; }
+
+        .line-clamp-2 {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+        }
     </style>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -137,7 +149,7 @@
             <a href="#" id="nav-series" onclick="navigateTo('series')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="monitor" class="w-5 h-5"></i><span>Series</span></a>
             <a href="#" id="nav-movies" onclick="navigateTo('movies')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="film" class="w-5 h-5"></i><span>Películas</span></a>
             <a href="#" id="nav-tv" onclick="navigateTo('tv')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="tv" class="w-5 h-5"></i><span>Televisión</span></a>
-            <a href="#" id="nav-sports" onclick="navigateTo('sports')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="soccer" class="w-5 h-5"></i><span>Deportes</span></a>
+            <a href="#" id="nav-sports" onclick="navigateTo('sports')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="baseball" class="w-5 h-5"></i><span>Deportes</span></a>
             <a href="#" id="nav-mylist" onclick="navigateTo('mylist')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="list-video" class="w-5 h-5"></i><span>Mi Lista</span></a>
         </nav>
     </aside>
@@ -238,8 +250,8 @@
 
     </main>
 
-    <!-- Modal de Detalles de Película -->
-    <div id="movie-detail-modal" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <!-- Modal de Detalles de Contenido -->
+    <div id="detail-modal" class="modal-overlay hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="modal-content w-full max-w-4xl rounded-2xl overflow-hidden relative shadow-2xl">
             <div id="modal-backdrop" class="modal-backdrop"></div>
             <div class="relative p-8 md:p-12 overflow-y-auto">
@@ -254,11 +266,21 @@
                 </div>
                 <div id="modal-genres" class="flex flex-wrap gap-2 mb-6"></div>
                 <p id="modal-description" class="text-gray-300 mb-6 max-w-2xl text-base leading-relaxed"></p>
-                <div class="mb-8">
+                <div id="modal-cast-section" class="mb-8">
                     <h4 class="text-lg font-semibold mb-2">Reparto</h4>
                     <p id="modal-cast" class="text-gray-400 text-sm"></p>
                 </div>
-                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+
+                <!-- Sección de Episodios (solo para series) -->
+                <div id="modal-episodes-section" class="hidden">
+                    <div class="flex justify-between items-center mb-4 mt-8">
+                        <h4 class="text-xl font-semibold">Episodios</h4>
+                        <select id="season-selector" class="bg-sidebar-bg border border-gray-700 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-primary-blue"></select>
+                    </div>
+                    <div id="episodes-list" class="max-h-60 overflow-y-auto pr-2 space-y-3"></div>
+                </div>
+
+                <div id="modal-buttons" class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-8">
                     <button id="modal-play-button" class="flex items-center justify-center space-x-2 px-6 py-3 bg-primary-blue hover:bg-blue-600 text-white font-bold rounded-full transition duration-200 shadow-lg shadow-primary-blue/50 w-full sm:w-auto"><i data-lucide="play" class="w-5 h-5 fill-white"></i><span>Reproducir</span></button>
                     <button id="modal-mylist-button" class="flex items-center justify-center space-x-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full transition duration-200 w-full sm:w-auto"><i data-lucide="bookmark" class="w-5 h-5"></i><span>Mi Lista</span></button>
                 </div>
@@ -268,11 +290,17 @@
 
     <!-- Video Player Modal -->
     <div id="video-player-modal" class="modal-overlay hidden fixed inset-0 z-[60] flex items-center justify-center bg-black p-4">
-        <button onclick="closePlayerModal()" class="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/80 rounded-full p-2 transition-colors z-10">
-            <i data-lucide="x" class="w-8 h-8"></i>
-        </button>
-        <div class="w-full max-w-5xl aspect-video">
-            <iframe id="video-player-iframe" class="w-full h-full rounded-lg" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <div class="flex flex-col items-center">
+            <button onclick="closePlayerModal()" class="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/80 rounded-full p-2 transition-colors z-10">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <div class="w-full max-w-5xl aspect-video">
+                <iframe id="video-player-iframe" class="w-full h-full rounded-lg" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            <p class="mt-4 text-xs text-gray-400 text-center max-w-2xl">
+                Si el video no se carga (error 232011), especialmente en un Smart TV, podría deberse a un formato no compatible. <br class="hidden sm:block">
+                Recomendamos usar la función "Transmitir" (<i data-lucide="cast" class="inline-block w-3 h-3"></i>) desde tu celular o PC.
+            </p>
         </div>
     </div>
 
@@ -285,7 +313,7 @@
             { title: "F1 La Película", rating: 7.7, year: 2025, duration: "2h 10m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//yKIG63pXN89EfbTA7yKpwxAU1rf.jpg", genres: ['drama', 'accion'], description: "Un ex piloto de Fórmula 1 regresa a la competición para ser mentor de un joven prodigio en el emocionante y peligroso mundo de las carreras.", cast: "Brad Pitt, Damson Idris, Kerry Condon", inMyList: false },
             { title: "Superman", rating: 7.2, year: 2025, duration: "2h 30m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//lfMKNOaaS2jGT3QKUaiFA8cO7DC.jpg", genres: ['fantasia', 'scifi', 'accion', 'destacada'], description: "La película sigue a Superman mientras busca reconciliar su herencia kryptoniana con su crianza humana como Clark Kent de Smallville, Kansas.", cast: "David Corenswet, Rachel Brosnahan, Nicholas Hoult", inMyList: true, videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" },
             { title: "mision imposible 8", rating: 7.2, year: 2025, duration: "2h 45m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//haOjJGUV00dKlZaJWgjM1UD1cJV.jpg", genres: ['accion', 'destacada', 'thriller'], description: "Ethan Hunt y su equipo del FMI se embarcan en su misión más peligrosa hasta la fecha: rastrear una nueva y aterradora arma que amenaza a toda la humanidad.", cast: "Tom Cruise, Hayley Atwell, Ving Rhames", inMyList: false, videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" },
-            { title: "Los Cuatro Fantásticos", rating: 7.1, year: 2025, duration: "2h 15m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//ckfiXWGEMWrUP53cc6QyHijLlhl.jpg", genres: ['fantasia', 'scifi', 'accion', 'destacada'], description: "Cuatro astronautas adquieren superpoderes tras una exposición a rayos cósmicos y deben usarlos para defender la Tierra de una amenaza galáctica.", cast: "Pedro Pascal, Vanessa Kirby, Ebon Moss-Bachrach", inMyList: false, videoUrl: "https://goodstream.one/video/embed/oxe5t2c79w1u" },
+            { title: "Los Cuatro Fantásticos", rating: 7.1, year: 2025, duration: "2h 15m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//ckfiXWGEMWrUP53cc6QyHijLlhl.jpg", genres: ['fantasia', 'scifi', 'accion', 'destacada'], description: "Cuatro astronautas adquieren superpoderes tras una exposición a rayos cósmicos y deben usarlos para defender la Tierra de una amenaza galáctica.", cast: "Pedro Pascal, Vanessa Kirby, Ebon Moss-Bachrach", inMyList: false },
             { title: "Elio", rating: 6.7, year: 2025, duration: "1h 50m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//fGjwHlv8bCjZypi2bHbbSmyIGMV.jpg", genres: ['fantasia', 'scifi', 'familiar'], description: "Un niño es transportado accidentalmente a través de la galaxia y es confundido con el embajador intergaláctico de la Tierra.", cast: "Yonas Kibreab, America Ferrera, Jameela Jamil", inMyList: false },
             { title: "Destino Final: Lazos de Sangre", rating: 6.7, year: 2025, duration: "1h 55m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//frNkbclQpexf3aUzZrnixF3t5Hw.jpg", genres: ['horror'], description: "Un nuevo grupo de jóvenes debe encontrar una manera de escapar del macabro diseño de la Muerte después de que uno de ellos tiene una premonición.", cast: "Brec Bassinger, Teo Briones, Kaitlyn Santa Juana", inMyList: false },
             { title: "Karate Kid: Leyendas", rating: 6.3, year: 2025, duration: "2h 05m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//bwNAjGUsHt35eqT0Aj8NHU02WPl.jpg", genres: ['accion', 'familiar', 'drama'], description: "Un joven prodigio del karate de China se traslada a la Costa Este, donde encuentra un mentor estricto pero sabio que le enseñará más que solo artes marciales.", cast: "Ben Wang, Jackie Chan, Ralph Macchio", inMyList: false },
@@ -298,18 +326,46 @@
             { title: "Cualquiera Menos Tú", rating: 7.1, year: 2023, duration: "1h 43m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//iwsMu0FN8Qe2a2u0lGg2b8g6LhK.jpg", genres: ['romantica', 'comedia'], description: "Después de una primera cita increíble, la ardiente atracción entre Bea y Ben se enfría. Pero cuando se reencuentran inesperadamente en una boda en Australia, fingen ser la pareja perfecta para mantener las apariencias.", cast: "Sydney Sweeney, Glen Powell, Alexandra Shipp", inMyList: false }
         ];
 
+        const allSeriesContent = [
+            { 
+                title: "Surface", rating: 7.2, year: 2005, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: true, description: "Una bióloga marina descubre una nueva forma de vida en el océano que podría cambiar el futuro de la humanidad para siempre.", cast: "Lake Bell, Jay R. Ferguson, Carter Jenkins",
+                seasons: [
+                    {
+                        seasonNumber: 1,
+                        episodes: [
+                            { episode: 1, title: "Hay algo en el agua", duration: "48m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El descubrimiento de una extraña criatura marina desencadena una investigación a nivel mundial.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" },
+                            { episode: 2, title: "El misterio se profundiza", duration: "49m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Mientras los científicos intentan comprender a la criatura, ocurren eventos extraños en todo el mundo.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" },
+                            { episode: 3, title: "Punto de no retorno", duration: "47m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "La situación se vuelve crítica cuando las criaturas comienzan a mostrar un comportamiento inesperado.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
+                        ]
+                    }
+                ]
+            }, 
+            { 
+                title: "La Brea", rating: 5.8, year: 2021, type: 'Serie', duration: "3 Temporadas", image: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", inMyList: false, description: "Un enorme socavón se abre en Los Ángeles, arrastrando a cientos de personas a una misteriosa tierra prehistórica.", cast: "Natalie Zea, Eoin Macken, Chiké Okonkwo",
+                seasons: [
+                    {
+                        seasonNumber: 1,
+                        episodes: [
+                            { episode: 1, title: "Piloto", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Un socavón masivo abre un portal a un mundo primitivo en el corazón de L.A.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
+                        ]
+                    },
+                    {
+                        seasonNumber: 2,
+                        episodes: [
+                            { episode: 1, title: "El día siguiente", duration: "44m", thumbnail: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Los supervivientes luchan por establecer un campamento y encontrar respuestas sobre su nueva realidad.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
         const newReleasesTitles = ["F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible"];
         const popularMoviesTitles = ["Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Destino Final: Lazos de Sangre", "La Guerra del Mañana", "Karate Kid: Leyendas", "Jurassic World: Renace", "Hipnosis: Arma Invisible"];
-
+        
         const allNewReleases = allMoviesSource.filter(m => newReleasesTitles.includes(m.title));
         const allPopularMovies = allMoviesSource.filter(m => popularMoviesTitles.includes(m.title));
         const allMoviesContent = Array.from(new Map(allMoviesSource.map(movie => [movie.title, movie])).values());
-        
-        const allSeriesContent = [
-            { title: "Surface", rating: 7.2, year: 2005, type: 'Serie', image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: true, videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }, 
-            { title: "La Brea", rating: 5.8, year: 2021, type: 'Serie', image: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", inMyList: false }, 
-            { title: "Kaiju N° 8", rating: 5.8, year: 2021, type: 'Serie', image: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: false }, 
-        ];
+        const allPopularSeries = allSeriesContent;
 
         const allTvContent = [{ title: "Noticias 24/7", rating: 7.5, year: 2024, type: 'TV', image: "https://placehold.co/300x450/00008B/white?text=NOTICIAS", inMyList: false }, { title: "La Casa del Dragón", rating: 8.9, year: 2024, type: 'TV', image: "https://placehold.co/300x450/A52A2A/white?text=HOTD", inMyList: false }];
         const allSportsContent = [{ title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true }, { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET", inMyList: false }];
@@ -336,8 +392,8 @@
         };
 
         function renderAllViews() {
-            renderView('home-view', [...allNewReleases, ...allPopularMovies, ...allSeriesContent], { 'new-releases-inner': item => allNewReleases.includes(item), 'popular-movies-inner': item => allPopularMovies.includes(item), 'popular-series-inner': item => allSeriesContent.includes(item) });
-            renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.rating > 8.5, 'comedy-series-inner': s => s.title.includes('Lasso'), 'drama-series-inner': s => s.rating <= 8.5 });
+            renderView('home-view', [...allNewReleases, ...allPopularMovies, ...allPopularSeries], { 'new-releases-inner': item => allNewReleases.includes(item), 'popular-movies-inner': item => allPopularMovies.includes(item), 'popular-series-inner': item => allPopularSeries.includes(item) });
+            renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.rating > 7, 'comedy-series-inner': s => false, 'drama-series-inner': s => s.rating <= 7 });
             renderView('movies-view', allMoviesContent, { 'featured-movies-inner': m => m.genres.includes('destacada'), 'comedy-movies-inner': m => m.genres.includes('comedia'), 'drama-movies-inner': m => m.genres.includes('drama'), 'fantasy-scifi-movies-inner': m => m.genres.includes('fantasia') || m.genres.includes('scifi'), 'family-movies-inner': m => m.genres.includes('familiar'), 'romance-movies-inner': m => m.genres.includes('romantica') });
             renderView('tv-view', allTvContent, { 'live-tv-inner': t => t.title.includes('Noticias'), 'reality-tv-inner': t => true });
             renderView('sports-view', allSportsContent, { 'live-sports-inner': s => true, 'replay-sports-inner': s => true });
@@ -403,29 +459,19 @@
         window.toggleInMyList = toggleInMyList;
 
         function updateMyListButtons(item) {
-            // Actualizar botón del modal
             const modalTitle = document.getElementById('modal-title').textContent;
             if (modalTitle === item.title) {
                 const myListButton = document.getElementById('modal-mylist-button');
-                if (myListButton) { // Add safety check
-                    if (item.inMyList) {
-                        myListButton.classList.add('bg-green-500/20', 'text-green-400');
-                        myListButton.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i><span>En Mi Lista</span>`;
-                    } else {
-                        myListButton.classList.remove('bg-green-500/20', 'text-green-400');
-                        myListButton.innerHTML = `<i data-lucide="bookmark" class="w-5 h-5"></i><span>Mi Lista</span>`;
-                    }
+                if (myListButton) {
+                    myListButton.innerHTML = item.inMyList ? `<i data-lucide="check" class="w-5 h-5"></i><span>En Mi Lista</span>` : `<i data-lucide="bookmark" class="w-5 h-5"></i><span>Mi Lista</span>`;
+                    myListButton.classList.toggle('bg-green-500/20', item.inMyList);
+                    myListButton.classList.toggle('text-green-400', item.inMyList);
                 }
             }
-            // Actualizar botón del héroe (si es Superman)
             if (item.title === 'Superman') {
                  const heroButton = document.getElementById('hero-mylist-button');
-                 if (heroButton) { // Add safety check
-                    if (item.inMyList) {
-                        heroButton.innerHTML = `<i data-lucide="check" class="w-5 h-5"></i><span>En Mi Lista</span>`;
-                    } else {
-                        heroButton.innerHTML = `<i data-lucide="plus" class="w-5 h-5"></i><span>Mi Lista</span>`;
-                    }
+                 if (heroButton) {
+                    heroButton.innerHTML = item.inMyList ? `<i data-lucide="check" class="w-5 h-5"></i><span>En Mi Lista</span>` : `<i data-lucide="plus" class="w-5 h-5"></i><span>Mi Lista</span>`;
                  }
             }
             lucide.createIcons();
@@ -447,26 +493,78 @@
             }
             lucide.createIcons();
         }
-
+        
         // --- Lógica del Modal de Detalles ---
-        const modal = document.getElementById('movie-detail-modal');
+        const modal = document.getElementById('detail-modal');
+        let currentModalItem = null;
+
+        function createEpisodeItem(episode) {
+            return `
+                <div class="flex items-start p-3 rounded-lg hover:bg-sidebar-bg cursor-pointer transition-colors duration-200" onclick="openPlayerModal('${episode.videoUrl}')">
+                    <span class="text-gray-400 font-semibold mr-4 w-5 text-center">${episode.episode}</span>
+                    <div class="relative w-28 h-16 flex-shrink-0">
+                        <img src="${episode.thumbnail}" class="w-full h-full object-cover rounded-md">
+                        <div class="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                            <i data-lucide="play" class="w-6 h-6 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow mx-4">
+                        <h5 class="font-semibold text-sm">${episode.title}</h5>
+                        <p class="text-xs text-gray-400 mt-1 line-clamp-2">${episode.description}</p>
+                    </div>
+                    <span class="text-xs text-gray-400 ml-4">${episode.duration}</span>
+                </div>`;
+        }
+        
+        function renderEpisodes(item, seasonNumber) {
+            const seasonData = item.seasons.find(s => s.seasonNumber == seasonNumber);
+            const episodesList = document.getElementById('episodes-list');
+            if (seasonData && episodesList) {
+                episodesList.innerHTML = seasonData.episodes.map(createEpisodeItem).join('');
+                lucide.createIcons();
+            }
+        }
+
         function openModal(index, type) {
             const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent };
             const source = dataSources[type];
             const item = source?.[index]; if (!item) return;
+            currentModalItem = { index, type };
+
             document.getElementById('modal-backdrop').style.backgroundImage = `url('${item.image}')`;
             document.getElementById('modal-title').textContent = item.title;
             document.getElementById('modal-rating').textContent = item.rating;
             document.getElementById('modal-year').textContent = item.year;
             document.getElementById('modal-duration').textContent = item.duration || '';
             document.getElementById('modal-description').textContent = item.description || 'Descripción no disponible.';
-            document.getElementById('modal-cast').textContent = item.cast || 'Reparto no disponible.';
+            
+            const castSection = document.getElementById('modal-cast-section');
+            if (item.cast) {
+                document.getElementById('modal-cast').textContent = item.cast;
+                castSection.classList.remove('hidden');
+            } else {
+                castSection.classList.add('hidden');
+            }
+
             const genresContainer = document.getElementById('modal-genres');
             genresContainer.innerHTML = '';
             if (item.genres) { item.genres.forEach(genre => { const genreEl = document.createElement('span'); genreEl.className = 'bg-white/10 text-white text-xs font-semibold px-3 py-1 rounded-full'; genreEl.textContent = genre.charAt(0).toUpperCase() + genre.slice(1); genresContainer.appendChild(genreEl); }); }
+            
             const playButton = document.getElementById('modal-play-button');
-            if (item.videoUrl) { playButton.onclick = () => openPlayerModal(item.videoUrl); playButton.disabled = false; playButton.classList.remove('opacity-50', 'cursor-not-allowed');
-            } else { playButton.onclick = null; playButton.disabled = true; playButton.classList.add('opacity-50', 'cursor-not-allowed'); }
+            const episodesSection = document.getElementById('modal-episodes-section');
+            if (item.type === 'Serie' && item.seasons) {
+                playButton.classList.add('hidden');
+                episodesSection.classList.remove('hidden');
+                const seasonSelector = document.getElementById('season-selector');
+                seasonSelector.innerHTML = item.seasons.map(s => `<option value="${s.seasonNumber}">Temporada ${s.seasonNumber}</option>`).join('');
+                seasonSelector.onchange = () => renderEpisodes(item, seasonSelector.value);
+                renderEpisodes(item, 1);
+            } else {
+                playButton.classList.remove('hidden');
+                episodesSection.classList.add('hidden');
+                if (item.videoUrl) { playButton.onclick = () => openPlayerModal(item.videoUrl); playButton.disabled = false; playButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                } else { playButton.onclick = null; playButton.disabled = true; playButton.classList.add('opacity-50', 'cursor-not-allowed'); }
+            }
             
             document.getElementById('modal-mylist-button').onclick = () => toggleInMyList(index, type);
             updateMyListButtons(item);
@@ -474,13 +572,14 @@
             modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; lucide.createIcons();
         }
         window.openModal = openModal;
+        
         function closeModal() { modal.classList.add('hidden'); if (playerModal.classList.contains('hidden')) { document.body.style.overflow = 'auto'; } }
         window.closeModal = closeModal;
         modal.addEventListener('click', (event) => { if (event.target === modal) { closeModal(); } });
 
         // --- Lógica del Modal de Video ---
         const playerModal = document.getElementById('video-player-modal'); const playerIframe = document.getElementById('video-player-iframe');
-        function openPlayerModal(url) { closeModal(); playerIframe.src = url; playerModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+        function openPlayerModal(url) { closeModal(); playerIframe.src = url; playerModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
         window.openPlayerModal = openPlayerModal;
         function closePlayerModal() { playerModal.classList.add('hidden'); playerIframe.src = ''; document.body.style.overflow = 'auto'; }
         window.closePlayerModal = closePlayerModal;
