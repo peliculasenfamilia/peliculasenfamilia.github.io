@@ -356,43 +356,7 @@
                         ]
                     }
                 ]
-            },
-
-             { 
-                title: "Kaiju N° 8", rating: 5.8, year: 2021, type: 'Serie', duration: "3 Temporadas", image: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: false, description: "Un hombre con un trabajo muy alejado de sus sueños de infancia se ve envuelto en una situación inesperada. Convertido en un monstruo, se propone una vez más cumplir el sueño de su vida!.", cast: "Masaya Fukunishi, Ai Fairouz, Genta Nakamura",
-                seasons: [
-                    {
-                        seasonNumber: 1,
-                        episodes: [
-                            { episode: 1, title: "Piloto", duration: "43m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Japón tiene la mayor tasa de incidencias por ataques de Kaijus de todo el mundo. Los Kaijus irrumpen continuamente y sin piedad en las vidas cotidianas de la gente. Kafka Hibino, que siempre quiso ser un miembro de las Fuerzas de Defensa, actualmente trabaja como limpiador de cadáveres de Kaijus.", videoUrl: "https://streamwish.top/e/n64cy2u9zuzm" }
-                        ]
-                    },
-                    {
-                        seasonNumber: 2,
-                        episodes: [
-                            { episode: 1, title: "El día siguiente", duration: "44m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Los supervivientes luchan por establecer un campamento y encontrar respuestas sobre su nueva realidad.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
-                        ]
-                    }
-                ]
-            },
-
-            { 
-                title: "Alien: Earth", rating: 5.8, year: 2021, type: 'Serie', duration: "3 Temporadas", image: "https://pics.filmaffinity.com/Alien_Earth_Serie_de_TV-175543537-large.jpg", inMyList: false, description: "Cuando una misteriosa nave espacial se estrella en la Tierra, una joven y un grupo heterogéneo de soldados tácticos hacen un descubrimiento fatídico que los pone cara a cara con la mayor amenaza del planeta. Alien: Planeta Tierra", cast: "Adarsh Gourav, Adrian Edmondson, Alex Lawther, Babou Ceesay, David Rysdahl",
-                seasons: [
-                    {
-                        seasonNumber: 1,
-                        episodes: [
-                            { episode: 1, title: "Piloto", duration: "43m", thumbnail: "https://pics.filmaffinity.com/Alien_Earth_Serie_de_TV-175543537-large.jpg", description: "Japón tiene la mayor tasa de incidencias por ataques de Kaijus de todo el mundo. Los Kaijus irrumpen continuamente y sin piedad en las vidas cotidianas de la gente. Kafka Hibino, que siempre quiso ser un miembro de las Fuerzas de Defensa, actualmente trabaja como limpiador de cadáveres de Kaijus.", videoUrl: "https://mivalyo.com/v/obnkutmavh9n" }
-                        ]
-                    },
-                    {
-                        seasonNumber: 2,
-                        episodes: [
-                            { episode: 1, title: "El día siguiente", duration: "44m", thumbnail: "https://pics.filmaffinity.com/Alien_Earth_Serie_de_TV-175543537-large.jpg", description: "Los supervivientes luchan por establecer un campamento y encontrar respuestas sobre su nueva realidad.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
-                        ]
-                    }
-                ]
-            },
+            }
         ];
 
         const newReleasesTitles = ["F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible"];
@@ -428,7 +392,14 @@
         };
 
         function renderAllViews() {
-            renderView('home-view', [...allNewReleases, ...allPopularMovies, ...allPopularSeries], { 'new-releases-inner': item => allNewReleases.includes(item), 'popular-movies-inner': item => allPopularMovies.includes(item), 'popular-series-inner': item => allPopularSeries.includes(item) });
+            const homeContent = [...allNewReleases, ...allPopularMovies, ...allPopularSeries];
+            const uniqueHomeContent = Array.from(new Map(homeContent.map(item => [item.title, item])).values());
+            
+            renderView('home-view', uniqueHomeContent, { 
+                'new-releases-inner': item => newReleasesTitles.includes(item.title), 
+                'popular-movies-inner': item => popularMoviesTitles.includes(item.title), 
+                'popular-series-inner': item => allPopularSeries.includes(item) 
+            });
             renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.rating > 7, 'comedy-series-inner': s => false, 'drama-series-inner': s => s.rating <= 7 });
             renderView('movies-view', allMoviesContent, { 'featured-movies-inner': m => m.genres.includes('destacada'), 'comedy-movies-inner': m => m.genres.includes('comedia'), 'drama-movies-inner': m => m.genres.includes('drama'), 'fantasy-scifi-movies-inner': m => m.genres.includes('fantasia') || m.genres.includes('scifi'), 'family-movies-inner': m => m.genres.includes('familiar'), 'romance-movies-inner': m => m.genres.includes('romantica') });
             renderView('tv-view', allTvContent, { 'live-tv-inner': t => t.title.includes('Noticias'), 'reality-tv-inner': t => true });
