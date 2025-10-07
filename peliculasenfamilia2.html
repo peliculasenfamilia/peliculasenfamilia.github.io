@@ -34,7 +34,7 @@
         }
         
         #home-hero-section { background-image: url('https://4kwallpapers.com/images/wallpapers/superman-david-3840x2160-22636.jpg'); }
-        #series-hero-section { background-image: url('https://placehold.co/1920x1080/003366/white?text=HEROE+SERIES'); }
+        #series-hero-section { background-image: url('https://image.tmdb.org/t/p/original/r0Q63P0n25ltSizr2d2iSj2gG48.jpg'); }
         #movies-hero-section { background-image: url('https://placehold.co/1920x1080/660000/white?text=HEROE+PELICULAS'); }
         #tv-hero-section { background-image: url('https://placehold.co/1920x1080/333333/white?text=HEROE+TV'); }
         #sports-hero-section { background-image: url('https://placehold.co/1920x1080/006633/white?text=HEROE+DEPORTES'); }
@@ -198,10 +198,10 @@
         </div>
         
         <div id="series-view" class="view-container hidden pt-2">
-            <section id="series-hero-section" class="hero-section flex items-end rounded-xl overflow-hidden mb-8"><div class="hero-content p-8 max-w-4xl"><h2 class="text-6xl font-extrabold tracking-tight">Severance</h2></div></section>
+            <section id="series-hero-section" class="hero-section flex items-end rounded-xl overflow-hidden mb-8"><div class="hero-content p-8 max-w-4xl"><h2 class="text-6xl font-extrabold tracking-tight">Shōgun</h2></div></section>
             <div id="series-carousels">
                 <section id="section-featured-series" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Series Destacadas</h3><div class="relative"><div id="series-grid-featured" class="movie-row"><div class="movie-row-inner" id="featured-series-inner"></div></div></div></section>
-                <section id="section-comedy-series" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Series de Comedia</h3><div class="relative"><div id="series-grid-comedy" class="movie-row"><div class="movie-row-inner" id="comedy-series-inner"></div></div></div></section>
+                <section id="section-scifi-series" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Ciencia Ficción y Fantasía</h3><div class="relative"><div id="series-grid-scifi" class="movie-row"><div class="movie-row-inner" id="scifi-series-inner"></div></div></div></section>
                 <section id="section-drama-series" class="pt-4 pb-8"><h3 class="text-2xl font-bold mb-6">Series Dramáticas</h3><div class="relative"><div id="series-grid-drama" class="movie-row"><div class="movie-row-inner" id="drama-series-inner"></div></div></div></section>
             </div>
         </div>
@@ -328,44 +328,51 @@
 
         const allSeriesContent = [
             { 
-                title: "Surface", rating: 7.2, year: 2005, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: true, description: "Una bióloga marina descubre una nueva forma de vida en el océano que podría cambiar el futuro de la humanidad para siempre.", cast: "Lake Bell, Jay R. Ferguson, Carter Jenkins",
-                seasons: [
-                    {
-                        seasonNumber: 1,
-                        episodes: [
-                            { episode: 1, title: "Hay algo en el agua", duration: "48m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El descubrimiento de una extraña criatura marina desencadena una investigación a nivel mundial.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" },
-                            { episode: 2, title: "El misterio se profundiza", duration: "49m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Mientras los científicos intentan comprender a la criatura, ocurren eventos extraños en todo el mundo.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" },
-                            { episode: 3, title: "Punto de no retorno", duration: "47m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "La situación se vuelve crítica cuando las criaturas comienzan a mostrar un comportamiento inesperado.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
-                        ]
-                    }
-                ]
+                title: "Surface", rating: 7.2, year: 2005, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: true, description: "Una bióloga marina descubre una nueva forma de vida en el océano que podría cambiar el futuro de la humanidad para siempre.", cast: "Lake Bell, Jay R. Ferguson, Carter Jenkins", genres: ['scifi', 'drama'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "Hay algo en el agua", duration: "48m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El descubrimiento de una extraña criatura marina desencadena una investigación a nivel mundial.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }, { episode: 2, title: "El misterio se profundiza", duration: "49m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Mientras los científicos intentan comprender a la criatura, ocurren eventos extraños en todo el mundo.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
             }, 
             { 
-                title: "La Brea", rating: 5.8, year: 2021, type: 'Serie', duration: "3 Temporadas", image: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", inMyList: false, description: "Un enorme socavón se abre en Los Ángeles, arrastrando a cientos de personas a una misteriosa tierra prehistórica.", cast: "Natalie Zea, Eoin Macken, Chiké Okonkwo",
-                seasons: [
-                    {
-                        seasonNumber: 1,
-                        episodes: [
-                            { episode: 1, title: "Piloto", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Un socavón masivo abre un portal a un mundo primitivo en el corazón de L.A.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
-                        ]
-                    },
-                    {
-                        seasonNumber: 2,
-                        episodes: [
-                            { episode: 1, title: "El día siguiente", duration: "44m", thumbnail: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Los supervivientes luchan por establecer un campamento y encontrar respuestas sobre su nueva realidad.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
-                        ]
-                    }
-                ]
+                title: "La Brea", rating: 5.8, year: 2021, type: 'Serie', duration: "3 Temporadas", image: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", inMyList: false, description: "Un enorme socavón se abre en Los Ángeles, arrastrando a cientos de personas a una misteriosa tierra prehistórica.", cast: "Natalie Zea, Eoin Macken, Chiké Okonkwo", genres: ['scifi', 'drama'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "Piloto", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Un socavón masivo abre un portal a un mundo primitivo en el corazón de L.A.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }] }, { seasonNumber: 2, episodes: [{ episode: 1, title: "El día siguiente", duration: "44m", thumbnail: "https://image.tmdb.org/t/p/w342//jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Los supervivientes luchan por establecer un campamento y encontrar respuestas sobre su nueva realidad.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
+            },
+            { 
+                title: "Monarch: El legado de los monstruos", rating: 8.1, year: 2023, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w342//8ZSrqUsa1JN9FkIQU8iTFOMw4D5.jpg", inMyList: false, description: "Tras la batalla entre Godzilla y los Titanes, dos hermanos siguen los pasos de su padre para descubrir la conexión de su familia con la organización Monarch.", cast: "Anna Sawai, Kiersey Clemons, Ren Watabe", genres: ['scifi', 'accion', 'destacada'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "Legado", duration: "50m", thumbnail: "https://image.tmdb.org/t/p/w342//8ZSrqUsa1JN9FkIQU8iTFOMw4D5.jpg", description: "El inicio de la búsqueda de la verdad sobre los monstruos y Monarch.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
+            },
+            { 
+                title: "From", rating: 8.3, year: 2022, type: 'Serie', duration: "2 Temporadas", image: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: false, description: "Los habitantes de un pueblo aterrador luchan por mantenerse con vida y buscar una salida, pero se ven acosados por criaturas nocturnas.", cast: "Harold Perrineau, Catalina Sandino Moreno, Eion Bailey", genres: ['misterio', 'horror', 'drama'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "Un largo camino a casa", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Una familia se desvía y llega a un pueblo del que no se puede salir.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
+            },
+            { 
+                title: "Shōgun", rating: 8.7, year: 2024, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w342/uIoDvVOQaKjSfz2oihkVS8M7l1v.jpg", inMyList: false, description: "Ambientada en el Japón de 1600, Lord Yoshii Toranaga lucha por su vida mientras sus enemigos en el Consejo de Regentes se unen contra él.", cast: "Hiroyuki Sanada, Cosmo Jarvis, Anna Sawai", genres: ['drama', 'historia', 'destacada'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "Anjin", duration: "1h 10m", thumbnail: "https://image.tmdb.org/t/p/w342/uIoDvVOQaKjSfz2oihkVS8M7l1v.jpg", description: "Un misterioso barco europeo es encontrado abandonado en un pueblo pesquero cercano.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
+            },
+            { 
+                title: "Wynonna Earp", rating: 7.6, year: 2016, type: 'Serie', duration: "4 Temporadas", image: "https://image.tmdb.org/t/p/w342//qnIaDelA81dmFaXrhpz6M6dpGSD.jpg", inMyList: false, description: "La bisnieta de Wyatt Earp lucha contra demonios y otras criaturas sobrenaturales. Con su arma única, envía a los revenants de vuelta al infierno.", cast: "Melanie Scrofano, Tim Rozon, Dominique Provost-Chalkley", genres: ['fantasia', 'accion', 'western'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "Purgatorio", duration: "45m", thumbnail: "https://image.tmdb.org/t/p/w342//qnIaDelA81dmFaXrhpz6M6dpGSD.jpg", description: "Wynonna regresa a su ciudad natal para asumir el papel que le corresponde como la heredera Earp.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
+            },
+            { 
+                title: "Wolf Pack", rating: 7.9, year: 2023, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w342//rbCANmS1ogweUkIBghP03EHtdHB.jpg", inMyList: false, description: "Las vidas de dos adolescentes cambian para siempre cuando un incendio forestal en California despierta a una aterradora criatura sobrenatural.", cast: "Sarah Michelle Gellar, Rodrigo Santoro, Armani Jackson", genres: ['fantasia', 'drama', 'misterio'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "Del lobo al hombre", duration: "52m", thumbnail: "https://image.tmdb.org/t/p/w342//rbCANmS1ogweUkIBghP03EHtdHB.jpg", description: "Un incendio forestal desata el caos y despierta a una bestia.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
+            },
+            { 
+                title: "The Boys", rating: 8.5, year: 2019, type: 'Serie', duration: "4 Temporadas", image: "https://image.tmdb.org/t/p/w342//2zmTngn1t6VAgJs4VbeZHHnE76b.jpg", inMyList: false, description: "Un grupo de vigilantes se propone acabar con los superhéroes corruptos que abusan de sus superpoderes.", cast: "Karl Urban, Jack Quaid, Antony Starr", genres: ['accion', 'comedia', 'scifi', 'destacada'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "El nombre del juego", duration: "1h 1m", thumbnail: "https://image.tmdb.org/t/p/w342//2zmTngn1t6VAgJs4VbeZHHnE76b.jpg", description: "Cuando un superhéroe mata a su novia, un joven se une a un grupo que busca justicia.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
+            },
+            { 
+                title: "Kaiju Nº 8", rating: 8.6, year: 2024, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w342//p1LbfGcmIonn1Dylb9yHh2AmYOk.jpg", inMyList: false, description: "En un mundo plagado de monstruos gigantes conocidos como 'kaiju', Kafka Hibino aspira a unirse a la Fuerza de Defensa. Pero cuando un kaiju lo transforma, debe navegar por la vida bajo el radar.", cast: "Masaya Fukunishi, Asami Seto, Wataru Katoh", genres: ['animacion', 'accion', 'scifi', 'destacada'],
+                seasons: [{ seasonNumber: 1, episodes: [{ episode: 1, title: "El hombre que se convirtió en Kaiju", duration: "24m", thumbnail: "https://image.tmdb.org/t/p/w342//p1LbfGcmIonn1Dylb9yHh2AmYOk.jpg", description: "El sueño de Kafka de unirse a la Fuerza de Defensa da un giro inesperado.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}]
             }
         ];
 
         const newReleasesTitles = ["F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible"];
         const popularMoviesTitles = ["Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Destino Final: Lazos de Sangre", "La Guerra del Mañana", "Karate Kid: Leyendas", "Jurassic World: Renace", "Hipnosis: Arma Invisible"];
+        const popularSeriesTitles = ["Shōgun", "The Boys", "Monarch: El legado de los monstruos", "Kaiju Nº 8", "From", "Wolf Pack", "Surface"];
         
         const allNewReleases = allMoviesSource.filter(m => newReleasesTitles.includes(m.title));
         const allPopularMovies = allMoviesSource.filter(m => popularMoviesTitles.includes(m.title));
+        const allPopularSeries = allSeriesContent.filter(s => popularSeriesTitles.includes(s.title));
         const allMoviesContent = Array.from(new Map(allMoviesSource.map(movie => [movie.title, movie])).values());
-        const allPopularSeries = allSeriesContent;
 
         const allTvContent = [{ title: "Noticias 24/7", rating: 7.5, year: 2024, type: 'TV', image: "https://placehold.co/300x450/00008B/white?text=NOTICIAS", inMyList: false }, { title: "La Casa del Dragón", rating: 8.9, year: 2024, type: 'TV', image: "https://placehold.co/300x450/A52A2A/white?text=HOTD", inMyList: false }];
         const allSportsContent = [{ title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true }, { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET", inMyList: false }];
@@ -398,9 +405,13 @@
             renderView('home-view', uniqueHomeContent, { 
                 'new-releases-inner': item => newReleasesTitles.includes(item.title), 
                 'popular-movies-inner': item => popularMoviesTitles.includes(item.title), 
-                'popular-series-inner': item => allPopularSeries.includes(item) 
+                'popular-series-inner': item => popularSeriesTitles.includes(item.title) 
             });
-            renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.rating > 7, 'comedy-series-inner': s => false, 'drama-series-inner': s => s.rating <= 7 });
+            renderView('series-view', allSeriesContent, { 
+                'featured-series-inner': s => s.genres.includes('destacada'), 
+                'scifi-series-inner': s => s.genres.includes('scifi') || s.genres.includes('fantasia'), 
+                'drama-series-inner': s => s.genres.includes('drama') 
+            });
             renderView('movies-view', allMoviesContent, { 'featured-movies-inner': m => m.genres.includes('destacada'), 'comedy-movies-inner': m => m.genres.includes('comedia'), 'drama-movies-inner': m => m.genres.includes('drama'), 'fantasy-scifi-movies-inner': m => m.genres.includes('fantasia') || m.genres.includes('scifi'), 'family-movies-inner': m => m.genres.includes('familiar'), 'romance-movies-inner': m => m.genres.includes('romantica') });
             renderView('tv-view', allTvContent, { 'live-tv-inner': t => t.title.includes('Noticias'), 'reality-tv-inner': t => true });
             renderView('sports-view', allSportsContent, { 'live-sports-inner': s => true, 'replay-sports-inner': s => true });
