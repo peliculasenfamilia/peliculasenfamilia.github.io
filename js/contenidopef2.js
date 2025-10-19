@@ -3,6 +3,7 @@
         
         // --- DATOS SIMULADOS ---
         const allMoviesSource = [
+            { title: "Caramelo", rating: 7.2, year: 2025, duration: "1h 41m", type: 'Película', image: "https://m.media-amazon.com/images/M/MV5BNTRlMzI4MDItZDJiNS00YmNmLWE1MmQtNjZjYTVhNDdmYjQ1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", genres: ['drama', 'comedia', 'familiar', ], description: "La película trata sobre un chef cuyo diagnóstico médico lo lleva a encontrar esperanza en un perro callejero llamado Amendoim.", cast: "Ademara Barros, Amendoim, Arianne Botelho, Benício Alves Torres, Bruno Vinicius", inMyList: false, videoUrl: "https://vimeos.net/embed-71fdjopqwc9g.html" },
             { title: "F1 La Película", rating: 7.7, year: 2025, duration: "2h 10m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/yKIG63pXN89EfbTA7yKpwxAU1rf.jpg", genres: ['drama', 'accion'], description: "Un ex piloto de Fórmula 1 regresa a la competición para ser mentor de un joven prodigio en el emocionante y peligroso mundo de las carreras.", cast: "Brad Pitt, Damson Idris, Kerry Condon", inMyList: false, videoUrl: "https://vimeos.net/embed-567smpecp27m.html" },
             { title: "Superman", rating: 7.2, year: 2025, duration: "2h 30m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/lfMKNOaaS2jGT3QKUaiFA8cO7DC.jpg", genres: ['fantasia', 'scifi', 'accion', 'destacada'], description: "La película sigue a Superman mientras busca reconciliar su herencia kryptoniana con su crianza humana como Clark Kent de Smallville, Kansas.", cast: "David Corenswet, Rachel Brosnahan, Nicholas Hoult", inMyList: true, videoUrl: "https://yuguaab.com/e/zgk5itgv132o" },
             { title: "mision imposible 8", rating: 7.2, year: 2025, duration: "2h 45m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/haOjJGUV00dKlZaJWgjM1UD1cJV.jpg", genres: ['accion', 'destacada', 'thriller'], description: "Ethan Hunt y su equipo del FMI se embarcan en su misión más peligrosa hasta la fecha: rastrear una nueva y aterradora arma que amenaza a toda la humanidad.", cast: "Tom Cruise, Hayley Atwell, Ving Rhames", inMyList: false, videoUrl: "https://vimeos.net/embed-heqjtv7ef12.html" },
@@ -93,7 +94,7 @@
             },
         ];
 
-        const newReleasesTitles = ["F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible"];
+        const newReleasesTitles = ["Caramelo", "F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible"];
         const popularMoviesTitles = ["Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Destino Final: Lazos de Sangre", "La Guerra del Mañana", "Karate Kid: Leyendas", "Jurassic World: Renace", "Hipnosis: Arma Invisible"];
         const popularSeriesTitles = ["Shōgun", "The Boys", "Monarch: El legado de los monstruos", "Kaiju Nº 8", "From", "Wolf Pack", "Surface", "La Brea", "Wynonna Earp", "Stargate SG-1","Invasión" ];
         
