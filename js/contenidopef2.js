@@ -69,6 +69,9 @@
             { title: "Rumbo al infierno", rating: 6.6, year: 2021, type: 'Serie', duration: "1 Temporada", image: "https://www.verseriesonline.net/storage/poster/series/rumbo-al-infierno.jpg", inMyList: false, description: "La gente escucha predicciones sobre cuándo morirá. Cuando llega ese momento, un ángel de la muerte aparece frente a ellos y toma su último aliento.", cast: "변봉선 , Han Mi-yeon , 양진모 , Kim Dong-wook , Lee Jae-sung , 김석원.", genres: ['scifi', 'drama', 'destacada'], dateAdded: '2025-10-22', 
                 seasons: [{ seasonNumber: 1, episodes: 
                     [{ episode: 1, title: "Episodio #1.1", duration: "51m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/rumbo-al-infierno-saison-1.jpg", description: "Los espectadores horrorizados observan cómo bestias sobrenaturales persiguen y matan a un hombre a plena luz del día.", videoUrl: "https://streamwish.to/e/vhrg7m4h8urj" }]}] },
+             { title: "Outcast", rating: 7.3, year: 2016, type: 'Serie', duration: "1 Temporada", image: "https://www.verseriesonline.net/storage/poster/series/outcast.jpg", inMyList: false, description: "Un joven busca respuestas sobre por qué ha estado sufriendo posesiones sobrenaturales toda su vida.", cast: "Sarah Byrd , Summer Eubanks , Ron Cosmo Vecchiarelli , David Auge", genres: ['scifi', 'drama', 'destacada'], dateAdded: '2025-10-22', 
+                seasons: [{ seasonNumber: 1, episodes: 
+                    [{ episode: 2, title: "(Recuerdo) Cuando ella me amaba", duration: "1h", thumbnail: "https://www.verseriesonline.net/storage/poster/series/outcast.jpg", description: "Kyle comienza a cuestionar su historia familiar.", videoUrl: "https://doodstream.com/e/cuqr6u2eh5h6" }]}] },
         ];
         
         let continueWatchingData = {};
@@ -182,7 +185,7 @@
 
         const newReleasesTitles = ["Caramelo", "F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible", "Mi Villano Favorito 4" ];
         const popularMoviesTitles = ["Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Destino Final: Lazos de Sangre", "La Guerra del Mañana", "Karate Kid: Leyendas", "Jurassic World: Renace", "Hipnosis: Arma Invisible"];
-        const popularSeriesTitles = ["Shōgun", "The Boys", "Monarch: El legado de los monstruos", "Kaiju Nº 8", "From", "Wolf Pack", "Surface", "La Brea", "Wynonna Earp", "Stargate SG-1","Invasión", "Rumbo al infierno" ];
+        const popularSeriesTitles = ["Shōgun", "The Boys", "Monarch: El legado de los monstruos", "Kaiju Nº 8", "From", "Wolf Pack", "Surface", "La Brea", "Wynonna Earp", "Stargate SG-1","Invasión", "Rumbo al infierno", "Outcast" ];
         const allNewReleases = allMoviesSource.filter(m => newReleasesTitles.includes(m.title));
         const allPopularMovies = allMoviesSource.filter(m => popularMoviesTitles.includes(m.title));
         const allPopularSeries = allSeriesContent.filter(s => popularSeriesTitles.includes(s.title));
