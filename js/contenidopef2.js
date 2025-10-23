@@ -193,8 +193,12 @@
         const allPopularMovies = allMoviesSource.filter(m => popularMoviesTitles.includes(m.title));
         const allPopularSeries = allSeriesContent.filter(s => popularSeriesTitles.includes(s.title));
         const allMoviesContent = Array.from(new Map(allMoviesSource.map(movie => [movie.title, movie])).values());
-        const allTvContent = [{ title: "Noticias 24/7", rating: 7.5, year: 2024, type: 'TV', image: "https://placehold.co/300x450/00008B/white?text=NOTICIAS", inMyList: false }, { title: "La Casa del Dragón", rating: 8.9, year: 2024, type: 'TV', image: "https://placehold.co/300x450/A52A2A/white?text=HOTD", inMyList: false }];
-        const allSportsContent = [{ title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true }, { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET", inMyList: false }];
+        const allTvContent = [
+            { title: "Canal 13", rating: 7.5, year: 2024, type: 'TV', image: "https://cdn.mitvstatic.com/channels/ar_el-trece_m.png", inMyList: false, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
+            { title: "La Casa del Dragón", rating: 8.9, year: 2024, type: 'TV', image: "https://placehold.co/300x450/A52A2A/white?text=HOTD", inMyList: false }];
+        const allSportsContent = [
+            { title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true }, 
+            { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET", inMyList: false }];
         let currentPage = 'home'; 
 
         function createMovieCard(item, index, type) { 
