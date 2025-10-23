@@ -39,7 +39,7 @@
                      { episode: 3, title: "Así son las cosas ahora", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "La familia Matthews debe elegir a cuál de los dos asentamientos se unirá. Mientras tanto, Jade acepta su situación y Boyd se enfrenta a una decisión imposible que afecta al corazón de la vida en la ciudad.", videoUrl: "https://dinisglows.com/v/hol85a8523wi" }, 
                      { episode: 4, title: "Una roca y un camino lejano", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Julie y Ethan hacen nuevos amigos, sus padres discuten sus diferencias y Boyd y Khatri hablan sobre el papel de Boyd en la comunidad.", videoUrl: "https://dinisglows.com/v/10olwiedbrvq" }, 
                      { episode: 5, title: "Siluetas", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Jim, Tabitha y Ethan comienzan a hacerse preguntas sobre dónde se encuentran con la esperanza de que eso los lleve a casa. Ellis y Fatima le muestran a Julie el lado más alegre de la vida en la ciudad.", videoUrl: "https://dinisglows.com/v/5qpphdfwatgw", dateAdded: '2025-10-20' }]}] },
-            { title: "Manifest", rating: 7.0, year: 2018, type: 'Serie', duration: "4 Temporadas", image: "https://www.verseriesonline.net/storage/poster/series/manifest-saison-1.jpg", inMyList: false, description: "Cuando el vuelo 828 de Montego Air aterriza de manera segura después de un vuelo turbulento pero de rutina, la tripulación y los pasajeros se sienten aliviados. Sin embargo, aunque para ellos han pasado pocas horas, el mundo ha envejecido cinco años y sus amigos, familias y colegas, después de llorar su pérdida, han perdido la esperanza y están intentando seguir adelante. Ahora, frente a lo imposible, a todos se les da una segunda oportunidad.", cast: "Melissa Roxburgh , Josh Dallas , J.R. Ramirez , Luna Blaise , Parveen Kaur , Matt Long , Holly Taylor , Daryl Edwards , Ty Doran", genres: ['misterio', 'fantasy', 'drama','scifi', 'destacada'], dateAdded: '2025-08-15', 
+            { title: "Manifest", rating: 7.0, year: 2018, type: 'Serie', duration: "4 Temporadas", image: "https://www.verseriesonline.net/storage/poster/series/manifest-saison-1.jpg", inMyList: false, description: "Cuando el vuelo 828 de Montego Air aterriza de manera segura después de un vuelo turbulento pero de rutina, la crew y los pasajeros se sienten aliviados. Sin embargo, aunque para ellos han pasado pocas horas, el mundo ha envejecido cinco años y sus amigos, familias y colegas, después de llorar su pérdida, han perdido la esperanza y están intentando seguir adelante. Ahora, frente a lo imposible, a todos se les da una segunda oportunidad.", cast: "Melissa Roxburgh , Josh Dallas , J.R. Ramirez , Luna Blaise , Parveen Kaur , Matt Long , Holly Taylor , Daryl Edwards , Ty Doran", genres: ['misterio', 'fantasy', 'drama','scifi', 'destacada'], dateAdded: '2025-08-15', 
                 seasons: [{ seasonNumber: 1, episodes: 
                     [{ episode: 1, title: "Piloto", duration: "42m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/manifest-saison-1.jpg", description: "Los pasajeros a bordo de un vuelo que regresa cinco años después de desaparecer deben reconstruir sus antiguas vidas y lidiar con misteriosas", videoUrl: "https://dsvplay.com/e/uee37r2htm49" }, 
                      { episode: 2, title: "Reingreso", duration: "42m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/manifest-saison-1.jpg", description: "Michaela se ve obligada a afrontar el hecho de que Jared está casado; Ben ayuda a un compañero de viaje;", videoUrl: "https://dsvplay.com/e/ihwspibp7485" }, 
@@ -57,7 +57,7 @@
             { title: "The Boys", rating: 8.5, year: 2019, type: 'Serie', duration: "4 Temporadas", image: "https://images.justwatch.com/poster/315996736/s718/temporada-1.jpg", inMyList: false, description: "Un grupo de vigilantes se propone acabar con los superhéroes corruptos que abusan de sus superpoderes.", cast: "Karl Urban, Jack Quaid, Antony Starr", genres: ['accion', 'comedia', 'scifi', 'destacada'], dateAdded: '2025-07-28', 
                 seasons: [{ seasonNumber: 1, episodes: 
                     [{ episode: 1, title: "El nombre del juego", duration: "1h 1m", thumbnail: "https://images.justwatch.com/poster/315996736/s718/temporada-1.jpg", description: "Cuando un superhéroe mata a su novia, un joven se une a un grupo que busca justicia.", videoUrl: "https://jilliandescribecompany.com/e/28ah4ambmvgf" }]}] },
-            { title: "Kaiju Nº 8", rating: 8.6, year: 2024, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: false, description: "En un mundo plagado de monstruos gigantes conocidos como 'kaiju', Kafka Hibino aspira a unirse a la Fuerza de Defensa. Pero cuando un kaiju lo transforma, debe navegar por la vida bajo el radar.", cast: "Masaya Fukunishi, Asami Seto, Wataru Katoh", genres: ['animacion', 'accion', 'scifi', 'destacada'], dateAdded: '2025-07-25', 
+            { title: "Kaiju Nº 8", rating: 8.6, year: 2024, type: 'Serie', duration: "1 Temporada", image: "httpsM://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: false, description: "En un mundo plagado de monstruos gigantes conocidos como 'kaiju', Kafka Hibino aspira a unirse a la Fuerza de Defensa. Pero cuando un kaiju lo transforma, debe navegar por la vida bajo el radar.", cast: "Masaya Fukunishi, Asami Seto, Wataru Katoh", genres: ['animacion', 'accion', 'scifi', 'destacada'], dateAdded: '2025-07-25', 
                 seasons: [{ seasonNumber: 1, episodes: 
                     [{ episode: 1, title: "El hombre que se convirtió en Kaiju", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El sueño de Kafka de unirse a la Fuerza de Defensa da un giro inesperado.", videoUrl: "https://jkanime.net/jkplayer/um?e=SnplKytPVWpGUGxYR3FZYUNkZ3U2Sis0VnRGRm9TcFE5R3VGR1VxcFRnV0J2OGJPb0ZQejdGTm1sWXBxc1RzQlNsQXpnaUN5dnBhMklKN25LZWlCVnc9PTo6g7S4B4CVrwPsmuCO0CRhJg--&t=4b96f6bdcd5960355301356f6a89eb68" }, 
                     { episode: 2, title: "El kaiju que elimina a otros kaiju", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Kafka se ha convertido en kaiju sin todavía comprender muy bien por qué, pero con la ayuda de Reno intenta dominar sus nuevos poderes y comienza protegiendo la ciudad de un ataque.", videoUrl: "https://jkanime.net/jkplayer/um?e=bEVVcDF0d3ZrRWVQK0RlM3BXVGMxM250ZitPdGxUbEdZNHVjNEFwNC9VcUhaMTlob2lzaisydktYbXJQU29TL25DdEl5b2JESG1SVWxZNXZnU2FMWWc9PTo6haR82L.uew2iCHQ7yPFhvA--&t=7d38439991471b50836127994d196d7a" }]}] },
@@ -131,17 +131,16 @@
 
         function createContinueWatchingCard(item) {
             let action, subtitle, progressPercent;
-            const content = item.type === 'Película' 
-                ? allMoviesSource.find(m => m.title === item.title) 
-                : allSeriesContent.find(s => s.title === item.title);
+            const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent };
+            const content = dataSources[item.type]?.find(m => m.title === item.title);
             if (!content) return '';
 
             if (item.type === 'Película') {
                 progressPercent = item.progress || 50; 
                 subtitle = `Visto por última vez: ${new Date(item.lastWatched).toLocaleDateString()}`;
-                action = `playMovie(${item.originalIndex}, '${item.type}')`;
-            } else {
-                const season = content.seasons.find(s => s.seasonNumber == item.seasonNumber); // FIX: Use loose equality
+                action = `playSimpleContent(${item.originalIndex}, '${item.type}')`;
+            } else if (item.type === 'Serie') {
+                const season = content.seasons.find(s => s.seasonNumber == item.seasonNumber);
                 if (!season) return '';
                 const lastWatchedIndex = season.episodes.findIndex(e => e.episode == item.episodeNumber);
                 const nextEpisodeIndex = lastWatchedIndex + 1;
@@ -156,6 +155,10 @@
                     subtitle = `Temporada ${item.seasonNumber} completada`;
                     action = `openModal(${item.originalIndex}, 'Serie')`; 
                 }
+            } else if (item.type === 'TV' || item.type === 'Deporte') {
+                progressPercent = 0; // No hay progreso para TV en vivo
+                subtitle = `Visto por última vez: ${new Date(item.lastWatched).toLocaleDateString()}`;
+                action = `playSimpleContent(${item.originalIndex}, '${item.type}')`;
             }
             
             return `<div class="continue-card group cursor-pointer" onclick="${action}">
@@ -164,7 +167,9 @@
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="play-button-overlay"><i data-lucide="play" class="w-6 h-6 text-white fill-white transition-transform group-hover:scale-110"></i></div>
                     </div>
-                     <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-700/80"><div class="bg-primary-blue h-1" style="width: ${progressPercent}%;"></div></div>
+                     <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-700/80" style="${(item.type === 'TV' || item.type === 'Deporte') ? 'display: none;' : ''}">
+                        <div class="bg-primary-blue h-1" style="width: ${progressPercent}%;"></div>
+                     </div>
                 </div>
                 <div class="pt-2">
                     <p class="text-sm font-semibold text-white truncate">${content.title}</p>
@@ -195,11 +200,11 @@
         const allPopularSeries = allSeriesContent.filter(s => popularSeriesTitles.includes(s.title));
         const allMoviesContent = Array.from(new Map(allMoviesSource.map(movie => [movie.title, movie])).values());
         const allTvContent = [
-            { title: "Canal 13", rating: 7.5, year: 2024, type: 'TV', image: "https://cdn.mitvstatic.com/channels/ar_el-trece_m.png", inMyList: false, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
-            { title: "TN", rating: 8.9, year: 2024, type: 'TV', image: "https://television.com.ar/wp-content/uploads/2024/07/tn.jpg", inMyList: false, videoUrl: "https://www.youtube.com/watch?v=cb12KmMMDJA" }];
+            { title: "Noticias", rating: 7.5, year: 2024, type: 'TV', image: "https://cdn.mitvstatic.com/channels/ar_el-trece_m.png", inMyList: false, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
+            { title: "TN", rating: 8.9, year: 2024, type: 'TV', image: "https://television.com.ar/wp-content/uploads/2024/07/tn.jpg", inMyList: false, videoUrl: "https://www.youtube.com/embed/cb12KmMMDJA" }]; // Use embed URL for YouTube
         const allSportsContent = [
-            { title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true }, 
-            { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET", inMyList: false }];
+            { title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
+            { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET", inMyList: false, videoUrl: "https://www.youtube.com/embed/cb12KmMMDJA" }]; // Use embed URL for YouTube
         let currentPage = 'home'; 
 
         function createMovieCard(item, index, type) { 
@@ -208,7 +213,7 @@
             return `<div class="movie-card-container group cursor-pointer hover:scale-[1.03] transition-transform duration-300" onclick="openModal(${index}, '${type}')"><div class="movie-card rounded-xl overflow-hidden shadow-lg bg-card-bg"><div class="relative aspect-[2/3] overflow-hidden ${watchedClass}"><img src="${item.image}" alt="${item.title}" onerror="this.onerror=null;this.src='https://placehold.co/300x450/444/white?text=${item.title.split(' ').slice(0, 2).join('+')}'" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-300">${isWatched ? `<div class="watched-overlay"><i data-lucide="check-circle-2" class="w-10 h-10 text-white opacity-90"></i></div>` : ''}<div class="absolute inset-0 flex items-center justify-center"><div class="play-button-overlay"><i data-lucide="play" class="w-6 h-6 text-white fill-white transition-transform group-hover:scale-110"></i></div></div></div></div><div class="pt-2 h-16"><p class="text-sm font-semibold text-white whitespace-normal">${item.title}</p><div class="mt-1 flex items-center space-x-2 text-xs text-gray-400"><i data-lucide="star" class="w-3 h-3 text-yellow-400 fill-yellow-400"></i><span>${item.rating}</span><span class="text-gray-500">•</span><span>${item.year}</span><span class="text-gray-500">•</span><span>${item.type}</span></div></div></div>`;
         }
         const renderView = (viewId, data, sections) => { const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent }; Object.entries(sections).forEach(([containerId, filterFn]) => { const filteredList = data.filter(filterFn); const container = document.getElementById(containerId); if (container) { container.innerHTML = filteredList.map(item => { const source = dataSources[item.type]; const originalIndex = source.findIndex(sourceItem => sourceItem.title === item.title); return createMovieCard(item, originalIndex, item.type); }).join(''); } }); };
-        function renderAllViews() { const homeContent = [...allNewReleases, ...allPopularMovies, ...allPopularSeries]; const uniqueHomeContent = Array.from(new Map(homeContent.map(item => [item.title, item])).values()); renderView('home-view', uniqueHomeContent, { 'new-releases-inner': item => newReleasesTitles.includes(item.title), 'popular-movies-inner': item => popularMoviesTitles.includes(item.title), 'popular-series-inner': item => popularSeriesTitles.includes(item.title) }); renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.genres.includes('destacada'), 'scifi-series-inner': s => s.genres.includes('scifi') || s.genres.includes('fantasia'), 'drama-series-inner': s => s.genres.includes('drama') }); renderView('movies-view', allMoviesContent, { 'featured-movies-inner': m => m.genres.includes('destacada'), 'comedy-movies-inner': m => m.genres.includes('comedia'), 'drama-movies-inner': m => m.genres.includes('drama'), 'fantasy-scifi-movies-inner': m => m.genres.includes('fantasia') || m.genres.includes('scifi'), 'family-movies-inner': m => m.genres.includes('familiar'), 'romance-movies-inner': m => m.genres.includes('romantica') }); renderView('tv-view', allTvContent, { 'live-tv-inner': t => t.title.includes('Noticias'), 'reality-tv-inner': t => true }); renderView('sports-view', allSportsContent, { 'live-sports-inner': s => true, 'replay-sports-inner': s => true }); renderMyListView(); renderContinueWatching(); }
+        function renderAllViews() { const homeContent = [...allNewReleases, ...allPopularMovies, ...allPopularSeries]; const uniqueHomeContent = Array.from(new Map(homeContent.map(item => [item.title, item])).values()); renderView('home-view', uniqueHomeContent, { 'new-releases-inner': item => newReleasesTitles.includes(item.title), 'popular-movies-inner': item => popularMoviesTitles.includes(item.title), 'popular-series-inner': item => popularSeriesTitles.includes(item.title) }); renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.genres.includes('destacada'), 'scifi-series-inner': s => s.genres.includes('scifi') || s.genres.includes('fantasia'), 'drama-series-inner': s => s.genres.includes('drama') }); renderView('movies-view', allMoviesContent, { 'featured-movies-inner': m => m.genres.includes('destacada'), 'comedy-movies-inner': m => m.genres.includes('comedia'), 'drama-movies-inner': m => m.genres.includes('drama'), 'fantasy-scifi-movies-inner': m => m.genres.includes('fantasia') || m.genres.includes('scifi'), 'family-movies-inner': m => m.genres.includes('familiar'), 'romance-movies-inner': m => m.genres.includes('romantica') }); renderView('tv-view', allTvContent, { 'live-tv-inner': t => true, 'reality-tv-inner': t => false }); renderView('sports-view', allSportsContent, { 'live-sports-inner': s => true, 'replay-sports-inner': s => false }); renderMyListView(); renderContinueWatching(); }
         function updateActiveLink(page) { document.querySelectorAll('.nav-link').forEach(link => { link.classList.remove('bg-primary-blue', 'text-white', 'shadow-lg', 'shadow-primary-blue/30', 'font-semibold'); link.classList.add('text-gray-300', 'hover:bg-white/10'); }); const activeLink = document.getElementById(`nav-${page}`); if (activeLink) { activeLink.classList.remove('text-gray-300', 'hover:bg-white/10'); activeLink.classList.add('bg-primary-blue', 'text-white', 'font-semibold', 'shadow-lg', 'shadow-primary-blue/30'); } }
         function navigateTo(page) { currentPage = page; document.querySelectorAll('.view-container').forEach(view => view.classList.add('hidden')); document.getElementById(`${page}-view`).classList.remove('hidden'); document.getElementById('search-input').value = ''; filterContent(); if (window.innerWidth < 1024) toggleSidebar(); updateActiveLink(page); document.querySelector('.main-content').scrollTop = 0; lucide.createIcons(); }
         window.navigateTo = navigateTo;
@@ -238,17 +243,115 @@
             return `<div class="flex items-start p-3 rounded-lg hover:bg-sidebar-bg group cursor-pointer transition-colors duration-200" onclick="playEpisode(${seriesIndex}, '${seasonNumber}', ${episode.episode})"><span class="text-gray-400 font-semibold mr-4 w-5 text-center">${episode.episode}</span><div class="relative w-28 h-16 flex-shrink-0 ${watchedClass}"><img src="${episode.thumbnail}" class="w-full h-full object-cover rounded-md">${isWatched ? `<div class="watched-overlay"><i data-lucide="check-circle" class="w-6 h-6 text-white"></i></div>` : ''}<div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity play-icon-container"><i data-lucide="play" class="w-6 h-6 text-white"></i></div></div><div class="flex-grow mx-4"><h5 class="font-semibold text-sm text-white">${episode.title}</h5><p class="text-xs text-gray-400 mt-1 line-clamp-2">${episode.description || ''}</p></div><span class="text-xs text-gray-400 ml-4">${episode.duration || ''}</span></div>`;
         }
         function renderEpisodes(item, seasonNumber, seriesIndex) { const seasonData = item.seasons.find(s => s.seasonNumber == seasonNumber); const episodesList = document.getElementById('episodes-list'); if (seasonData && episodesList) { episodesList.innerHTML = seasonData.episodes.map(ep => createEpisodeItem(ep, seriesIndex, seasonNumber)).join(''); lucide.createIcons(); } }
-        function playMovie(index, type) { const movie = allMoviesSource[index]; if (movie) { updateContinueWatching(movie, { originalIndex: index, progress: 50 }); markAsWatched(movie); openPlayerModal(movie.videoUrl); } }
-        window.playMovie = playMovie;
-        function playEpisode(seriesIndex, seasonNumber, episodeNumber) { const series = allSeriesContent[seriesIndex]; if (!series) return; const season = series.seasons.find(s => s.seasonNumber == seasonNumber); if (!season) return; const episode = season.episodes.find(e => e.episode == episodeNumber); if (!episode) return; updateContinueWatching(series, { originalIndex: seriesIndex, seasonNumber, episodeNumber }); markAsWatched(series, { seasonNumber, episodeNumber }); renderEpisodes(series, seasonNumber, seriesIndex); openPlayerModal(episode.videoUrl); }
+        
+        // Función unificada para reproducir Películas, TV y Deportes
+        function playSimpleContent(index, type) {
+            const dataSources = { 'Película': allMoviesSource, 'TV': allTvContent, 'Deporte': allSportsContent };
+            const source = dataSources[type];
+            const item = source?.[index];
+
+            if (item) {
+                let details = { originalIndex: index };
+                if (type === 'Película') {
+                    details.progress = 50; // Añadir progreso solo para películas
+                }
+                
+                updateContinueWatching(item, details);
+                markAsWatched(item); 
+                openPlayerModal(item.videoUrl);
+            }
+        }
+        window.playSimpleContent = playSimpleContent;
+
+        function playEpisode(seriesIndex, seasonNumber, episodeNumber) { 
+            const series = allSeriesContent[seriesIndex]; 
+            if (!series) return; 
+            const season = series.seasons.find(s => s.seasonNumber == seasonNumber); 
+            if (!season) return; 
+            const episode = season.episodes.find(e => e.episode == episodeNumber); 
+            if (!episode) return; 
+            updateContinueWatching(series, { originalIndex: seriesIndex, seasonNumber, episodeNumber }); 
+            markAsWatched(series, { seasonNumber, episodeNumber }); 
+            renderEpisodes(series, seasonNumber, seriesIndex); 
+            openPlayerModal(episode.videoUrl); 
+        }
         window.playEpisode = playEpisode;
-        function openModal(index, type) { const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent }; const source = dataSources[type]; const item = source?.[index]; if (!item) return; currentModalItem = { index, type }; document.getElementById('modal-backdrop').style.backgroundImage = `url('${item.image}')`; document.getElementById('modal-title').textContent = item.title; document.getElementById('modal-rating').textContent = item.rating; document.getElementById('modal-year').textContent = item.year; document.getElementById('modal-duration').textContent = item.duration || ''; document.getElementById('modal-description').textContent = item.description || 'Descripción no disponible.'; const castSection = document.getElementById('modal-cast-section'); if (item.cast) { document.getElementById('modal-cast').textContent = item.cast; castSection.classList.remove('hidden'); } else { castSection.classList.add('hidden'); } const genresContainer = document.getElementById('modal-genres'); genresContainer.innerHTML = ''; if (item.genres) { item.genres.forEach(genre => { const genreEl = document.createElement('span'); genreEl.className = 'bg-white/10 text-white text-xs font-semibold px-3 py-1 rounded-full'; genreEl.textContent = genre.charAt(0).toUpperCase() + genre.slice(1); genresContainer.appendChild(genreEl); }); } const playButton = document.getElementById('modal-play-button'); const episodesSection = document.getElementById('modal-episodes-section'); if (item.type === 'Serie' && item.seasons) { playButton.classList.add('hidden'); episodesSection.classList.remove('hidden'); const seasonSelector = document.getElementById('season-selector'); seasonSelector.innerHTML = item.seasons.map(s => `<option value="${s.seasonNumber}">Temporada ${s.seasonNumber}</option>`).join(''); seasonSelector.onchange = () => renderEpisodes(item, seasonSelector.value, index); renderEpisodes(item, 1, index); } else { playButton.classList.remove('hidden'); episodesSection.classList.add('hidden'); if (item.videoUrl) { playButton.onclick = () => playMovie(index, type); playButton.disabled = false; playButton.classList.remove('opacity-50', 'cursor-not-allowed'); } else { playButton.onclick = null; playButton.disabled = true; playButton.classList.add('opacity-50', 'cursor-not-allowed'); } } document.getElementById('modal-mylist-button').onclick = () => toggleInMyList(index, type); updateMyListButtons(item); modal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
+
+        function openModal(index, type) { 
+            const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent };
+            const source = dataSources[type]; 
+            const item = source?.[index]; 
+            if (!item) return; 
+            currentModalItem = { index, type }; 
+            document.getElementById('modal-backdrop').style.backgroundImage = `url('${item.image}')`; 
+            document.getElementById('modal-title').textContent = item.title; 
+            document.getElementById('modal-rating').textContent = item.rating; 
+            document.getElementById('modal-year').textContent = item.year; 
+            document.getElementById('modal-duration').textContent = item.duration || ''; 
+            document.getElementById('modal-description').textContent = item.description || 'Descripción no disponible.'; 
+            const castSection = document.getElementById('modal-cast-section'); 
+            if (item.cast) { 
+                document.getElementById('modal-cast').textContent = item.cast; 
+                castSection.classList.remove('hidden'); 
+            } else { 
+                castSection.classList.add('hidden'); 
+            } 
+            const genresContainer = document.getElementById('modal-genres'); 
+            genresContainer.innerHTML = ''; 
+            if (item.genres) { 
+                item.genres.forEach(genre => { 
+                    const genreEl = document.createElement('span'); 
+                    genreEl.className = 'bg-white/10 text-white text-xs font-semibold px-3 py-1 rounded-full'; 
+                    genreEl.textContent = genre.charAt(0).toUpperCase() + genre.slice(1); 
+                    genresContainer.appendChild(genreEl); 
+                }); 
+            } 
+            const playButton = document.getElementById('modal-play-button'); 
+            const episodesSection = document.getElementById('modal-episodes-section'); 
+            
+            if (item.type === 'Serie' && item.seasons) { 
+                playButton.classList.add('hidden'); 
+                episodesSection.classList.remove('hidden'); 
+                const seasonSelector = document.getElementById('season-selector'); 
+                seasonSelector.innerHTML = item.seasons.map(s => `<option value="${s.seasonNumber}">Temporada ${s.seasonNumber}</option>`).join(''); 
+                seasonSelector.onchange = () => renderEpisodes(item, seasonSelector.value, index); 
+                renderEpisodes(item, 1, index); 
+            } else { // Maneja Película, TV, y Deporte
+                playButton.classList.remove('hidden'); 
+                episodesSection.classList.add('hidden'); 
+                if (item.videoUrl) { 
+                    playButton.onclick = () => playSimpleContent(index, type); // Usar la nueva función
+                    playButton.disabled = false; 
+                    playButton.classList.remove('opacity-50', 'cursor-not-allowed'); 
+                } else { 
+                    playButton.onclick = null; 
+                    playButton.disabled = true; 
+                    playButton.classList.add('opacity-50', 'cursor-not-allowed'); 
+                } 
+            } 
+            document.getElementById('modal-mylist-button').onclick = () => toggleInMyList(index, type); 
+            updateMyListButtons(item); 
+            modal.classList.remove('hidden'); 
+            document.body.style.overflow = 'hidden'; 
+            lucide.createIcons(); 
+        }
         window.openModal = openModal;
         function closeModal() { modal.classList.add('hidden'); if (playerModal.classList.contains('hidden')) { document.body.style.overflow = 'auto'; } }
         window.closeModal = closeModal;
         modal.addEventListener('click', (event) => { if (event.target === modal) { closeModal(); } });
         const playerModal = document.getElementById('video-player-modal'); const playerIframe = document.getElementById('video-player-iframe');
-        function openPlayerModal(url) { closeModal(); playerIframe.src = url; playerModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; lucide.createIcons(); }
+        function openPlayerModal(url) { 
+            closeModal(); 
+            // Convertir URLs de YouTube watch a embed
+            if (url.includes("youtube.com/watch?v=")) {
+                const videoId = url.split('v=')[1].split('&')[0];
+                url = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            }
+            playerIframe.src = url; 
+            playerModal.classList.remove('hidden'); 
+            document.body.style.overflow = 'hidden'; 
+            lucide.createIcons(); 
+        }
         window.openPlayerModal = openPlayerModal;
         function closePlayerModal() { playerModal.classList.add('hidden'); playerIframe.src = ''; document.body.style.overflow = 'auto'; renderContinueWatching(); renderAllViews(); }
         window.closePlayerModal = closePlayerModal;
@@ -350,4 +453,13 @@
             renderNotifications();
             renderAllViews(); 
             navigateTo('home'); 
-            const supermanIndex = allMoviesSource.findIndex(m => m.title === 'Superman'); if (supermanIndex !== -1) { const superman = allMoviesSource[supermanIndex]; document.getElementById('hero-play-button').onclick = () => playMovie(supermanIndex, 'Película'); document.getElementById('hero-mylist-button').onclick = () => toggleInMyList(supermanIndex, 'Película'); updateMyListButtons(superman); } if (sidebar) { sidebar.classList.remove('open'); } if (overlay) { overlay.classList.add('hidden'); } };
+            const supermanIndex = allMoviesSource.findIndex(m => m.title === 'Superman'); 
+            if (supermanIndex !== -1) { 
+                const superman = allMoviesSource[supermanIndex]; 
+                document.getElementById('hero-play-button').onclick = () => playSimpleContent(supermanIndex, 'Película'); 
+                document.getElementById('hero-mylist-button').onclick = () => toggleInMyList(supermanIndex, 'Película'); 
+                updateMyListButtons(superman); 
+            } 
+            if (sidebar) { sidebar.classList.remove('open'); } 
+            if (overlay) { overlay.classList.add('hidden'); } 
+        };
