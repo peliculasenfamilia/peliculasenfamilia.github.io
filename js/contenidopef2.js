@@ -235,7 +235,7 @@
         const allTvContent = [
             { title: "El Trece", rating: 7.5, year: 2024, type: 'TV', image: "https://cdn.mitvstatic.com/channels/ar_el-trece_m.png", inMyList: false, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
             { title: "TN", rating: 8.9, year: 2024, type: 'TV', image: "https://television.com.ar/wp-content/uploads/2024/07/tn.jpg", inMyList: false, videoUrl: "https://www.youtube.com/embed/cb12KmMMDJA" },
-            { title: "Telefe", rating: 8.9, year: 2024, type: 'TV', image: "https://bestleague.world/img/telefe.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
+            { title: "Telefe", rating: 8.9, year: 2024, type: 'TV', image: "https://images.seeklogo.com/logo-png/52/1/telefe-2018-logo-png_seeklogo-527139.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
         ]; // Use embed URL for YouTube
         const allSportsContent = [
             { title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
