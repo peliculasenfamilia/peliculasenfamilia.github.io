@@ -236,6 +236,14 @@
             { title: "El Trece", rating: 7.5, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/trece.png", inMyList: false, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
             { title: "TN", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2048.png", inMyList: false, videoUrl: "https://www.youtube.com/embed/cb12KmMMDJA" },
             { title: "Telefe", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2046.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
+            { title: "America", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2047.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
+            { title: "Canal 26", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2050.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=MjZfVFZfSEQ&lang=1" },
+            { title: "La Nación +", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2049.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=TGFfTmFjaW9u&lang=1" },
+            { title: "TV Pública", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2053.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=Q2FuYWw3&lang=1" },
+            { title: "Canal Rural", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2054.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=Q2FuYWxfUnVyYWw=&lang=1" },
+            { title: "Diputados TV", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2059.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=RGlwdXRhZG9zX1RW&lang=1" },
+            { title: "Canal Encuentro", rating: 8.9, year: 2024, type: 'TV', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbe00d_Component%2057.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=RW5jdWVudHJv&lang=1" },
+            
         ]; // Use embed URL for YouTube
         const allSportsContent = [
             { title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
