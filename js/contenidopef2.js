@@ -246,8 +246,9 @@
             
         ]; // Use embed URL for YouTube
         const allSportsContent = [
-            { title: "Fútbol: Final", rating: 9.5, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/008000/white?text=FUTBOL", inMyList: true, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
-            { title: "Baloncesto: Playoffs", rating: 9.1, year: 2024, type: 'Deporte', image: "https://placehold.co/300x450/FFA500/black?text=BASKET", inMyList: false, videoUrl: "https://www.youtube.com/embed/cb12KmMMDJA" }]; // Use embed URL for YouTube
+            { title: "TNT SPORTS", rating: 9.5, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a7608246440cf94a360e64_Component%2072.png", inMyList: true, videoUrl: "https://dots.bestleague.world/mpdk/?get=aHR0cHM6Ly9jZG4udHJpbWkuY29tLmFyL2xpdmUvc20tbGl2ZS9UTlRfU1BPUlRTX0JLUDQvc2FfbGl2ZV9kYXNoX2xsL1ROVF9TUE9SVFNfQktQNC5tcGQ=&key=NGM3OWEyN2Y0NmY0NGJmYmI3NzRiOGM3ZjFmMWU1N2Y=&key2=NTMwZmQwY2JhOWRjNTU2YTMzOWIwM2FmNGIwOTUxYjk=&start=true" }, 
+            { title: "Tyc Sports", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a760a538423d0aebe285aa_Component%2071.png", inMyList: false, videoUrl: "https://la14hd.com/vivo/canales.php?stream=tycsports" },
+        ]; // Use embed URL for YouTube
         let currentPage = 'home'; 
 
         function createMovieCard(item, index, type) { 
