@@ -233,8 +233,8 @@
         const allPopularSeries = allSeriesContent.filter(s => popularSeriesTitles.includes(s.title));
         const allMoviesContent = Array.from(new Map(allMoviesSource.map(movie => [movie.title, movie])).values());
         const allTvContent = [
-            { title: "El Trece", rating: 7.5, year: 2024, type: 'TV', image: "https://cdn.mitvstatic.com/channels/ar_el-trece_m.png", inMyList: false, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
-            { title: "TN", rating: 8.9, year: 2024, type: 'TV', image: "https://television.com.ar/wp-content/uploads/2024/07/tn.jpg", inMyList: false, videoUrl: "https://www.youtube.com/embed/cb12KmMMDJA" },
+            { title: "El Trece", rating: 7.5, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/trece.png", inMyList: false, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
+            { title: "TN", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2048.png", inMyList: false, videoUrl: "https://www.youtube.com/embed/cb12KmMMDJA" },
             { title: "Telefe", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2046.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
         ]; // Use embed URL for YouTube
         const allSportsContent = [
