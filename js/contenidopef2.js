@@ -232,9 +232,9 @@
             lucide.createIcons();
         }
 
-        const newReleasesTitles = ["Caramelo", "F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible", "Mi Villano Favorito 4" ];
+        const newReleasesTitles = ["IT: Bienvenidos a Derry (2025)","Caramelo", "F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible", "Mi Villano Favorito 4" ];
         const popularMoviesTitles = ["Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Destino Final: Lazos de Sangre", "La Guerra del Mañana", "Karate Kid: Leyendas", "Jurassic World: Renace", "Hipnosis: Arma Invisible"];
-        const popularSeriesTitles = ["Shōgun", "The Boys", "Monarch: El legado de los monstruos", "Kaiju Nº 8", "From", "Wolf Pack", "Surface", "La Brea", "Wynonna Earp", "Stargate SG-1","Invasión", "Rumbo al infierno", "Outcast", "One tree hill" ];
+        const popularSeriesTitles = ["IT: Bienvenidos a Derry (2025)","Shōgun", "The Boys", "Monarch: El legado de los monstruos", "Kaiju Nº 8", "From", "Wolf Pack", "Surface", "La Brea", "Wynonna Earp", "Stargate SG-1","Invasión", "Rumbo al infierno", "Outcast", "One tree hill" ];
         const allNewReleases = allMoviesSource.filter(m => newReleasesTitles.includes(m.title));
         const allPopularMovies = allMoviesSource.filter(m => popularMoviesTitles.includes(m.title));
         const allPopularSeries = allSeriesContent.filter(s => popularSeriesTitles.includes(s.title));
