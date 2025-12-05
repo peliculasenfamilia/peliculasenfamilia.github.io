@@ -276,6 +276,7 @@
             { title: "Tyc Sports", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a760a538423d0aebe285aa_Component%2071.png", inMyList: false, videoUrl: "https://la14hd.com/vivo/canales.php?stream=tycsports" },
             { title: "FOX SPORTS", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a7665339a7f4d465af996d_Component%2066.png", inMyList: false, videoUrl: "https://envivolibre.com/canal.php?stream=foxsports" },
             { title: "ESPN PREMIUM", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a76849a5661885a4caf286_ESPNPREMIUM.png", inMyList: false, videoUrl: "https://envivolibre.com/canal.php?stream=espnpremium" },
+            { title: "Telefe", rating: 8.9, year: 2024, type: 'Deporte', image: "https://peliculasenfamilia.github.io/img/canales/Component%2046.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
         ]; // Use embed URL for YouTube
         let currentPage = 'home'; 
 
