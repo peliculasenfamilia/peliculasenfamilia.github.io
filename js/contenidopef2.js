@@ -274,6 +274,8 @@
         const allSportsContent = [
             { title: "TNT SPORTS", rating: 9.5, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a7608246440cf94a360e64_Component%2072.png", inMyList: true, videoUrl: "https://dots.bestleague.world/mpdk/?get=aHR0cHM6Ly9jZG4udHJpbWkuY29tLmFyL2xpdmUvc20tbGl2ZS9UTlRfU1BPUlRTX0JLUDQvc2FfbGl2ZV9kYXNoX2xsL1ROVF9TUE9SVFNfQktQNC5tcGQ=&key=NGM3OWEyN2Y0NmY0NGJmYmI3NzRiOGM3ZjFmMWU1N2Y=&key2=NTMwZmQwY2JhOWRjNTU2YTMzOWIwM2FmNGIwOTUxYjk=&start=true" }, 
             { title: "Tyc Sports", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a760a538423d0aebe285aa_Component%2071.png", inMyList: false, videoUrl: "https://la14hd.com/vivo/canales.php?stream=tycsports" },
+            { title: "FOX SPORTS", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a7665339a7f4d465af996d_Component%2066.png", inMyList: false, videoUrl: "https://envivolibre.com/canal.php?stream=foxsports" },
+            { title: "ESPN PREMIUM", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a76849a5661885a4caf286_ESPNPREMIUM.png", inMyList: false, videoUrl: "https://envivolibre.com/canal.php?stream=espnpremium" },
         ]; // Use embed URL for YouTube
         let currentPage = 'home'; 
 
