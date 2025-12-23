@@ -21,6 +21,12 @@
             { title: "Cualquiera Menos Tú", rating: 7.1, year: 2023, duration: "1h 43m", type: 'Película', image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2FsmIleWSSXhbBunnWkKmyGj9oVaj.jpg&w=256&q=75", genres: ['romantica', 'comedia', 'destacada'], description: "Después de una primera cita increíble, la ardiente atracción entre Bea y Ben se enfría. Pero cuando se reencuentran inesperadamente en una boda en Australia, fingen ser la pareja perfecta para mantener las apariencias.", cast: "Sydney Sweeney, Glen Powell, Alexandra Shipp", videoUrl: "https://dsvplay.com/e/ekpdaahg7ivq", inMyList: false, dateAdded: '2025-08-20' }
         ];
         const allSeriesContent = [
+            { title: "The War Between the Land and the Sea", rating: 6.2, year: 2025, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w200/4wDU61HtpXbcwpgCy1xnodxKRYN.jpg", inMyList: true, description: "Una pequeña ciudad obsesionada con las sirenas se revoluciona con la llegada de una misteriosa joven.", cast: "Eline Powell,Alex Roe,Fola Evans-Akingbola,Ian Verdun,Rena Owen", genres: ['drama', 'scifi', 'destacada'], dateAdded: '2025-12-03', 
+                seasons: 
+                [{ seasonNumber: 1, episodes: 
+                    [{ episode: 1, title: " Homo Aqua", duration: "1h", thumbnail: "https://image.tmdb.org/t/p/w200/4wDU61HtpXbcwpgCy1xnodxKRYN.jpg", description: "La vida cotidiana de Barclay se convierte en un mundo de terror cuando una especie ancestral emerge del mar.", videoUrl: "https://player.cuevana.bot/?token=1VFxBDlxQVR0YAl5J" }, 
+                     { episode: 2, title: "El señuelo", duration: "1h", thumbnail: "https://image.tmdb.org/t/p/w200/4wDU61HtpXbcwpgCy1xnodxKRYN.jpg", description: "Ben y la tripulación de North Star descubren un dispositivo que emite un sonido extraño; Ryn encuentra refugio en la casa del experto en folclore local.", videoUrl: "https://videostr.net/embed-1/v3/e-1/wR3gD6dzBLa9?z=" }]}] },  
+
             { title: "Siren", rating: 7.0, year: 2018, type: 'Serie', duration: "3 Temporada", image: "https://pics.filmaffinity.com/siren-443221358-mmed.jpg", inMyList: true, description: "Una pequeña ciudad obsesionada con las sirenas se revoluciona con la llegada de una misteriosa joven.", cast: "Eline Powell,Alex Roe,Fola Evans-Akingbola,Ian Verdun,Rena Owen", genres: ['drama', 'scifi', 'destacada'], dateAdded: '2025-12-03', 
                 seasons: 
                 [{ seasonNumber: 1, episodes: 
