@@ -561,7 +561,7 @@
             renderNotifications();
             renderAllViews(); 
             navigateTo('home'); 
-            const supermanIndex = allMoviesSource.findIndex(m => m.title === 'Superman'); 
+            const supermanIndex = allMoviesSource.findIndex(m => m.title === 'Maquina de guerra'); 
             if (supermanIndex !== -1) { 
                 const superman = allMoviesSource[supermanIndex]; 
                 document.getElementById('hero-play-button').onclick = () => playSimpleContent(supermanIndex, 'Película'); 
