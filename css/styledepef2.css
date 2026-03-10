@@ -1,5 +1,5 @@
 .hero-section { background-size: cover; background-position: center; position: relative; height: 500px; }
-        #home-hero-section { background-image: url('https://pics.filmaffinity.com/war_machine-295564835-large.jpg'); }
+        #home-hero-section { background-image: url('https://www.iwmbuzz.com/wp-content/uploads/2026/03/war-machine-2026-a-toast-to-humanity-and-hope-among-ruins.jpg'); }
         .hero-section::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient( to right, rgba(27, 36, 51, 1) 0%, rgba(27, 36, 51, 1) 25%, rgba(27, 36, 51, 0.8) 50%, rgba(27, 36, 51, 0.3) 75%, rgba(27, 36, 51, 0) 100% ); }
         .hero-content { position: relative; z-index: 10; }
         .ring-notification { animation: ring-pulse 1.5s infinite; }
