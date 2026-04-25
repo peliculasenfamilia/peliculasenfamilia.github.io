@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Películas en Familia - Interfaz de Streaming</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary-blue': '#1A73E8', // Color azul principal para botones y acentos
+                        'dark-bg': '#0D1117',      // Fondo muy oscuro para el cuerpo (Casi negro)
+                        'sidebar-bg': '#1B2433',   /* Sidebar más CLARO */
+                        'card-bg': '#1E232A',      // Fondo de las tarjetas de películas
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .hero-section { background-size: cover; background-position: center; position: relative; height: 500px; }
+        #home-hero-section { background-image: url('https://pics.filmaffinity.com/war_machine-295564835-large.jpg'); }
+        .hero-section::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient( to right, rgba(27, 36, 51, 1) 0%, rgba(27, 36, 51, 1) 25%, rgba(27, 36, 51, 0.8) 50%, rgba(27, 36, 51, 0.3) 75%, rgba(27, 36, 51, 0) 100% ); }
+        .hero-content { position: relative; z-index: 10; }
+        .ring-notification { animation: ring-pulse 1.5s infinite; }
+        @keyframes ring-pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 69, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); } }
+        .sidebar { transform: translateX(-100%); transition: transform 0.3s ease-in-out; z-index: 50; }
+        .sidebar.open { transform: translateX(0); }
+        @media (min-width: 1024px) { .sidebar { position: relative; transform: translateX(0); width: 256px; flex-shrink: 0; } }
+        .movie-row { overflow-x: scroll; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+        .movie-row::-webkit-scrollbar { display: none; }
+        .movie-row-inner { display: flex; gap: 1.5rem; padding-bottom: 1rem; }
+        .movie-card { flex-shrink: 0; width: 130px; }
+        @media (min-width: 640px) { .movie-card { width: 160px; } }
+        @media (min-width: 1024px) { .movie-card { width: 180px; } }
+        .play-button-overlay { opacity: 0; transition: opacity 0.3s; width: 50px; height: 50px; border-radius: 9999px; background-color: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
+        .movie-card-container:hover .play-button-overlay { opacity: 1; }
+        .nav-arrow { left: 1rem; background-color: rgba(0, 0, 0, 0.5); padding: 0.75rem; border-radius: 9999px; }
+        .nav-arrow.right { right: 1rem; left: auto; }
+        
+        /* Estilos del reproductor overlay */
+        .modal-overlay { background-color: rgba(0, 0, 0, 0.95); transition: opacity 0.3s ease-in-out; }
+        
+        #episodes-list::-webkit-scrollbar, #notification-list::-webkit-scrollbar { width: 4px; }
+        #episodes-list::-webkit-scrollbar-track, #notification-list::-webkit-scrollbar-track { background: transparent; }
+        #episodes-list::-webkit-scrollbar-thumb, #notification-list::-webkit-scrollbar-thumb { background: #4A5568; border-radius: 2px; }
+        #episodes-list::-webkit-scrollbar-thumb:hover, #notification-list::-webkit-scrollbar-thumb:hover { background: #718096; }
+        .line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+        .continue-card { flex-shrink: 0; width: 280px; }
+        @media (min-width: 768px) { .continue-card { width: 320px; } }
+        
+        /* Nuevos estilos para indicar contenido visto */
+        .watched-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .is-watched .play-button-overlay, .is-watched .play-icon-container {
+            display: none;
+        }
+        .is-watched > img, .is-watched img {
+            filter: grayscale(70%);
+        }
+
+        /* Degradado de la vista de detalles */
+        .details-gradient {
+            background: linear-gradient(to top, #0D1117 0%, rgba(13, 17, 23, 0.8) 40%, transparent 100%);
+        }
+        .details-gradient-side {
+            background: linear-gradient(to right, #0D1117 0%, rgba(13, 17, 23, 0.6) 50%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-white font-sans flex min-h-screen">
+
+    <aside id="sidebar" class="sidebar fixed inset-y-0 left-0 w-64 bg-sidebar-bg p-4 flex flex-col lg:relative lg:translate-x-0 lg:flex-shrink-0">
+        <div class="flex items-center space-x-2 mb-8">
+            <i data-lucide="play-circle" class="text-primary-blue h-7 w-7"></i>
+            <span class="text-xl font-bold text-white">Películas en Familia</span>
+            <button id="close-sidebar" class="lg:hidden ml-auto p-2 rounded-full hover:bg-white/10"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <nav class="flex flex-col space-y-2">
+            <h3 class="text-gray-400 text-xs font-semibold uppercase mb-2">MENU</h3>
+            <a href="#" id="nav-home" onclick="navigateTo('home')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="home" class="w-5 h-5"></i><span>Inicio</span></a>
+            <a href="#" id="nav-series" onclick="navigateTo('series')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="monitor" class="w-5 h-5"></i><span>Series</span></a>
+            <a href="#" id="nav-movies" onclick="navigateTo('movies')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="film" class="w-5 h-5"></i><span>Películas</span></a>
+            <a href="#" id="nav-tv" onclick="navigateTo('tv')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="tv" class="w-5 h-5"></i><span>Televisión</span></a>
+            <a href="#" id="nav-sports" onclick="navigateTo('sports')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><circle cx="12" cy="12" r="10"></circle><polygon points="12 5.5 15.5 8 15.5 13 12 15.5 8.5 13 8.5 8 12 5.5"></polygon><line x1="12" y1="22" x2="12" y2="15.5"></line><line x1="3.5" y1="17.5" x2="8.5" y2="13"></line><line x1="20.5" y1="17.5" x2="15.5" y2="13"></line><line x1="3.5" y1="6.5" x2="8.5" y2="8"></line><line x1="20.5" y1="6.5" x2="15.5" y2="8"></line></svg>
+                <span>Deportes</span>
+            </a>
+            <a href="#" id="nav-mylist" onclick="navigateTo('mylist')" class="nav-link flex items-center space-x-3 p-3 rounded-xl text-gray-300 hover:bg-white/10 transition duration-150"><i data-lucide="list-video" class="w-5 h-5"></i><span>Mi Lista</span></a>
+        </nav>
+    </aside>
+    
+    <div id="overlay" class="fixed inset-0 bg-black/50 hidden lg:hidden z-40"></div>
+
+    <main class="main-content flex-1 overflow-y-auto relative h-screen">
+        <!-- Header Principal (Oculto en la vista de detalles para mayor inmersión) -->
+        <header id="main-header" class="sticky top-0 bg-dark-bg/95 backdrop-blur-sm z-30 pt-4 pb-4 px-4 lg:px-6 flex items-center justify-between lg:justify-end border-b border-sidebar-bg">
+            <button id="open-sidebar" class="lg:hidden p-2 rounded-full hover:bg-white/10 mr-4"><i data-lucide="menu" class="w-6 h-6"></i></button>
+            <div class="relative flex-grow max-w-lg hidden sm:block">
+                <i data-lucide="search" class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+                <input type="text" id="search-input" onkeyup="filterContent()" placeholder="Buscar en todas las secciones..." class="w-full py-2 pl-10 pr-4 bg-sidebar-bg rounded-full border border-gray-700 focus:ring-2 focus:ring-primary-blue focus:border-primary-blue text-sm placeholder-gray-400">
+            </div>
+            <div class="flex items-center space-x-4 ml-auto">
+                <div class="relative">
+                    <button id="notification-button" class="p-2 rounded-full hover:bg-white/10 relative">
+                        <i data-lucide="bell" class="w-5 h-5 text-gray-300"></i>
+                        <span id="notification-dot" class="hidden absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full ring-2 ring-dark-bg ring-notification"></span>
+                    </button>
+                    <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-sidebar-bg rounded-lg shadow-lg z-50 border border-gray-700">
+                        <div class="p-3 border-b border-gray-700 flex justify-between items-center">
+                            <h4 class="font-semibold text-white">Notificaciones</h4>
+                            <button id="mark-read-button" class="text-xs text-primary-blue hover:underline">Marcar como leído</button>
+                        </div>
+                        <div id="notification-list" class="p-2 max-h-80 overflow-y-auto"></div>
+                        <div class="p-2 border-t border-gray-700 text-center"><a href="#" class="text-sm text-primary-blue hover:underline">Ver todas</a></div>
+                    </div>
+                </div>
+                <button class="p-2 rounded-full hover:bg-white/10"><i data-lucide="cast" class="w-5 h-5 text-gray-300"></i></button>
+                <div class="h-8 w-8 bg-primary-blue rounded-full flex items-center justify-center text-sm font-bold cursor-pointer">A</div>
+            </div>
+        </header>
+        
+        <div class="px-4 lg:px-6">
+            <div id="home-view" class="view-container pt-2">
+                 <section id="home-hero-section" class="hero-section flex items-end rounded-xl overflow-hidden mb-8">
+                    <div class="hero-content p-8 max-w-4xl">
+                        <h2 class="text-6xl font-extrabold tracking-tight">Maquina de guerra</h2>
+                        <div class="flex items-center space-x-4 text-gray-300 text-sm my-4">
+                            <span class="flex items-center space-x-1"><i data-lucide="star" class="w-4 h-4 text-yellow-400 fill-yellow-400"></i><span>6.5</span></span>
+                            <span>2026</span><span>1h 46m</span><span class="border border-gray-400 px-1 text-xs rounded">PG-13</span>
+                        </div>
+                        <p class="text-gray-300 mb-6 max-w-2xl text-base leading-relaxed">En su última misión de entrenamiento, un ingeniero de combate debe liderar a su unidad en una lucha por sobrevivir ante una amenaza inimaginable...</p>
+                        <div class="flex space-x-4">
+                            <button id="hero-play-button" class="flex items-center space-x-2 px-6 py-3 bg-primary-blue hover:bg-blue-600 text-white font-bold rounded-full transition duration-200 shadow-lg shadow-primary-blue/50"><i data-lucide="play" class="w-5 h-5 fill-white"></i><span>Reproducir</span></button>
+                            <button id="hero-mylist-button" class="flex items-center space-x-2 px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full transition duration-200"><i data-lucide="plus" class="w-5 h-5"></i><span>Mi Lista</span></button>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="continue-watching-section" class="hidden pt-8 pb-4">
+                    <h3 class="text-2xl font-bold mb-6">Continuar Viendo</h3>
+                    <div class="relative">
+                        <button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button>
+                        <div class="movie-row"><div class="movie-row-inner" id="continue-watching-inner"></div></div>
+                        <button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button>
+                    </div>
+                </section>
+
+                <div id="home-carousels">
+                    <section id="section-new-releases" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Nuevos Lanzamientos</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="new-releases-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section>
+                    <section id="section-popular-movies" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Populares</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="popular-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section>
+                    <section id="section-popular-series" class="pt-4 pb-8"><h3 class="text-2xl font-bold mb-6">Series Populares</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="popular-series-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section>
+                </div>
+            </div>
+            
+            <div id="series-view" class="view-container hidden pt-2"><div id="series-carousels" class="pt-8"><section id="section-featured-series" class="pb-4"><h3 class="text-2xl font-bold mb-6">Series Destacadas</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="featured-series-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section id="section-scifi-series" class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Ciencia Ficción y Fantasía</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="scifi-series-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section id="section-drama-series" class="pt-4 pb-8"><h3 class="text-2xl font-bold mb-6">Series Dramáticas</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="drama-series-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
+            <div id="movies-view" class="view-container hidden pt-2"><div id="movies-carousels" class="pt-8"><section class="pb-4"><h3 class="text-2xl font-bold mb-6">Películas Destacadas</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="featured-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas de Comedia</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="comedy-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Dramáticas</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="drama-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Fantasía y Ciencia Ficción</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="fantasy-scifi-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Familiares</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="family-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Románticas</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="romance-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
+            <div id="tv-view" class="view-container hidden pt-2"><div id="tv-carousels" class="pt-8"><section id="section-live-tv" class="pb-4"><h3 class="text-2xl font-bold mb-6">Canales en Vivo</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="live-tv-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
+            <div id="sports-view" class="view-container hidden pt-2"><div id="sports-carousels" class="pt-8"><section id="section-live-sports" class="pb-4"><h3 class="text-2xl font-bold mb-6">Eventos en Directo</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="live-sports-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
+            <div id="mylist-view" class="view-container hidden pt-2"><div class="pt-8 pb-4"><h2 class="text-3xl font-bold mb-8">Mi Lista de Contenidos</h2><div id="mylist-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div></div></div>
+            
+            <div id="no-results" class="hidden text-center py-12 text-gray-400">
+                <i data-lucide="frown" class="w-12 h-12 mx-auto mb-4 text-primary-blue"></i>
+                <p class="text-xl font-semibold">No se encontraron resultados.</p>
+                <p>Intenta buscar otra palabra clave.</p>
+            </div>
+        </div>
+
+        <!-- NUEVA VISTA DE DETALLES A PÁGINA COMPLETA (UNIFICADA) -->
+        <div id="details-view" class="view-container hidden w-full pb-16 absolute top-0 left-0 bg-dark-bg z-40 min-h-screen">
+            <button onclick="goBack()" class="absolute top-6 left-6 z-50 flex items-center space-x-2 bg-black/60 hover:bg-black/90 text-white px-5 py-2.5 rounded-full backdrop-blur-md transition-all shadow-lg border border-white/10">
+                <i data-lucide="arrow-left" class="w-5 h-5"></i><span class="font-semibold">Volver</span>
+            </button>
+            
+            <div id="details-media-container" class="relative w-full h-[40vh] md:h-[70vh] transition-all duration-300">
+                <!-- Reproductor en línea unificado para todo el contenido -->
+                <div id="details-inline-player-wrapper" class="flex w-full h-full pt-20 px-4 lg:px-12 pb-4">
+                    <iframe id="details-inline-player" class="w-full h-full rounded-xl shadow-2xl bg-black border border-white/10" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+
+            <div id="details-content-container" class="relative z-10 px-6 lg:px-12 mt-8 max-w-7xl mx-auto transition-all duration-300">
+                <h2 id="details-title" class="text-3xl md:text-5xl font-extrabold tracking-tight mb-3 text-white drop-shadow-lg line-clamp-2"></h2>
+                
+                <div class="flex flex-wrap items-center gap-4 text-gray-300 text-sm mb-6 font-medium">
+                    <span class="flex items-center space-x-1"><i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i><span id="details-rating" class="text-white text-lg font-bold"></span></span>
+                    <span id="details-year"></span>
+                    <span class="text-gray-500">•</span>
+                    <span id="details-duration"></span>
+                </div>
+                
+                <div id="details-genres" class="flex flex-wrap gap-2 mb-8"></div>
+                
+                <div id="details-grid-layout" class="grid grid-cols-1 gap-12">
+                    <div id="details-main-column" class="col-span-1">
+                        <p id="details-description" class="text-gray-300 mb-8 text-base md:text-lg leading-relaxed"></p>
+                        
+                        <!-- Reparto unificado -->
+                        <div id="details-cast-section" class="hidden mb-8">
+                            <h4 class="text-xl font-bold mb-3 text-white">Reparto Principal</h4>
+                            <p id="details-cast" class="text-gray-400 text-base leading-relaxed"></p>
+                        </div>
+
+                        <div id="details-buttons" class="flex flex-col sm:flex-row gap-3 mb-8">
+                            <button id="details-mylist-button" class="flex items-center justify-center space-x-2 px-6 py-2.5 bg-sidebar-bg hover:bg-white/10 border border-gray-600 text-white text-base font-semibold rounded-full transition duration-200 w-full sm:w-auto"><i data-lucide="bookmark" class="w-5 h-5"></i><span>Mi Lista</span></button>
+                        </div>
+
+                        <div id="details-episodes-section" class="hidden mt-8">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 border-b border-gray-700 pb-4">
+                                <h4 class="text-2xl font-bold">Episodios y Temporadas</h4>
+                                <select id="season-selector" class="bg-card-bg border border-gray-600 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-blue font-semibold text-white"></select>
+                            </div>
+                            <div id="episodes-list" class="space-y-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Reproductor de video emergente (overlay) -->
+    <div id="video-player-modal" class="modal-overlay hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div class="flex flex-col items-center w-full">
+            <button onclick="closePlayerModal()" class="absolute top-4 right-4 text-white bg-white/10 hover:bg-white/30 rounded-full p-2 transition-colors z-10 backdrop-blur-sm"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <div class="w-full max-w-5xl aspect-video shadow-2xl rounded-xl overflow-hidden border border-white/10 bg-black">
+                <iframe id="video-player-iframe" class="w-full h-full" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+            <p class="mt-4 text-xs text-gray-400 text-center max-w-2xl bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">Si el video no se carga, podría deberse a un formato no compatible en tu dispositivo. Recomendamos usar la función "Transmitir" (<i data-lucide="cast" class="inline-block w-3 h-3"></i>).</p>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        
+        const allMoviesSource = [
+            { title: "Maquina de guerra", rating:6.5, year: 2026, duration: "1h 46m", type: 'Película', image: "https://pics.filmaffinity.com/war_machine-295564835-large.jpg", genres: ['accion', 'scifi','destacada','suspenso', ], description: "En su última misión de entrenamiento, un ingeniero de combate debe liderar a su unidad en una lucha por sobrevivir ante una amenaza inimaginable.", cast: "Alan Richtson, Dennis Quaid, Stephan James.", inMyList: false, videoUrl: "https://vimeos.net/embed-gu0ui9l378lj.html", dateAdded: '2026-03-08' },
+            { title: "Mortal", rating:5.9, year: 2020, duration: "1h 44m", type: 'Película', image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fb3QfqB5hYIBaguFxKliDabRIciU.jpg&w=256&q=75", genres: ['accion', 'scifi','destacada', ], description: "Un joven descubre que tiene poderes divinos como los que aparecen en las antiguas historias de la mitología noruega.", cast: "Nat Wolff, Iben Akerlie, Per Frisch, Priyanka Bose.", inMyList: false, videoUrl: "https://player.poseidonhd2.co/player.php?h=rxPRsRSX4IlkyS1F21W5jyCXNRYcEHW.M9bSz5TBEeF0rp1u8tBssQQ2k7FkBHrT", dateAdded: '2026-02-13' },
+            { title: "El gran diluvio", rating:5.4, year: 2025, duration: "1h 49m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//qIzSyT2AmDxkcQ0zOAeTbtZR9EQ.jpg", genres: ['accion', 'aventura', 'scifi','destacada', ], description: "Una inundación catastrófica inunda el planeta. En lo que podría ser el último día en la Tierra, se libra una lucha desesperada por salvar a un niño de un piso inundado.", cast: " 권민경, 권은성, 김강빈, 김규나, 김다미.", inMyList: false, videoUrl: "https://vimeos.net/embed-j6ydgnuluroa.html", dateAdded: '2025-12-27' },
+            { title: "El Conjuro 4: Últimos ritos", rating:6.2, year: 2025, duration: "2h 15m", type: 'Película', image: "https://cdnfiles.cfd/p/v2/w1/Cotcju9cuEXNm1sXIRKjbUu6O2J5dnSGBcILxIN.webp", genres: ['terror', 'misterio', 'suspenso','destacada', ], description: "Los investigadores paranormales Ed y Lorraine Warren se enfrentan a un último y aterrador caso en el que deben enfrentarse a misteriosas entidades.", cast: " Vera Farmiga, Patrick Wilson, Mia Tomlinson.", inMyList: false, videoUrl: "https://nuuuppp.sbs/watch/3cFmo3jz3H9rjw5sXzhfbVQZ3RQzOcgXTUlkSt3jz3wVCXOyE", dateAdded: '2025-12-03' },
+            { title: "Trol 2", rating:5.5, year: 2025, duration: "1h 42m", type: 'Película', image: "https://la.movie/wp-content/uploads/thumbs/be63bd049a45e596c9be7079dd937943_hd.webp", genres: ['accion', 'suspenso', 'fantasia', ], description: "Cuando otro despiadado trol desata una ola de destrucción en su país, Nora, Andreas y el comandante Kris se embarcan en la misión más peligrosa de sus vidas.", cast: "Ine Marie Wilmann, Kim S. Falck-Jørgensen, Mads Sjøgård Pettersen", inMyList: false, videoUrl: "https://vimeos.net/embed-mmwf2qetgghv.html", dateAdded: '2026-02-09' },
+            { title: "Caramelo", rating: 7.2, year: 2025, duration: "1h 41m", type: 'Película', image: "https://m.media-amazon.com/images/M/MV5BNTRlMzI4MDItZDJiNS00YmNmLWE1MmQtNjZjYTVhNDdmYjQ1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", genres: ['drama', 'comedia', 'familiar', ], description: "La película trata sobre un chef cuyo diagnóstico médico lo lleva a encontrar esperanza en un perro callejero llamado Amendoim.", cast: "Ademara Barros, Amendoim, Arianne Botelho, Benício Alves Torres, Bruno Vinicius", inMyList: false, videoUrl: "https://vimeos.net/embed-71fdjopqwc9g.html", dateAdded: '2025-10-19' },
+            { title: "F1 La Película", rating: 7.7, year: 2025, duration: "2h 10m", type: 'Película', image: "https://i0.wp.com/tomatazos.buscafs.com/2025/01/238049_f1-la-pelicula-de-formula-1-de-brad-pitt-lanza-.jpg?fit=960,1200&quality=75&strip=all", genres: ['drama', 'accion'], description: "Un ex piloto de Fórmula 1 regresa a la competición para ser mentor de un joven prodigio en el emocionante y peligroso mundo de las carreras.", cast: "Brad Pitt, Damson Idris, Kerry Condon", inMyList: false, videoUrl: "https://vimeos.net/embed-567smpecp27m.html", dateAdded: '2025-10-18' },
+            { title: "Superman", rating: 7.2, year: 2025, duration: "2h 30m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/lfMKNOaaS2jGT3QKUaiFA8cO7DC.jpg", genres: ['fantasia', 'scifi', 'accion', 'destacada'], description: "La película sigue a Superman mientras busca reconciliar su herencia kryptoniana con su crianza humana como Clark Kent de Smallville, Kansas.", cast: "David Corenswet, Rachel Brosnahan, Nicholas Hoult", inMyList: true, videoUrl: "https://yuguaab.com/e/zgk5itgv132o", dateAdded: '2025-10-01' },
+            { title: "mision imposible 8", rating: 7.2, year: 2025, duration: "2h 45m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/haOjJGUV00dKlZaJWgjM1UD1cJV.jpg", genres: ['accion', 'destacada', 'thriller'], description: "Ethan Hunt y su equipo del FMI se embarcan en su misión más peligrosa hasta la fecha: rastrear una nueva y aterradora arma que amenaza a toda la humanidad.", cast: "Tom Cruise, Hayley Atwell, Ving Rhames", inMyList: false, videoUrl: "https://vimeos.net/embed-heqjtv7ef12.html", dateAdded: '2025-09-28' },
+            { title: "Los Cuatro Fantásticos", rating: 7.1, year: 2025, duration: "2h 15m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/ckfiXWGEMWrUP53cc6QyHijLlhl.jpg", genres: ['fantasia', 'scifi', 'accion', 'destacada'], description: "Cuatro astronautas adquieren superpoderes tras una exposición a rayos cósmicos y deben usarlos para defender la Tierra de una amenaza galáctica.", cast: "Pedro Pascal, Vanessa Kirby, Ebon Moss-Bachrach", inMyList: false, videoUrl: "https://bingezove.com/v/l0khu0wlxpd6", dateAdded: '2025-09-25' },
+            { title: "Elio", rating: 6.7, year: 2025, duration: "1h 50m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/fGjwHlv8bCjZypi2bHbbSmyIGMV.jpg", genres: ['fantasia', 'scifi', 'familiar'], description: "Un niño es transportado accidentalmente a través de la galaxia y es confundido con el embajador intergaláctico de la Tierra.", cast: "Yonas Kibreab, America Ferrera, Jameela Jamil", inMyList: false, videoUrl: "https://vimeos.net/embed-u5rzs30rp4s5.html", dateAdded: '2025-09-22' },
+            { title: "Destino Final: Lazos de Sangre", rating: 6.7, year: 2025, duration: "1h 55m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/frNkbclQpexf3aUzZrnixF3t5Hw.jpg", genres: ['horror', 'destacada'], description: "Un nuevo grupo de jóvenes debe encontrar una manera de escapar del macabro diseño de la Muerte después de que uno de ellos tiene una premonición.", cast: "Brec Bassinger, Teo Briones, Kaitlyn Santa Juana", inMyList: false, videoUrl: "https://vimeos.net/embed-3zh5v5e8teu4.html", dateAdded: '2025-09-20' },
+            { title: "Karate Kid: Leyendas", rating: 6.3, year: 2025, duration: "2h 05m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/bwNAjGUsHt35eqT0Aj8NHU02WPl.jpg", genres: ['accion', 'familiar', 'drama', 'destacada'], description: "Un joven prodigio del karate de China se traslada a la Costa Este, donde encuentra un mentor estricto pero sabio que le enseñará más que solo artes marciales.", cast: "Ben Wang, Jackie Chan, Ralph Macchio", inMyList: false, videoUrl: "https://vimeos.net/embed-vps3xcruxazs.html", dateAdded: '2025-09-18' },
+            { title: "Jurassic World: Renace", rating: 5.9, year: 2025, duration: "2h 20m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/Aw1FSO4gWk2Zjr2sfuyQ4lnK3Gc.jpg", genres: ['scifi', 'accion', 'destacada'], description: "Una nueva era de dinosaurios comienza, y un grupo de científicos y aventureros debe enfrentarse a nuevas amenazas en un mundo donde los humanos ya no son la especie dominante.", cast: "Scarlett Johansson, Jonathan Bailey, Mahershala Ali", inMyList: false, videoUrl: "https://vimeos.net/embed-r5xuubxljw1k.html", dateAdded: '2025-09-15' },
+            { title: "Primitive War", rating: 5.9, year: 2025, duration: "1h 40m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/egDAs0vh2SzTR07eUzdcC1XYkTS.jpg", genres: ['scifi', 'horror'], description: "Un equipo de soldados de élite es enviado a una jungla remota para una misión de rescate, solo para descubrir que están siendo cazados por dinosaurios modificados genéticamente.", cast: "Ryan Kwanten, Tricia Helfer, Jeff Fahey", inMyList: false, videoUrl: "https://vimeos.net/embed-mrywycuhxu5z.html", dateAdded: '2025-09-12' },
+            { title: "Hipnosis: Arma Invisible", rating: 5.5, year: 2025, duration: "2h 00m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/3IhGkkalwXguTlceGSl8XUJZOVI.jpg", genres: ['accion', 'thriller'], description: "Un detective debe resolver una serie de atracos de alto riesgo mientras se enfrenta a un misterioso villano que utiliza la hipnosis para controlar a la gente.", cast: "Ben Affleck, Alice Braga, William Fichtner", inMyList: false, videoUrl: "https://vimeos.net/embed-mrywycuhxu5z.html", dateAdded: '2025-09-10' },
+            { title: "La Guerra del Mañana", rating: 6.6, year: 2021, duration: "2h 18m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/tzp6VzED2TBc02bkYoYnQa6r2OK.jpg", genres: ['scifi', 'accion', 'drama'], description: "Un grupo de viajeros en el tiempo llega desde el año 2021 para entregar un mensaje urgente: 30 años en el futuro, la humanidad está perdiendo una guerra global contra una mortal especie alienígena.", cast: "Chris Pratt, Yvonne Strahovski, J.K. Simmons", videoUrl: "https://vimeos.net/embed-mbz2fvbnvtv6.html", inMyList: false, dateAdded: '2025-09-05' },
+            { title: "Xeno", rating: 5.5, year: 2025, duration: "1h 43m", type: 'Película', image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fa173ryH3yQXvP2y0jriL3dYjWfX.jpg&w=256&q=75", genres: ['scifi', 'accion', 'drama', 'destacada'], description: "Una adolescente convierte en su amiga a un aterrador extraterrestre después de que se estrella cerca del desierto.", cast: " Lulu Wilson, Omari Hardwick, Paul Schneider, Trae Romano, Wrenn Schmidt, Josh Cooke.", videoUrl: "https://vimeos.net/embed-mbz2fvbnvtv6.html", inMyList: false, dateAdded: '2025-09-01' },
+            { title: "Mi Villano Favorito 4", rating: 7.8, year: 2024, duration: "1h 35m", type: 'Película', image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fb6JX0fBne5yPFNBtdp4Imi3CpiE.jpg&w=256&q=75", genres: ['comedia', 'familiar', 'animacion', 'destacada'], description: "Gru se enfrenta a un nuevo némesis, Maxime Le Mal, y su novia Valentina, por lo cual la familia se ve obligada a huir.", cast: "Steve Carell, Kristen Wiig, Will Ferrell", videoUrl: "https://guxhag.com/e/ok2by17zzeuj", inMyList: false, dateAdded: '2025-08-28' },
+            { title: "Amigos Imaginarios", rating: 7.5, year: 2024, duration: "1h 44m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//8RgGuC7w8JxhykauzTC4bwha1J8.jpg", genres: ['comedia', 'familiar', 'fantasia', 'destacada'], description: "Una niña que puede ver a los amigos imaginarios de todo el mundo se embarca en una aventura mágica para reconectar a los amigos imaginarios olvidados con sus niños.", cast: "Cailey Fleming, Ryan Reynolds, John Krasinski", videoUrl: "https://vimeos.net/embed-jhke9mr9bw0b.html", inMyList: false, dateAdded: '2025-08-25' },
+            { title: "Cualquiera Menos Tú", rating: 7.1, year: 2023, duration: "1h 43m", type: 'Película', image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2FsmIleWSSXhbBunnWkKmyGj9oVaj.jpg&w=256&q=75", genres: ['romantica', 'comedia', 'destacada'], description: "Después de una primera cita increíble, la ardiente atracción entre Bea y Ben se enfría. Pero cuando se reencuentran inesperadamente en una boda en Australia, fingen ser la pareja perfecta para mantener las apariencias.", cast: "Sydney Sweeney, Glen Powell, Alexandra Shipp", videoUrl: "https://dsvplay.com/e/ekpdaahg7ivq", inMyList: false, dateAdded: '2025-08-20' }
+        ];
+
+        const allSeriesContent = [
+             { title: "The chosen", rating: 9.1, year: 2017, type: 'Serie', duration: "6 Temporada", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqBPcX8_YHEP83pwUXuXEGp7Y5FUf696Sx30HXCZx99g&s", inMyList: true, description: "La vida de Jesucristo y los apóstoles. Ambientada en Judea y Galilea en el siglo I, la serie retrata la vida de Jesús de Nazareth a través de las personas que interactuaron con él.", cast: "Jonathan Roumie, Shahar Isaac, Liz Tabish, Paras Patel.", genres: ['drama', 'historia', 'destacada'], dateAdded: '2025-03-29', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Te he llamado por tu nombre", duration: "1h", thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqBPcX8_YHEP83pwUXuXEGp7Y5FUf696Sx30HXCZx99g&s", description: "Dos hermanos se enfrentan a un recaudador de impuestos judío por sus deudas con Roma.", videoUrl: "https://niramirus.com/e/qo41mq2l48fm" }, 
+                    { episode: 2, title: "Shabat", duration: "1h", thumbnail: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqBPcX8_YHEP83pwUXuXEGp7Y5FUf696Sx30HXCZx99g&s", description: "Mateo valida el acuerdo de Simón con el pretor Quinto.", videoUrl: "https://niramirus.com/e/zvqfxr8pvrfr" }]}] },
+
+            { title: "The War Between the Land and the Sea", rating: 6.2, year: 2025, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w200/4wDU61HtpXbcwpgCy1xnodxKRYN.jpg", inMyList: true, description: "Una pequeña ciudad obsesionada con las sirenas se revoluciona con la llegada de una misteriosa joven.", cast: "Eline Powell,Alex Roe,Fola Evans-Akingbola,Ian Verdun,Rena Owen", genres: ['drama', 'scifi', 'destacada'], dateAdded: '2026-03-13', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: " Homo Aqua", duration: "1h", thumbnail: "https://image.tmdb.org/t/p/w200/4wDU61HtpXbcwpgCy1xnodxKRYN.jpg", description: "La vida cotidiana de Barclay se convierte en un mundo de terror cuando una especie ancestral emerge del mar.", videoUrl: "https://player.cuevana.bot/?token=1VFxBDlxQVR0YAl5J" }, 
+                    { episode: 2, title: "El señuelo", duration: "1h", thumbnail: "https://image.tmdb.org/t/p/w200/4wDU61HtpXbcwpgCy1xnodxKRYN.jpg", description: "Ben y la tripulación de North Star descubren un dispositivo.", videoUrl: "https://videostr.net/embed-1/v3/e-1/wR3gD6dzBLa9?z=" }]}] },  
+
+            { title: "Siren", rating: 7.0, year: 2018, type: 'Serie', duration: "3 Temporada", image: "https://pics.filmaffinity.com/siren-443221358-mmed.jpg", inMyList: true, description: "Una pequeña ciudad obsesionada con las sirenas se revoluciona con la llegada de una misteriosa joven.", cast: "Eline Powell,Alex Roe,Fola Evans-Akingbola,Ian Verdun,Rena Owen", genres: ['drama', 'scifi', 'destacada'], dateAdded: '2025-12-03', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "El descubrimiento de la sirena", duration: "1h", thumbnail: "https://pics.filmaffinity.com/siren-443221358-mmed.jpg", description: "Una chica llega a una ciudad donde hay una leyenda de sirenas.", videoUrl: "https://www.vidking.net/embed/tv/71886/1/1?color=ffa500&autoPlay=true" }, 
+                    { episode: 2, title: "El señuelo", duration: "1h", thumbnail: "https://pics.filmaffinity.com/siren-443221358-mmed.jpg", description: "Ben y la tripulación de North Star descubren un dispositivo.", videoUrl: "https://www.vidking.net/embed/tv/71886/1/2?color=ffa500&autoPlay=true" },
+                    { episode: 3, title: "Entrevista con una sirena", duration: "1h", thumbnail: "https://pics.filmaffinity.com/siren-443221358-mmed.jpg", description: "La investigación de Dale y la policía local apunta directamente a Ryn.", videoUrl: "https://www.vidking.net/embed/tv/71886/1/3?color=ffa500&autoPlay=true" }
+                    ]}] },  
+
+            { title: "Revival", rating: 6.7, year: 2025, type: 'Serie', duration: "1 Temporada", image: "https://cdnfiles.cfd/p/v2/w1/w2rrAdY4Cm2MLtmy403LV8OEiaayoF.webp", inMyList: true, description: "En un día milagroso en la zona rural de Wisconsin, los recién fallecidos se levantan repentinamente de sus tumbas.", cast: "Melanie Scrofano, Romy Weltman, David James Elliott, Andy McQueen", genres: ['drama', 'scifi', 'crimen', 'destacada'], dateAdded: '2025-12-03', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "No se lo digas a papá", duration: "45m", thumbnail: "https://cdnfiles.cfd/p/v2/w1/w2rrAdY4Cm2MLtmy403LV8OEiaayoF.webp", description: "Mientras los muertos vuelven a la vida en un pequeño pueblo, la agente Dana Cypress descubre un nuevo y mortal misterio.", videoUrl: "https://www.vidking.net/embed/tv/254013/1/1?color=ffa500&autoPlay=true" }, 
+                    { episode: 2, title: "Manteniendo las apariencias", duration: "45m", thumbnail: "https://cdnfiles.cfd/p/v2/w1/w2rrAdY4Cm2MLtmy403LV8OEiaayoF.webp", description: "El ataque de un Reviver sacude a Wausau mientras Dana comienza una investigación.", videoUrl: "https://www.vidking.net/embed/tv/254013/1/2?color=ffa500&autoPlay=true" }]}] },  
+
+            { title: "Stranger Things", rating: 8.6, year: 2016, type: 'Serie', duration: "5 Temporada", image: "https://la.movie/wp-content/uploads/thumbs/82ab7aa30c681b7318943b9366f1fb94_hd.webp", inMyList: true, description: "Después de la extraña desaparición de un niño, un pueblo se encuentra ante un misterio que revela experimentos secretos.", cast: "Millie Bobby Brown, Finn Wolfhard, Noah Schnapp", genres: ['misterio', 'scifi', 'terror', 'destacada'], dateAdded: '2025-12-03', 
+                seasons: [
+                { seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Capítulo uno: La desaparición de Will Byers", duration: "2h", thumbnail: "https://pics.filmaffinity.com/stranger_things-875025085-large.jpg", description: "Cuando vuelve en bici a su casa, Will ve algo horroroso.", videoUrl: "https://vimeos.net/embed-j3zix72mposh.html" }, 
+                    { episode: 2, title: " Capítulo dos: El bicho raro de Maple Street", duration: "2h", thumbnail: "https://pics.filmaffinity.com/stranger_things-875025085-large.jpg", description: "Lucas, Mike y Dustin intentan hablar con la niña que encontraron en el bosque.", videoUrl: "https://vimeos.net/embed-dl8tqs8xdz93.html" },
+                    { episode: 3, title: "Capítulo tres: Holly, Jolly", duration: "2h", thumbnail: "https://pics.filmaffinity.com/stranger_things-875025085-large.jpg", description: "Cada vez más preocupada, Nancy sigue buscando a Barb.", videoUrl: "https://vimeos.net/embed-edllt1zz1uza.html" },
+                    { episode: 4, title: "Capítulo Cuatro: El Cuerpo", duration: "2h", thumbnail: "https://pics.filmaffinity.com/stranger_things-875025085-large.jpg", description: "Joyce se niega a aceptar que su hijo Will esté muerto.", videoUrl: "https://vimeos.net/embed-gjk8kfqq4ow8.html" },
+                    { episode: 5, title: "Capítulo cinco: La pulga y el acróbata", duration: "2h", thumbnail: "https://pics.filmaffinity.com/stranger_things-875025085-large.jpg", description: "Hopper entra en el laboratorio.", videoUrl: "https://vimeos.net/embed-mind6a9b5ryr.html" },
+                    { episode: 6, title: " Capítulo Seis: El Monstruo", duration: "2h", thumbnail: "https://pics.filmaffinity.com/stranger_things-875025085-large.jpg", description: "Jonathan busca desesperadamente a Nancy en la oscuridad.", videoUrl: "https://vimeos.net/embed-zkv703zpyypc.html" },
+                ]},
+                { seasonNumber: 5, episodes: [
+                    { episode: 1, title: "Capítulo uno: El rastreo", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/82ab7aa30c681b7318943b9366f1fb94_hd.webp", description: "Noviembre de 1987. La pandilla evade al ejército para buscar a Vecna.", videoUrl: "https://vimeos.net/embed-q1ht6r6cytjv.html" }, 
+                    { episode: 2, title: "Capítulo dos: La desaparición de Holly Wheeler", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/82ab7aa30c681b7318943b9366f1fb94_hd.webp", description: "Tras un brutal ataque en la casa de los Wheeler.", videoUrl: "https://vimeos.net/embed-dl8tqs8xdz93.html" },
+                    { episode: 3, title: " Capítulo tres: La trampa del arco giratorio", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/82ab7aa30c681b7318943b9366f1fb94_hd.webp", description: "Will obtendrá información privilegiada sobre el próximo movimiento de Vecna.", videoUrl: "https://vimeos.net/embed-edllt1zz1uza.html" },
+                    { episode: 4, title: " Capítulo Cuatro: Hechicero", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/82ab7aa30c681b7318943b9366f1fb94_hd.webp", description: "El ejército refuerza su control sobre la ciudad.", videoUrl: "https://vimeos.net/embed-pturhmfxsiqb.html" },
+                    { episode: 5, title: "Capítulo cinco: Shock Jock", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/82ab7aa30c681b7318943b9366f1fb94_hd.webp", description: "La pandilla urde un plan electrizante.", videoUrl: "https://vimeos.net/embed-abzzsyi5n2jg.html" },
+                    { episode: 6, title: "Capítulo Seis: Escape de Camazotz", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/82ab7aa30c681b7318943b9366f1fb94_hd.webp", description: "Mientras Holly y Max luchan por escapar de la mente de Vecna.", videoUrl: "https://vimeos.net/embed-dkufxap0k3u6.html" },
+                    { episode: 7, title: " Capítulo Siete: El Puente", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/82ab7aa30c681b7318943b9366f1fb94_hd.webp", description: "En el aniversario de la desaparición de Will, el grupo se reúne.", videoUrl: "https://vimeos.net/embed-v0seu4u9na98.html" },
+                ]}] }, 
+
+            { title: "IT: Bienvenidos a Derry (2025)", rating: 6.8, year: 2025, type: 'Serie', duration: "1 Temporada", image: "https://la.movie/wp-content/uploads/thumbs/720e36c820ef1b1b88fb4e8c0e71cf86_hd.webp", inMyList: true, description: "En 1958, un grupo de siete amigos están empezando a ver cosas extrañas en el tranquilo pueblito Derry.", cast: "Jovan Adepo, Bill Skarsgård, Taylour Paige", genres: ['misterio', 'drama', 'terror'], dateAdded: '2025-12-02', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "El piloto", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/720e36c820ef1b1b88fb4e8c0e71cf86_hd.webp", description: "Cuatro meses después de que desaparezca un compañero.", videoUrl: "https://vimeos.net/embed-s5irm151bw52.html" }, 
+                    { episode: 2, title: "La cosa en la oscuridad", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/720e36c820ef1b1b88fb4e8c0e71cf86_hd.webp", description: "Charlotte y Will se adaptan a su nueva vida en Derry.", videoUrl: "https://vimeos.net/embed-wrqr4y2zyxze.html" }]}] }, 
+
+            { title: "Surface", rating: 7.2, year: 2005, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: true, description: "Una bióloga marina descubre una nueva forma de vida en el océano que podría cambiar el futuro de la humanidad para siempre.", cast: "Lake Bell, Jay R. Ferguson, Carter Jenkins", genres: ['scifi', 'drama'], dateAdded: '2025-09-15', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Hay algo en el agua", duration: "48m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El descubrimiento de una extraña criatura marina.", videoUrl: "https://videostr.net/embed-1/v3/e-1/2UBECDHXXIgW?z=" }, 
+                    { episode: 2, title: "El misterio se profundiza", duration: "49m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Mientras los científicos intentan comprender a la criatura...", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}] }, 
+
+            { title: "La Brea", rating: 5.8, year: 2021, type: 'Serie', duration: "3 Temporadas", image: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", inMyList: false, description: "Un enorme socavón se abre en Los Ángeles, arrastrando a cientos de personas a una misteriosa tierra prehistórica.", cast: "Natalie Zea, Eoin Macken, Chiké Okonkwo", genres: ['scifi', 'drama', 'destacada'], dateAdded: '2025-10-17', 
+                seasons: [ 
+                    { seasonNumber: 1, episodes: [
+                        { episode: 1, title: "Piloto", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Un socavón masivo abre un portal.", videoUrl: "https://guxhag.com/e/dojyrn1jo95h" },
+                        { episode: 2, title: "Día dos", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Eve recorre el peligroso desierto.", videoUrl: "https://doodstream.com/e/2wj4q3nbn2wk" },
+                        { episode: 3, title: "La caza", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Con la escasez de alimentos, Eve y Ty se adentran en el bosque.", videoUrl: "https://doodstream.com/e/l7x5b6q0lcb4" },
+                        { episode: 4, title: "El recién llegado", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "La visión de un avión estrellado infunde esperanza.", videoUrl: "https://doodstream.com/e/1ro0cs7yf783" },
+                        { episode: 5, title: "El Fuerte", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Un grupo de búsqueda explora un misterioso fuerte.", videoUrl: "https://doodstream.com/e/x6xw4itqu602" },
+                        { episode: 6, title: "El camino a casa", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Cuando el tiempo se acaba antes de que su casa ventana se cierre...", videoUrl: "https://doodstream.com/e/igexh37y0ksv" },
+                        { episode: 7, title: "La Tormenta", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Cuando una supertormenta caótica azota el claro...", videoUrl: "https://doodstream.com/e/2cw9ea7cgfvw" },
+                        { episode: 8, title: "Orígenes", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Con la llegada del frío, Eve, Levi y Ty regresan al fuerte.", videoUrl: "https://filemoon.sx/e/i1tn3c3142ad" },
+                        { episode: 9, title: "Padre e hijo", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Una revelación impactante pone en peligro la vida de Josh.", videoUrl: "https://doodstream.com/e/bf0tsgnew4wu" },
+                        { episode: 10, title: "Topanga", duration: "43m", thumbnail: "https://image.tmdb.org/t/p/w342/jyHK7qFX2HvaAULSAO7aztdanyr.jpg", description: "Noticia de la apertura de un último sumidero.", videoUrl: "https://doodstream.com/e/l7x5b6q0lcb4" }
+                    ] },
+                  { seasonNumber: 2, episodes: [
+                        { episode: 1, title: "El día siguiente", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Los supervivientes luchan por establecer un campamento.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" },
+                        { episode: 2, title: "La Cueva", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Gavin pide ayuda a su abuelo.", videoUrl: "https://doodstream.com/e/s9zpv7us8my6" },
+                        { episode: 3, title: "La gran evasión", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Gavin y Eve intentan una audaz huida.", videoUrl: "https://doodstream.com/e/a223p6c3anro" },
+                        { episode: 4, title: "La niebla", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Cuando la niebla cubre el Claro, Eve lidera la defensa.", videoUrl: "https://doodstream.com/e/ot95xyowygcs" },
+                        { episode: 5, title: "El atraco", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Eve y Gavin intentan comandar un cargamento.", videoUrl: "https://doodstream.com/e/frus3syyq58w" },
+                        { episode: 6, title: "Lázaro", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Su plan para infiltrarse fracasa.", videoUrl: "https://doodstream.com/e/4mlf8u6y2a2n" },
+                        { episode: 7, title: "1988", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Una familia Harris reunificada.", videoUrl: "https://doodstream.com/e/9124zoofgmhd" },
+                        { episode: 8, title: "Estampida", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Harris data del 10.000 a.C.", videoUrl: "https://doodstream.com/e/cb7auvtduuiu" },
+                        { episode: 9, title: "Asesinato en el claro", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Un Superviviente es asesinado.", videoUrl: "https://doodstream.com/e/2jfd4ejig0e7" },
+                        { episode: 10, title: "El día siguiente", duration: "44m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/la-brea-saison-2.jpg", description: "Luchan por establecer un campamento.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }
+                    ]}
+                ] },
+
+            { title: "Monarch: El legado de los monstruos", rating: 8.1, year: 2023, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w342/8ZSrqUsa1JN9FkIQU8iTFOMw4D5.jpg", inMyList: false, description: "Tras la batalla entre Godzilla y los Titanes, dos hermanos siguen los pasos de su padre.", cast: "Anna Sawai, Kiersey Clemons", genres: ['scifi', 'accion', 'destacada'], dateAdded: '2025-10-10', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Legado", duration: "50m", thumbnail: "https://image.tmdb.org/t/p/w342/8ZSrqUsa1JN9FkIQU8iTFOMw4D5.jpg", description: "El inicio de la búsqueda de la verdad.", videoUrl: "https://dinisglows.com/v/fz9d2ysr8bma" }]}] },
+
+            { title: "From", rating: 8.3, year: 2022, type: 'Serie', duration: "2 Temporadas", image: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: false, description: "Los habitantes de un pueblo aterrador luchan por mantenerse con vida y buscar una salida.", cast: "Harold Perrineau, Catalina Sandino Moreno", genres: ['misterio', 'horror', 'drama', 'destacada'], dateAdded: '2025-09-20', seasons: 
+                [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Un largo camino a casa", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Una familia se desvía y llega a un pueblo.", videoUrl: "https://dinisglows.com/v/q5e4mv754sh5" }, 
+                     { episode: 2, title: "Así son las cosas ahora", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "En Colony House, Tabitha y Julie se enfrentan a su nueva realidad.", videoUrl: "https://dinisglows.com/v/pgxswiuy4gqj" }, 
+                     { episode: 3, title: "El asentamiento", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "La familia Matthews debe elegir a cuál de los dos asentamientos unirse.", videoUrl: "https://dinisglows.com/v/hol85a8523wi" }, 
+                     { episode: 4, title: "Una roca y un camino lejano", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Julie y Ethan hacen nuevos amigos.", videoUrl: "https://dinisglows.com/v/10olwiedbrvq" }, 
+                     { episode: 5, title: "Siluetas", duration: "55m", thumbnail: "https://m.media-amazon.com/images/M/MV5BYzM5ZWMxOGEtZjEyMC00YjQ0LThiYjEtZjVkZGEzN2NlOGEwXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Jim, Tabitha y Ethan comienzan a hacerse preguntas.", videoUrl: "https://dinisglows.com/v/5qpphdfwatgw", dateAdded: '2025-10-20' }]}] },
+
+            { title: "Manifest", rating: 7.0, year: 2018, type: 'Serie', duration: "4 Temporadas", image: "https://pics.filmaffinity.com/manifest-168688963-large.jpg", inMyList: false, description: "Cuando el vuelo 828 de Montego Air aterriza de manera segura después de un vuelo turbulento pero de rutina, la crew y los pasajeros se sienten aliviados.", cast: "Melissa Roxburgh , Josh Dallas , J.R. Ramirez", genres: ['misterio', 'fantasy', 'drama','scifi', 'destacada'], dateAdded: '2025-08-15', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Piloto", duration: "42m", thumbnail: "https://pics.filmaffinity.com/manifest-168688963-large.jpg", description: "Los pasajeros a bordo de un vuelo que regresa cinco años después.", videoUrl: "https://dsvplay.com/e/uee37r2htm49" }, 
+                     { episode: 2, title: "Reingreso", duration: "42m", thumbnail: "https://pics.filmaffinity.com/manifest-168688963-large.jpg", description: "Michaela se ve obligada a afrontar el hecho de que Jared está casado.", videoUrl: "https://dsvplay.com/e/ihwspibp7485" }, 
+                     { episode: 3, title: "Turbulencia", duration: "42m", thumbnail: "https://pics.filmaffinity.com/manifest-168688963-large.jpg", description: "Ben y Michaela investigan un asesinato impactante.", videoUrl: "https://dsvplay.com/e/kmyusovujme2" }, 
+                     { episode: 4, title: "Equipaje no reclamado", duration: "42m", thumbnail: "https://pics.filmaffinity.com/manifest-168688963-large.jpg", description: "Saanvi solicita la ayuda de Ben para descubrir un secreto.", videoUrl: "https://dsvplay.com/e/2d0fjb81z8xf" }]}] },
+            { title: "Shōgun", rating: 8.7, year: 2024, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w342/uIoDvVOQaKjSfz2oihkVS8M7l1v.jpg", inMyList: false, description: "Ambientada en el Japón de 1600, Lord Yoshii Toranaga lucha por su vida mientras sus enemigos en el Consejo de Regentes se unen contra él.", cast: "Hiroyuki Sanada, Cosmo Jarvis, Anna Sawai", genres: ['drama', 'historia', 'destacada'], dateAdded: '2025-08-10', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Anjin", duration: "1h 10m", thumbnail: "https://image.tmdb.org/t/p/w342/uIoDvVOQaKjSfz2oihkVS8M7l1v.jpg", description: "Un misterioso barco europeo es encontrado abandonado en un pueblo pesquero cercano.", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}] },
+            { title: "Wynonna Earp", rating: 7.6, year: 2016, type: 'Serie', duration: "4 Temporadas", image: "https://image.tmdb.org/t/p/w342/qnIaDelA81dmFaXrhpz6M6dpGSD.jpg", inMyList: false, description: "La bisnieta de Wyatt Earp lucha contra demonios y otras criaturas sobrenaturales.", cast: "Melanie Scrofano, Tim Rozon", genres: ['fantasia', 'accion', 'western', 'destacada'], dateAdded: '2025-08-05', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Purgatorio", duration: "45m", thumbnail: "https://image.tmdb.org/t/p/w342/qnIaDelA81dmFaXrhpz6M6dpGSD.jpg", description: "Wynonna regresa a su ciudad natal para asumir el papel que le corresponde.", videoUrl: "https://jilliandescribecompany.com/e/cx8w8xfybp0j" }]}] },
+            { title: "Wolf Pack", rating: 7.9, year: 2023, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w342/rbCANmS1ogweUkIBghP03EHtdHB.jpg", inMyList: false, description: "Las vidas de dos adolescentes cambian para siempre cuando un incendio forestal en California despierta a una aterradora criatura sobrenatural.", cast: "Sarah Michelle Gellar, Rodrigo Santoro, Armani Jackson", genres: ['fantasia', 'drama', 'misterio', 'destacada'], dateAdded: '2025-08-01', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Del lobo al hombre", duration: "52m", thumbnail: "https://image.tmdb.org/t/p/w342/rbCANmS1ogweUkIBghP03EHtdHB.jpg", description: "Un incendio forestal desata el caos y despierta a una bestia.", videoUrl: "https://guxhag.com/e/vkqwk96gxwb7" }]}] },
+            { title: "The Boys", rating: 8.5, year: 2019, type: 'Serie', duration: "4 Temporadas", image: "https://images.justwatch.com/poster/315996736/s718/temporada-1.jpg", inMyList: false, description: "Un grupo de vigilantes se propone acabar con los superhéroes corruptos que abusan de sus superpoderes.", cast: "Karl Urban, Jack Quaid, Antony Starr", genres: ['accion', 'comedia', 'scifi', 'destacada'], dateAdded: '2025-07-28', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "El nombre del juego", duration: "1h 1m", thumbnail: "https://images.justwatch.com/poster/315996736/s718/temporada-1.jpg", description: "Cuando un superhéroe mata a su novia, un joven se une a un grupo que busca justicia.", videoUrl: "https://jilliandescribecompany.com/e/28ah4ambmvgf" }]}] },
+            { title: "Kaiju Nº 8", rating: 8.6, year: 2024, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: false, description: "En un mundo plagado de monstruos gigantes conocidos como 'kaiju', Kafka Hibino aspira a unirse a la Fuerza de Defensa.", cast: "Masaya Fukunishi, Asami Seto, Wataru Katoh", genres: ['animacion', 'accion', 'scifi', 'destacada'], dateAdded: '2025-07-25', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "El hombre que se convirtió en Kaiju", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El sueño de Kafka de unirse a la Fuerza de Defensa da un giro inesperado.", videoUrl: "https://jkanime.net/jkplayer/um?e=SnplKytPVWpGUGxYR3FZYUNkZ3U2Sis0VnRGRm9TcFE5R3VGR1VxcFRnV0J2OGJPb0ZQejdGTm1sWXBxc1RzQlNsQXpnaUN5dnBhMklKN25LZWlCVnc9PTo6g7S4B4CVrwPsmuCO0CRhJg--&t=4b96f6bdcd5960355301356f6a89eb68" }, 
+                    { episode: 2, title: "El kaiju que elimina a otros kaiju", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Kafka se ha convertido en kaiju.", videoUrl: "https://jkanime.net/jkplayer/um?e=bEVVcDF0d3ZrRWVQK0RlM3BXVGMxM250ZitPdGxUbEdZNHVjNEFwNC9VcUhaMTlob2lzaisydktYbXJQU29TL25DdEl5b2JESG1SVWxZNXZnU2FMWWc9PTo6haR82L.uew2iCHQ7yPFhvA--&t=7d38439991471b50836127994d196d7a" },
+                    { episode: 3, title: "Combate de venganza", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Kafka se prepara para un último intento.", videoUrl: "https://jkanime.net/jkplayer/um?e=Wlo0WnY3cVQwejg5amVaUFZQYXVPMUZuZStyWmVBYUFRMEE3T0xGc2tsU0R0RHlBeDNvTUFoamtXbEo0dmlOM3ROQzVIRGx0bnBvbmJwanZsamt1R0VkNzRBQmR3b256WWtDZGYyNm5UU009OjoZ330JJIUvIgRDzOBiioz7&t=0bf36c0f73b587d544e127f4901569dd&op=NTcwMjM=" },
+                    { episode: 4, title: "Fortaleza 9.8", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Durante el examen de la división de defensa.", videoUrl: "https://jkanime.net/jkplayer/um?e=aTR5eVFKb2drYkZ4eDFlRTBweDFHWVFLVnA3UWZOWlFNMjFXWTJySWx0WlFZbkhGeGhRUEZyYmpnOVJSUmRRbmphRWxjMmdSUUt3TjROTVRiQjJ3SExZVXlmYUx1Smhid2lTa1lmK3JFNnc9OjpN4lqbZGE7DKZU2O_5LIuK&t=b3b8d9e9038a203ea0bde316f50f5812&op=NTcxMDU=" },
+                    { episode: 5, title: "¡Únete!", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Kafka es ahora miembro de las Fuerzas de Defensa.", videoUrl: "https://jkanime.net/jkplayer/um?e=T1Y4S3JDc2FIQzNBUVg1eVNneThBYW1QVFBQMXJ6TjA5amp1N0MvWEFZWFJNSVZ2Q0JNVUJ6VGFva0luZVkxTjBqcVFoMDZwdFc0dHR6T0ptK0I4U3c9PTo67IWetBQtfEyjztMc.Yu2hg--&t=496061c51ced7e1a129f9804275b34c7&op=NTcxOTc=" },
+                    { episode: 6, title: "Operación de Neutralización de Sagamihara al Amanecer", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Kafka redobla esfuerzos para estar al nivel de sus compañeros.", videoUrl: "https://jkanime.net/jkplayer/um?e=dENIaG96SmtIV1p4OHI5cXpGT2Y4dnpTSHVISGJQdGlEVS9Xc0NBWHRZaFZ0ZFBxRThwRkVaQTR4UUoxR2dZc1BlVElSd0F0eXp5WVlKLzVUdXFRcHc9PTo6jtV.qi.P.EyViHWujsMAoA--&t=baa3c10cc780ea5fc4bcdb4290b23bf8&op=NTcyNzg=" },
+                    { episode: 7, title: "Kaiju No. 9", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Reno e Iharu se encuentran con un poderoso Kaiju humanoide.", videoUrl: "https://jkanime.net/jkplayer/um?e=WDZHSDNRSmNDWVNxeXp2MmRUbEI0RUdlOUtCTnhDUFFLRVMxNzJodzZ5RERLT3dNMVkwaGNrL0tLM2s5YmZkMEdVRitHTktWR3luMitGYmthUzQxR2c9PTo6M4Mb7_RPMZf.DbSDJamEiA--&t=a9caa102e190108baff515c9407a46a4&op=NTczNjM=" },
+                    { episode: 8, title: "Bienvenido a la Fuerza de Defensa", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Transformado en Kaiju para salvar a sus amigos.", videoUrl: "https://jkanime.net/jkplayer/um?e=UGR0VHRvOTFGNk8xcUpHcUdQamJ1KzU0My9ubUMvNzhjdkR6aGdqUlNmNEppZU4rZThkY1RUTGxGdTBjWjFLUXN0REVJekJSZldySDZOSm9DeG5PdkE9PTo6hBJOBw0Fco8m.Ccs_8QIoA--&t=aadb192a01447c8bcc3b4c1a46d3bd82&op=NTc0NTg=" },
+                    { episode: 9, title: "Incursión en la base de Tachikawa", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "La base de Tachikawa sufre un devastador ataque aéreo.", videoUrl: "https://jkanime.net/jkplayer/um?e=d2lLeTlCc3kyUEVhaDFCL1hDbGYxVkVRcWlyaDlnRlc5N3VmR2ZjMWdJTHJNZzM5cWJsSGFBS1oxeDZQY3pFU1VyMmZaV2pFZklaVUhRWmYxSFlyQmc9PTo6D0lpjHca6t61FKJaYEcjoA--&t=7969148322e18aa856fb28f259cfa26a&op=NTc1MzU=" },
+                    { episode: 10, title: "Secreto revelado", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Cuando la Fuerza de Defensa está en peligro, Kafka se ve obligado a elegir.", videoUrl: "https://jkanime.net/jkplayer/um?e=Z1VDQkZLZTZWc2g5UjY3bXZWVWVwY3R2OHZSbHROek41U2FJQ2ladFNRTHRVdUlKa2JNM3VVTWNoMGQrbzU1K2pXVktzTkx0UnNKZ21wZVBnT3MyYXc9PTo6rANkFoLNgmoNH.Tebb8M2Q--&t=33e07b135d8b8aedf1adc9a015ade640&op=NTc2MTc=" },
+                    { episode: 11, title: "Capturado", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El Kaiju No. 8 es capturado y Kafka está a merced de los líderes.", videoUrl: "https://jkanime.net/jkplayer/um?e=SUNvSysvdFBwYlhBc2hZOWFDVGM3L3kzQUY1K3BNV1g5cVZoeDJkdmdGeUY4ZVVXbGVqWWhYOVJCVEJWN1VvWDlDVnM4a2VSUDBIMTZGSnVveGFQRWc9PTo6qkGxpZi.P3l7UaBUbzp59A--&t=82bda4dbf019370015554328a37ac6d1&op=NTc2ODI=" },
+                    { episode: 12, title: "Kafka Hibino", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El destino final de Kafka se determina.", videoUrl: "https://jkanime.net/jkplayer/um?e=cjh4TkgyZjRUZ0ZQS0VhdS9wY0dJZTNwKzJ2QWx0ZDJCcm5DcThUbldiNHNBWXVEcjZDUlJWS0pQcDZSTVZtSXhBZkVORHBmajdrTmI4TS9hN1hNbUE9PTo68K_Av7LqT6aeUVzra4AiDQ--&t=f858adc11c1878a45688173540a2933f&op=NTc3Mzc=" },
+                ]}] },
+            { title: "Stargate SG-1", rating: 8.4, year: 1997, type: 'Serie', duration: "1 Temporada", image: "https://pics.filmaffinity.com/stargate_sg_1-145480884-large.jpg", inMyList: false, description: "Un equipo de exploradores compuesto de soldados y científicos viaja a través de un portal que da acceso a otros planetas.", cast: "Ben Browder , Amanda Tapping", genres: ['accion', 'scifi', 'drama','aventura', 'destacada'], dateAdded: '2026-04-19', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Children of the Gods", duration: "46m", thumbnail: "https://pics.filmaffinity.com/stargate_sg_1-145480884-large.jpg", description: "El coronel Jack O'Neill sale de su retiro para dirigir una nueva expedición.", videoUrl: "https://www.vidking.net/embed/tv/4629/1/1?color=ffa500&autoPlay=true" },
+                     { episode: 2, title: "Children of the Gods 2", duration: "46m", thumbnail: "https://pics.filmaffinity.com/stargate_sg_1-145480884-large.jpg", description: "Segunda parte de la expedición a Abydos.", videoUrl: "https://www.vidking.net/embed/tv/4629/1/2?color=ffa500&autoPlay=true" },
+                     { episode: 3, title: "The enemy within", duration: "46m", thumbnail: "https://pics.filmaffinity.com/stargate_sg_1-145480884-large.jpg", description: "Los médicos descubren que una larva Goa'uld se ha adherido al cerebro de Kawalsky.", videoUrl: "https://f16px.com/e/akl34o30sg20?sub.info=https://qqqcdn.cloud/subtitles/fm/token/2ux4tho3zf6i4.json" },
+                     { episode: 4, title: "Emancipation", duration: "46m", thumbnail: "https://pics.filmaffinity.com/stargate_sg_1-145480884-large.jpg", description: "Mientras explora un mundo poblado por descendientes de mongoles, la capitán Carter es secuestrada.", videoUrl: "https://f16px.com/e/xms3wl86rm5a?sub.info=https://qqqcdn.cloud/subtitles/fm/token/2ux4tho3zf6i3.json" },
+                ]}] },
+            { title: "Invasión", rating: 6.2, year: 2021, type: 'Serie', duration: "1 Temporada", image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fwe6trvt9PfESlC4Td3SWQvmrmb3.jpg&w=256&q=75", inMyList: false, description: "La Tierra es visitada por una especie alienígena que amenaza la existencia de la humanidad.", cast: "Golshifteh Farahani, Shamier Anderson", genres: ['accion', 'scifi', 'drama','aventura', 'destacada'], dateAdded: '2025-07-15', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Last Day", duration: "56m", thumbnail: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fwe6trvt9PfESlC4Td3SWQvmrmb3.jpg&w=256&q=75", description: "En todo el mundo comienzan a desarrollarse sucesos extraños e inexplicables.", videoUrl: "https://auvexiug.com/e/ljzt1i3iwzx0" }]}] },
+            { title: "Rumbo al infierno", rating: 6.6, year: 2021, type: 'Serie', duration: "1 Temporada", image: "https://www.verseriesonline.net/storage/poster/series/rumbo-al-infierno.jpg", inMyList: false, description: "La gente escucha predicciones sobre cuándo morirá. Cuando llega ese momento, un ángel de la muerte aparece frente a ellos.", cast: "Kim Dong-wook, Lee Jae-sung", genres: ['scifi', 'drama', 'destacada'], dateAdded: '2025-10-22', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Episodio #1.1", duration: "51m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/rumbo-al-infierno-saison-1.jpg", description: "Los espectadores horrorizados observan cómo bestias sobrenaturales persiguen y matan a un hombre.", videoUrl: "https://streamwish.to/e/vhrg7m4h8urj" }]}] },
+            { title: "Outcast", rating: 7.3, year: 2016, type: 'Serie', duration: "1 Temporada", image: "https://www.verseriesonline.net/storage/poster/series/outcast.jpg", inMyList: false, description: "Un joven busca respuestas sobre por qué ha estado sufriendo posesiones sobrenaturales toda su vida.", cast: "Sarah Byrd, Summer Eubanks", genres: ['scifi', 'drama', 'destacada'], dateAdded: '2025-10-22', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 2, title: "(Recuerdo) Cuando ella me amaba", duration: "1h", thumbnail: "https://www.verseriesonline.net/storage/poster/series/outcast.jpg", description: "Kyle comienza a cuestionar su historia familiar.", videoUrl: "https://doodstream.com/e/cuqr6u2eh5h6" }]}] },
+            { title: "One tree hill", rating: 7.8, year: 2003, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BMzk2YjJiNzMtZjk2Mi00ZGU5LWI1ZTUtNjIwMGI2NjZiMTVjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: false, description: "Los hermanastros Lucas y Nathan Scott alternan entre su relación de familia y su rivalidad.", cast: "James Lafferty, Bethany Joy Lenz", genres: ['drama', 'destacada'], dateAdded: '2025-10-22', 
+                seasons: [{ seasonNumber: 1, episodes: [
+                    { episode: 1, title: "Pilot", duration: "1h", thumbnail: "https://m.media-amazon.com/images/M/MV5BMzk2YjJiNzMtZjk2Mi00ZGU5LWI1ZTUtNjIwMGI2NjZiMTVjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Nathan Scott es la estrella más importante del baloncesto de Tree Hill High y está saliendo con Peyton.", videoUrl: "https://nuuuppp.sbs/wathcpremium/ZSMCRuJ4j9Y0PJqBIeeQ4Yz0SvYXyTQkuMCf2ZCBpKg?h=" }]}] },
+        ];
+        
+        const allTvContent = [
+            { title: "El Trece", rating: 7.5, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/trece.png", inMyList: false, videoUrl: "https://tvlibre.cc/html/dash.html?get=aHR0cHM6Ly9saXZlLTAxLTAyLWVsdHJlY2Uudm9kZ2MubmV0L2VsdHJlY2V0di9pbmRleC5tM3U4" }, 
+            { title: "TN", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2048.png", inMyList: false, videoUrl: "https://www.youtube.com/embed/cb12KmMMDJA" },
+            { title: "Telefe", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2046.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
+            { title: "America", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2047.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
+            { title: "Canal 26", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2050.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=MjZfVFZfSEQ&lang=1" },
+            { title: "La Nación +", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2049.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=TGFfTmFjaW9u&lang=1" },
+            { title: "TV Pública", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2053.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=Q2FuYWw3&lang=1" },
+            { title: "Canal Rural", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2054.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=Q2FuYWxfUnVyYWw=&lang=1" },
+            { title: "Diputados TV", rating: 8.9, year: 2024, type: 'TV', image: "https://peliculasenfamilia.github.io/img/canales/Component%2059.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=RGlwdXRhZG9zX1RW&lang=1" },
+            { title: "Canal Encuentro", rating: 8.9, year: 2024, type: 'TV', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a5fa02f0bb2c4bf6dbe00d_Component%2057.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=RW5jdWVudHJv&lang=1" },
+        ];
+        
+        const allSportsContent = [
+            { title: "TNT SPORTS", rating: 9.5, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a7608246440cf94a360e64_Component%2072.png", inMyList: true, videoUrl: "https://dots.bestleague.world/mpdk/?get=aHR0cHM6Ly9jZG4udHJpbWkuY29tLmFyL2xpdmUvc20tbGl2ZS9UTlRfU1BPUlRTX0JLUDQvc2FfbGl2ZV9kYXNoX2xsL1ROVF9TUE9SVFNfQktQNC5tcGQ=&key=NGM3OWEyN2Y0NmY0NGJmYmI3NzRiOGM3ZjFmMWU1N2Y=&key2=NTMwZmQwY2JhOWRjNTU2YTMzOWIwM2FmNGIwOTUxYjk=&start=true" }, 
+            { title: "Tyc Sports", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a760a538423d0aebe285aa_Component%2071.png", inMyList: false, videoUrl: "https://la14hd.com/vivo/canales.php?stream=tycsports" },
+            { title: "FOX SPORTS", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a7665339a7f4d465af996d_Component%2066.png", inMyList: false, videoUrl: "https://envivolibre.com/canal.php?stream=foxsports" },
+            { title: "ESPN PREMIUM", rating: 9.1, year: 2024, type: 'Deporte', image: "https://uploads-ssl.webflow.com/64a5fa02f0bb2c4bf6dbdf77/64a76849a5661885a4caf286_ESPNPREMIUM.png", inMyList: false, videoUrl: "https://envivolibre.com/canal.php?stream=espnpremium" },
+            { title: "Telefe", rating: 8.9, year: 2024, type: 'Deporte', image: "https://peliculasenfamilia.github.io/img/canales/Component%2046.png", inMyList: false, videoUrl: "https://dots.bestleague.world/cvatt.html?get=VGVsZWZlSEQ=&lang=1" },
+        ];
+        
+        let continueWatchingData = {};
+        let watchedContent = new Set();
+        let dynamicNotifications = [];
+        let lastNotificationCheck = 0;
+        let currentPage = 'home'; 
+        let previousPage = 'home';
+
+        function loadWatchedContent() {
+            try {
+                const watchedData = JSON.parse(localStorage.getItem('watchedContent') || '[]');
+                watchedContent = new Set(watchedData);
+            } catch (e) {
+                console.error("Error loading watched content from localStorage", e);
+                watchedContent = new Set();
+            }
+        }
+
+        function saveWatchedContent() {
+            try {
+                localStorage.setItem('watchedContent', JSON.stringify(Array.from(watchedContent)));
+            } catch (e) {
+                console.error("Error saving watched content to localStorage", e);
+            }
+        }
+        
+        function markAsWatched(item, details = null) {
+            let key;
+            if (item.type === 'Serie' && details) {
+                key = `${item.title}-S${details.seasonNumber}-E${details.episodeNumber}`;
+            } else {
+                key = item.title;
+            }
+            if (!watchedContent.has(key)) {
+                watchedContent.add(key);
+                saveWatchedContent();
+            }
+        }
+        
+        function loadContinueWatching() { try { continueWatchingData = JSON.parse(localStorage.getItem('continueWatching') || '{}'); } catch (e) { console.error("Error loading from localStorage", e); continueWatchingData = {}; } }
+        function saveContinueWatching() { try { localStorage.setItem('continueWatching', JSON.stringify(continueWatchingData)); } catch (e) { console.error("Error saving to localStorage", e); } }
+
+        function updateContinueWatching(item, details) {
+            const id = `${item.type}-${item.title.replace(/\s+/g, '-')}`;
+            continueWatchingData[id] = {
+                title: item.title,
+                type: item.type,
+                lastWatched: Date.now(),
+                ...details
+            };
+            saveContinueWatching();
+            renderContinueWatching();
+        }
+
+        function createContinueWatchingCard(item) {
+            let action, subtitle, progressPercent;
+            const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent };
+            const content = dataSources[item.type]?.find(m => m.title === item.title);
+            if (!content) return '';
+
+            if (item.type === 'Película') {
+                progressPercent = item.progress || 50; 
+                subtitle = `Visto por última vez: ${new Date(item.lastWatched).toLocaleDateString()}`;
+                action = `playSimpleContent(${item.originalIndex}, '${item.type}')`;
+            } else if (item.type === 'Serie') {
+                const season = content.seasons.find(s => s.seasonNumber == item.seasonNumber);
+                if (!season) return '';
+                const lastWatchedIndex = season.episodes.findIndex(e => e.episode == item.episodeNumber);
+                const nextEpisodeIndex = lastWatchedIndex + 1;
+                
+                progressPercent = ((lastWatchedIndex + 1) / season.episodes.length) * 100;
+                
+                if (nextEpisodeIndex < season.episodes.length) {
+                    const nextEpisode = season.episodes[nextEpisodeIndex];
+                    subtitle = `Siguiente: T${item.seasonNumber}:E${nextEpisode.episode} "${nextEpisode.title}"`;
+                    action = `playEpisode(${item.originalIndex}, ${item.seasonNumber}, ${nextEpisode.episode})`;
+                } else {
+                    subtitle = `Temporada ${item.seasonNumber} completada`;
+                    action = `showDetails(${item.originalIndex}, 'Serie')`; 
+                }
+            } else if (item.type === 'TV' || item.type === 'Deporte') {
+                progressPercent = 0; 
+                subtitle = `Visto por última vez: ${new Date(item.lastWatched).toLocaleDateString()}`;
+                action = `playSimpleContent(${item.originalIndex}, '${item.type}')`;
+            }
+            
+            return `<div class="continue-card group cursor-pointer" onclick="${action}">
+                <div class="relative aspect-video rounded-xl overflow-hidden shadow-lg bg-card-bg">
+                    <img src="${content.image}" alt="${content.title}" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-300">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="play-button-overlay"><i data-lucide="play" class="w-6 h-6 text-white fill-white transition-transform group-hover:scale-110"></i></div>
+                    </div>
+                     <div class="absolute bottom-0 left-0 w-full h-1 bg-gray-700/80" style="${(item.type === 'TV' || item.type === 'Deporte') ? 'display: none;' : ''}">
+                        <div class="bg-primary-blue h-1" style="width: ${progressPercent}%;"></div>
+                     </div>
+                </div>
+                <div class="pt-2">
+                    <p class="text-sm font-semibold text-white line-clamp-2 leading-tight" title="${content.title}">${content.title}</p>
+                    <p class="text-xs text-gray-400 truncate mt-1">${subtitle}</p>
+                </div>
+            </div>`;
+        }
+
+        function renderContinueWatching() {
+            const container = document.getElementById('continue-watching-inner');
+            const section = document.getElementById('continue-watching-section');
+            if (!container || !section) return;
+            const items = Object.values(continueWatchingData).sort((a, b) => b.lastWatched - a.lastWatched);
+            if (items.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            section.classList.remove('hidden');
+            container.innerHTML = items.map(createContinueWatchingCard).join('');
+            lucide.createIcons();
+        }
+
+        const newReleasesTitles = ["Maquina de guerra","Mortal","El gran diluvio","The War Between the Land and the Sea","Siren","Revival","El Conjuro 4: Últimos ritos","Stranger Things","Trol 2","IT: Bienvenidos a Derry (2025)","Caramelo", "F1 La Película", "Superman", "mision imposible 8", "Los Cuatro Fantásticos", "Elio", "Destino Final: Lazos de Sangre", "Karate Kid: Leyendas", "Jurassic World: Renace", "Primitive War", "Hipnosis: Arma Invisible", "Mi Villano Favorito 4" ];
+        const popularMoviesTitles = ["Maquina de guerra","El gran diluvio","El Conjuro 4: Últimos ritos","Superman","Mortal", "mision imposible 8", "Los Cuatro Fantásticos", "Destino Final: Lazos de Sangre", "La Guerra del Mañana", "Karate Kid: Leyendas", "Jurassic World: Renace", "Hipnosis: Arma Invisible", "Trol 2"];
+        const popularSeriesTitles = ["The chosen","The War Between the Land and the Sea","Siren","Revival","Stranger Things","IT: Bienvenidos a Derry (2025)","Shōgun", "The Boys", "Monarch: El legado de los monstruos", "Kaiju Nº 8", "From", "Wolf Pack", "Surface", "La Brea", "Wynonna Earp", "Stargate SG-1","Invasión", "Rumbo al infierno", "Outcast", "One tree hill"];
+        const allNewReleases = allMoviesSource.filter(m => newReleasesTitles.includes(m.title));
+        const allPopularMovies = allMoviesSource.filter(m => popularMoviesTitles.includes(m.title));
+        const allPopularSeries = allSeriesContent.filter(s => popularSeriesTitles.includes(s.title));
+        const allMoviesContent = Array.from(new Map(allMoviesSource.map(movie => [movie.title, movie])).values());
+        
+        function createMovieCard(item, index, type) { 
+            let key = (type === 'Serie' && item.seasons) ? `${item.title}-S${item.seasons[0].seasonNumber}-E${item.seasons[0].episodes[0].episode}` : item.title;
+            const isWatched = watchedContent.has(key);
+            const watchedClass = isWatched ? 'is-watched' : '';
+            return `
+                <div class="movie-card-container group cursor-pointer hover:scale-[1.03] transition-transform duration-300" onclick="showDetails(${index}, '${type}')">
+                    <div class="movie-card rounded-xl overflow-hidden shadow-lg bg-card-bg">
+                        <div class="relative aspect-[2/3] overflow-hidden ${watchedClass}">
+                            <img src="${item.image}" alt="${item.title}" onerror="this.onerror=null;this.src='https://placehold.co/300x450/444/white?text=${item.title.split(' ').slice(0, 2).join('+')}'" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-300">
+                            ${isWatched ? `<div class="watched-overlay"><i data-lucide="check-circle-2" class="w-10 h-10 text-white opacity-90"></i></div>` : ''}
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="play-button-overlay"><i data-lucide="play" class="w-6 h-6 text-white fill-white transition-transform group-hover:scale-110"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pt-2 h-16">
+                        <p class="text-sm font-semibold text-white line-clamp-2 leading-tight" title="${item.title}">${item.title}</p>
+                        <div class="mt-1 flex items-center space-x-2 text-xs text-gray-400">
+                            ${item.rating ? `<i data-lucide="star" class="w-3 h-3 text-yellow-400 fill-yellow-400"></i><span>${item.rating}</span><span class="text-gray-500">•</span>` : ''}
+                            <span>${item.year || ''}</span><span class="text-gray-500">•</span><span>${item.type || type}</span>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        const renderView = (viewId, data, sections) => { 
+            const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent }; 
+            Object.entries(sections).forEach(([containerId, filterFn]) => { 
+                const filteredList = data.filter(filterFn); 
+                const container = document.getElementById(containerId); 
+                if (container) { 
+                    container.innerHTML = filteredList.map(item => { 
+                        const source = dataSources[item.type]; 
+                        const originalIndex = source.findIndex(sourceItem => sourceItem.title === item.title); 
+                        return createMovieCard(item, originalIndex, item.type); 
+                    }).join(''); 
+                } 
+            }); 
+        };
+
+        function renderAllViews() { 
+            const homeContent = [...allNewReleases, ...allPopularMovies, ...allPopularSeries]; 
+            const uniqueHomeContent = Array.from(new Map(homeContent.map(item => [item.title, item])).values()); 
+            renderView('home-view', uniqueHomeContent, { 
+                'new-releases-inner': item => newReleasesTitles.includes(item.title), 
+                'popular-movies-inner': item => popularMoviesTitles.includes(item.title), 
+                'popular-series-inner': item => popularSeriesTitles.includes(item.title) 
+            }); 
+            renderView('series-view', allSeriesContent, { 'featured-series-inner': s => s.genres.includes('destacada'), 'scifi-series-inner': s => s.genres.includes('scifi') || s.genres.includes('fantasia'), 'drama-series-inner': s => s.genres.includes('drama') }); 
+            renderView('movies-view', allMoviesContent, { 'featured-movies-inner': m => m.genres.includes('destacada'), 'comedy-movies-inner': m => m.genres.includes('comedia'), 'drama-movies-inner': m => m.genres.includes('drama'), 'fantasy-scifi-movies-inner': m => m.genres.includes('fantasia') || m.genres.includes('scifi'), 'family-movies-inner': m => m.genres.includes('familiar'), 'romance-movies-inner': m => m.genres.includes('romantica') }); 
+            renderView('tv-view', allTvContent, { 'live-tv-inner': t => true, 'reality-tv-inner': t => false }); 
+            renderView('sports-view', allSportsContent, { 'live-sports-inner': s => true, 'replay-sports-inner': s => false }); 
+            renderMyListView(); 
+            renderContinueWatching(); 
+        }
+
+        function updateActiveLink(page) { 
+            document.querySelectorAll('.nav-link').forEach(link => { 
+                link.classList.remove('bg-primary-blue', 'text-white', 'shadow-lg', 'shadow-primary-blue/30', 'font-semibold'); 
+                link.classList.add('text-gray-300', 'hover:bg-white/10'); 
+            }); 
+            const activeLink = document.getElementById(`nav-${page}`); 
+            if (activeLink) { 
+                activeLink.classList.remove('text-gray-300', 'hover:bg-white/10'); 
+                activeLink.classList.add('bg-primary-blue', 'text-white', 'font-semibold', 'shadow-lg', 'shadow-primary-blue/30'); 
+            } 
+        }
+
+        function navigateTo(page) { 
+            if (page !== 'details') {
+                previousPage = page;
+                updateActiveLink(page);
+                document.getElementById('main-header').classList.remove('hidden');
+            } else {
+                // Quitar foco del menu activo cuando estemos en la vista de detalles
+                document.querySelectorAll('.nav-link').forEach(link => { 
+                    link.classList.remove('bg-primary-blue', 'text-white', 'shadow-lg', 'shadow-primary-blue/30', 'font-semibold'); 
+                    link.classList.add('text-gray-300', 'hover:bg-white/10'); 
+                });
+                document.getElementById('main-header').classList.add('hidden'); // Ocultar barra superior en detalles
+            }
+            
+            currentPage = page; 
+            document.querySelectorAll('.view-container').forEach(view => view.classList.add('hidden')); 
+            document.getElementById(`${page}-view`).classList.remove('hidden'); 
+            
+            if (page !== 'details') {
+                document.getElementById('search-input').value = ''; 
+                filterContent(); 
+            }
+            
+            if (window.innerWidth < 1024 && !sidebar.classList.contains('-translate-x-full')) toggleSidebar(); 
+            document.querySelector('.main-content').scrollTop = 0; 
+            lucide.createIcons(); 
+        }
+        window.navigateTo = navigateTo;
+        
+        function goBack() {
+            const inlinePlayer = document.getElementById('details-inline-player');
+            if (inlinePlayer) inlinePlayer.src = ''; // Detener video
+            navigateTo(previousPage || 'home');
+        }
+        window.goBack = goBack;
+
+        function filterContent() { 
+            if (currentPage === 'details') {
+                // Si busca estando en detalles, mandarlo a inicio
+                navigateTo(previousPage || 'home');
+                return;
+            }
+
+            const searchTerm = document.getElementById('search-input').value.toLowerCase().trim(); 
+            const dataMap = { 'home': [...allNewReleases, ...allPopularMovies, ...allSeriesContent], 'series': allSeriesContent, 'movies': allMoviesContent, 'tv': allTvContent, 'sports': allSportsContent, 'mylist': [...allMoviesSource, ...allSeriesContent, ...allTvContent, ...allSportsContent].filter(i => i.inMyList) }; 
+            const currentData = dataMap[currentPage]; 
+            const filteredData = searchTerm ? currentData.filter(item => item.title.toLowerCase().includes(searchTerm)) : currentData; 
+            const carousels = document.getElementById(`${currentPage}-view`).querySelector('[id$="-carousels"], [id$="-grid"]'); 
+            const hero = document.getElementById(`${currentPage}-hero-section`); 
+            const continueSection = document.getElementById('continue-watching-section'); 
+            
+            if (carousels) carousels.style.display = searchTerm ? 'none' : 'block'; 
+            if (hero) hero.style.display = searchTerm ? 'none' : 'flex'; 
+            if (continueSection) continueSection.style.display = searchTerm ? 'none' : (Object.keys(continueWatchingData).length > 0 ? 'block' : 'none'); 
+            
+            document.getElementById('no-results').classList.toggle('hidden', filteredData.length > 0 || !searchTerm); 
+            
+            let searchResultsContainer = document.getElementById('search-results'); 
+            if (searchTerm) { 
+                if(!searchResultsContainer) { 
+                    searchResultsContainer = document.createElement('div'); 
+                    searchResultsContainer.id = 'search-results'; 
+                    searchResultsContainer.className = 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 pt-8'; 
+                    document.getElementById(`${currentPage}-view`).appendChild(searchResultsContainer); 
+                } 
+                const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent }; 
+                searchResultsContainer.innerHTML = filteredData.map(item => { 
+                    const source = dataSources[item.type]; 
+                    const originalIndex = source.findIndex(sourceItem => sourceItem.title === item.title); 
+                    return createMovieCard(item, originalIndex, item.type); 
+                }).join(''); 
+            } else { 
+                if(searchResultsContainer) searchResultsContainer.remove(); 
+            } 
+            lucide.createIcons(); 
+        }
+        window.filterContent = filterContent;
+
+        const sidebar = document.getElementById('sidebar'); 
+        const overlay = document.getElementById('overlay'); 
+        function toggleSidebar() { 
+            sidebar.classList.toggle('open'); 
+            overlay.classList.toggle('hidden'); 
+        }
+        document.getElementById('open-sidebar').addEventListener('click', toggleSidebar); 
+        document.getElementById('close-sidebar').addEventListener('click', toggleSidebar); 
+        overlay.addEventListener('click', toggleSidebar);
+        
+        function scrollCarousel(button, amount) {
+            const row = button.closest('.relative').querySelector('.movie-row');
+            if (row) {
+                row.scrollBy({ left: amount, behavior: 'smooth' });
+            }
+        }
+        window.scrollCarousel = scrollCarousel;
+
+        function toggleInMyList(index, type) { 
+            const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent }; 
+            const source = dataSources[type]; 
+            const item = source?.[index]; 
+            if (!item) return; 
+            item.inMyList = !item.inMyList; 
+            updateMyListButtons(item); 
+            renderMyListView(); 
+        }
+        window.toggleInMyList = toggleInMyList;
+
+        function updateMyListButtons(item) { 
+            const detailsTitle = document.getElementById('details-title').textContent; 
+            if (detailsTitle === item.title) { 
+                const myListButton = document.getElementById('details-mylist-button'); 
+                if (myListButton) { 
+                    myListButton.innerHTML = item.inMyList ? `<i data-lucide="check" class="w-5 h-5"></i><span>En Mi Lista</span>` : `<i data-lucide="bookmark" class="w-5 h-5"></i><span>Mi Lista</span>`; 
+                    myListButton.classList.toggle('bg-green-500/20', item.inMyList); 
+                    myListButton.classList.toggle('text-green-400', item.inMyList); 
+                    myListButton.classList.toggle('border-green-500/50', item.inMyList);
+                } 
+            } 
+            if (item.title === "Maquina de guerra") { 
+                const heroButton = document.getElementById('hero-mylist-button'); 
+                if (heroButton) { 
+                    heroButton.innerHTML = item.inMyList ? `<i data-lucide="check" class="w-5 h-5"></i><span>En Mi Lista</span>` : `<i data-lucide="plus" class="w-5 h-5"></i><span>Mi Lista</span>`; 
+                } 
+            } 
+            lucide.createIcons(); 
+        }
+
+        function renderMyListView() { 
+            const allContent = [...allMoviesSource, ...allSeriesContent, ...allTvContent, ...allSportsContent]; 
+            const myListItems = allContent.filter(item => item.inMyList); 
+            const container = document.getElementById('mylist-grid'); 
+            if (!container) return; 
+            
+            if (myListItems.length === 0) { 
+                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><i data-lucide="list-video" class="w-12 h-12 mx-auto mb-4 text-primary-blue"></i><p class="text-xl font-semibold">Tu lista está vacía.</p><p>Añade películas y series para verlas aquí.</p></div>`; 
+            } else { 
+                const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent }; 
+                container.innerHTML = myListItems.map(item => { 
+                    const source = dataSources[item.type]; 
+                    const originalIndex = source.findIndex(si => si.title === item.title); 
+                    return createMovieCard(item, originalIndex, item.type); 
+                }).join(''); 
+            } 
+            lucide.createIcons(); 
+        }
+
+        let currentModalItem = null;
+
+        function createEpisodeItem(episode, seriesIndex, seasonNumber) { 
+            const series = allSeriesContent[seriesIndex];
+            const watchedKey = `${series.title}-S${seasonNumber}-E${episode.episode}`;
+            const isWatched = watchedContent.has(watchedKey);
+            const watchedClass = isWatched ? 'is-watched' : '';
+            return `
+                <div class="flex items-start p-4 rounded-xl hover:bg-white/5 group cursor-pointer transition-colors duration-200" onclick="playEpisode(${seriesIndex}, '${seasonNumber}', ${episode.episode})">
+                    <span class="text-gray-400 font-bold text-lg mr-4 md:mr-6 w-6 text-center self-center">${episode.episode}</span>
+                    <div class="relative w-32 md:w-40 h-20 md:h-24 flex-shrink-0 ${watchedClass}">
+                        <img src="${episode.thumbnail}" class="w-full h-full object-cover rounded-lg shadow-md">
+                        ${isWatched ? `<div class="watched-overlay rounded-lg"><i data-lucide="check-circle" class="w-8 h-8 text-white"></i></div>` : ''}
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity play-icon-container rounded-lg">
+                            <i data-lucide="play" class="w-8 h-8 text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow mx-4 md:mx-6">
+                        <h5 class="font-bold text-base md:text-lg text-white line-clamp-1" title="${episode.title}">${episode.title}</h5>
+                        <p class="text-sm text-gray-400 mt-1 line-clamp-2">${episode.description || ''}</p>
+                    </div>
+                    <span class="text-sm font-semibold text-gray-500 ml-auto hidden sm:block">${episode.duration || ''}</span>
+                </div>`;
+        }
+
+        function renderEpisodes(item, seasonNumber, seriesIndex) { 
+            const seasonData = item.seasons.find(s => s.seasonNumber == seasonNumber); 
+            const episodesList = document.getElementById('episodes-list'); 
+            if (seasonData && episodesList) { 
+                episodesList.innerHTML = seasonData.episodes.map(ep => createEpisodeItem(ep, seriesIndex, seasonNumber)).join(''); 
+                lucide.createIcons(); 
+            } 
+        }
+        
+        function playSimpleContent(index, type) {
+            const dataSources = { 'Película': allMoviesSource, 'TV': allTvContent, 'Deporte': allSportsContent };
+            const source = dataSources[type];
+            const item = source?.[index];
+
+            if (item) {
+                let details = { originalIndex: index };
+                if (type === 'Película') {
+                    details.progress = 50; 
+                }
+                
+                updateContinueWatching(item, details);
+                markAsWatched(item); 
+                openPlayerModal(item.videoUrl);
+            }
+        }
+        window.playSimpleContent = playSimpleContent;
+
+        function playEpisode(seriesIndex, seasonNumber, episodeNumber) { 
+            const series = allSeriesContent[seriesIndex]; 
+            if (!series) return; 
+            const season = series.seasons.find(s => s.seasonNumber == seasonNumber); 
+            if (!season) return; 
+            const episode = season.episodes.find(e => e.episode == episodeNumber); 
+            if (!episode) return; 
+            updateContinueWatching(series, { originalIndex: seriesIndex, seasonNumber, episodeNumber }); 
+            markAsWatched(series, { seasonNumber, episodeNumber }); 
+            renderEpisodes(series, seasonNumber, seriesIndex); 
+            
+            let videoUrl = episode.videoUrl;
+            if (videoUrl.includes("youtube.com/watch?v=")) {
+                const videoId = videoUrl.split('v=')[1].split('&')[0];
+                videoUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            }
+
+            const inlineWrapper = document.getElementById('details-inline-player-wrapper');
+            // Como el wrapper ahora es universal, actualizamos el iframe principal siempre que estemos en la vista de detalles
+            if (currentPage === 'details' && inlineWrapper) {
+                document.getElementById('details-inline-player').src = videoUrl;
+                document.querySelector('.main-content').scrollTo({ top: 0, behavior: 'smooth' }); // Volver arriba
+            } else {
+                openPlayerModal(episode.videoUrl); 
+            }
+        }
+        window.playEpisode = playEpisode;
+
+        function showDetails(index, type) { 
+            const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent };
+            const source = dataSources[type]; 
+            const item = source?.[index]; 
+            if (!item) return; 
+            currentModalItem = { index, type }; 
+            
+            document.getElementById('details-title').textContent = item.title; 
+            document.getElementById('details-rating').textContent = item.rating ? item.rating : ''; 
+            document.getElementById('details-year').textContent = item.year ? item.year : ''; 
+            document.getElementById('details-duration').textContent = item.duration || ''; 
+            document.getElementById('details-description').textContent = item.description || 'Descripción no disponible.'; 
+            
+            const castSection = document.getElementById('details-cast-section'); 
+            if (item.cast) {
+                document.getElementById('details-cast').textContent = item.cast;
+                castSection.classList.remove('hidden');
+            } else {
+                castSection.classList.add('hidden');
+            }
+            
+            const genresContainer = document.getElementById('details-genres'); 
+            genresContainer.innerHTML = ''; 
+            if (item.genres) { 
+                item.genres.forEach(genre => { 
+                    const genreEl = document.createElement('span'); 
+                    genreEl.className = 'bg-white/10 text-white text-xs font-semibold px-4 py-1.5 rounded-full border border-white/10'; 
+                    genreEl.textContent = genre.charAt(0).toUpperCase() + genre.slice(1); 
+                    genresContainer.appendChild(genreEl); 
+                }); 
+            } 
+            
+            const episodesSection = document.getElementById('details-episodes-section'); 
+            const inlinePlayer = document.getElementById('details-inline-player');
+            let videoUrlToPlay = '';
+            
+            if (item.type === 'Serie' && item.seasons) { 
+                episodesSection.classList.remove('hidden'); 
+                const seasonSelector = document.getElementById('season-selector'); 
+                seasonSelector.innerHTML = item.seasons.map(s => `<option value="${s.seasonNumber}">Temporada ${s.seasonNumber}</option>`).join(''); 
+                seasonSelector.onchange = () => renderEpisodes(item, seasonSelector.value, index); 
+                renderEpisodes(item, 1, index); 
+                
+                // Cargar primer episodio
+                if(item.seasons[0] && item.seasons[0].episodes && item.seasons[0].episodes[0]) {
+                    videoUrlToPlay = item.seasons[0].episodes[0].videoUrl;
+                }
+            } else { 
+                // Adaptación para Películas, TV y Deportes
+                episodesSection.classList.add('hidden'); 
+                videoUrlToPlay = item.videoUrl || '';
+                
+                // Guardar en continuar viendo/visto automáticamente al abrir
+                if (videoUrlToPlay) {
+                    let details = { originalIndex: index };
+                    if (type === 'Película') details.progress = 50; 
+                    updateContinueWatching(item, details);
+                    markAsWatched(item); 
+                }
+            } 
+
+            // Configurar el reproductor universal
+            if (videoUrlToPlay) {
+                if (videoUrlToPlay.includes("youtube.com/watch?v=")) {
+                    const videoId = videoUrlToPlay.split('v=')[1].split('&')[0];
+                    videoUrlToPlay = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+                }
+                inlinePlayer.src = videoUrlToPlay;
+            } else {
+                inlinePlayer.src = '';
+            }
+
+            document.getElementById('details-mylist-button').onclick = () => toggleInMyList(index, type); 
+            updateMyListButtons(item); 
+            
+            // Navegar a la página de detalles
+            navigateTo('details');
+        }
+        window.showDetails = showDetails;
+
+        const playerModal = document.getElementById('video-player-modal'); 
+        const playerIframe = document.getElementById('video-player-iframe');
+        
+        function openPlayerModal(url) { 
+            if (url.includes("youtube.com/watch?v=")) {
+                const videoId = url.split('v=')[1].split('&')[0];
+                url = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            }
+            playerIframe.src = url; 
+            playerModal.classList.remove('hidden'); 
+            document.body.style.overflow = 'hidden'; 
+            lucide.createIcons(); 
+        }
+        window.openPlayerModal = openPlayerModal;
+
+        function closePlayerModal() { 
+            playerModal.classList.add('hidden'); 
+            playerIframe.src = ''; 
+            document.body.style.overflow = 'auto'; 
+            renderContinueWatching(); 
+            renderAllViews(); 
+        }
+        window.closePlayerModal = closePlayerModal;
+        
+        // --- Notification System ---
+        const notificationButton = document.getElementById('notification-button');
+        const notificationsPanel = document.getElementById('notifications-panel');
+        const notificationDot = document.getElementById('notification-dot');
+        const notificationList = document.getElementById('notification-list');
+
+        function loadNotificationState() {
+            try {
+                lastNotificationCheck = parseInt(localStorage.getItem('lastNotificationCheck') || '0', 10);
+                if (lastNotificationCheck === 0) {
+                    lastNotificationCheck = Date.now() - 7 * 24 * 60 * 60 * 1000;
+                    localStorage.setItem('lastNotificationCheck', lastNotificationCheck);
+                }
+            } catch (e) { console.error("Error loading notification state", e); }
+        }
+
+        function generateNotifications() {
+            dynamicNotifications = [];
+            allMoviesSource.forEach(movie => {
+                if(movie.dateAdded) {
+                    dynamicNotifications.push({ icon: 'film', color: 'blue-400', title: `${movie.title} ya está disponible`, time: new Date(movie.dateAdded) });
+                }
+            });
+            allSeriesContent.forEach(series => {
+                if (series.dateAdded) {
+                    dynamicNotifications.push({ icon: 'tv', color: 'green-400', title: `Nueva serie: ${series.title}`, time: new Date(series.dateAdded) });
+                }
+                series.seasons.forEach(season => {
+                    season.episodes.forEach(episode => {
+                        if (episode.dateAdded) {
+                            dynamicNotifications.push({ icon: 'zap', color: 'yellow-400', title: `Nuevo episodio de ${series.title}`, time: new Date(episode.dateAdded) });
+                        }
+                    });
+                });
+            });
+            dynamicNotifications.sort((a, b) => b.time - a.time);
+        }
+
+        function formatTimeAgo(date) {
+            if(isNaN(date)) return 'Recientemente';
+            const now = new Date();
+            const seconds = Math.floor((now - date) / 1000);
+            if (seconds < 60) return 'justo ahora';
+            const minutes = Math.floor(seconds / 60);
+            if (minutes < 60) return `hace ${minutes} min`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `hace ${hours}h`;
+            const days = Math.floor(hours / 24);
+            return `hace ${days}d`;
+        }
+
+        function renderNotifications() {
+            if (!notificationList) return;
+            const hasUnseen = dynamicNotifications.some(n => n.time.getTime() > lastNotificationCheck);
+            notificationDot.classList.toggle('hidden', !hasUnseen);
+            const notificationsToRender = dynamicNotifications.slice(0, 10);
+            if (notificationsToRender.length === 0) {
+                notificationList.innerHTML = `<p class="text-sm text-gray-400 text-center p-4">No hay notificaciones.</p>`;
+                return;
+            }
+            notificationList.innerHTML = notificationsToRender.map(n => {
+                const isNew = n.time.getTime() > lastNotificationCheck;
+                return `<a href="#" class="flex items-center p-2 rounded-lg hover:bg-white/5 transition-colors">
+                    <div class="flex-shrink-0 h-8 w-8 rounded-full bg-gray-700 flex items-center justify-center mr-3"><i data-lucide="${n.icon}" class="w-4 h-4 text-${n.color}"></i></div>
+                    <div class="flex-grow"><p class="text-sm font-semibold text-white">${n.title}</p><p class="text-xs text-gray-400">${formatTimeAgo(n.time)}</p></div>
+                    ${isNew ? '<span class="h-2 w-2 bg-primary-blue rounded-full ml-auto self-center"></span>' : ''}
+                </a>`;
+            }).join('');
+            lucide.createIcons();
+        }
+        
+        if (notificationButton) {
+            notificationButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                notificationsPanel.classList.toggle('hidden');
+                if (!notificationsPanel.classList.contains('hidden')) {
+                     notificationDot.classList.add('hidden');
+                     lastNotificationCheck = Date.now();
+                     localStorage.setItem('lastNotificationCheck', lastNotificationCheck);
+                     setTimeout(() => renderNotifications(), 300);
+                }
+            });
+        }
+        
+        document.getElementById('mark-read-button').addEventListener('click', () => {
+            lastNotificationCheck = Date.now();
+            localStorage.setItem('lastNotificationCheck', lastNotificationCheck);
+            renderNotifications();
+        });
+        
+        document.addEventListener('click', (e) => { if (notificationsPanel && !notificationsPanel.contains(e.target) && !notificationButton.contains(e.target)) { notificationsPanel.classList.add('hidden'); } });
+
+        window.onload = () => { 
+            loadContinueWatching(); 
+            loadWatchedContent();
+            loadNotificationState();
+            generateNotifications();
+            renderNotifications();
+            renderAllViews(); 
+            navigateTo('home'); 
+            const supermanIndex = allMoviesSource.findIndex(m => m.title === 'Maquina de guerra'); 
+            if (supermanIndex !== -1) { 
+                const superman = allMoviesSource[supermanIndex]; 
+                document.getElementById('hero-play-button').onclick = () => playSimpleContent(supermanIndex, 'Película'); 
+                document.getElementById('hero-mylist-button').onclick = () => toggleInMyList(supermanIndex, 'Película'); 
+                updateMyListButtons(superman); 
+            } 
+            if (sidebar) { sidebar.classList.remove('open'); } 
+            if (overlay) { overlay.classList.add('hidden'); } 
+        };
+    </script>
+</body>
+</html>
