@@ -181,46 +181,44 @@
             </div>
         </div>
 
-        <!-- NUEVA VISTA DE DETALLES A PÁGINA COMPLETA (UNIFICADA) -->
+        <!-- NUEVA VISTA DE DETALLES A PÁGINA COMPLETA (UNIFICADA Y MEJORADA UX/UI) -->
         <div id="details-view" class="view-container hidden w-full pb-16 absolute top-0 left-0 bg-dark-bg z-40 min-h-screen">
-            <button onclick="goBack()" class="absolute top-6 left-6 z-50 flex items-center space-x-2 bg-black/60 hover:bg-black/90 text-white px-5 py-2.5 rounded-full backdrop-blur-md transition-all shadow-lg border border-white/10">
+            <!-- Botón alineado con los márgenes del contenido -->
+            <button onclick="goBack()" class="absolute top-6 left-4 lg:left-12 z-50 flex items-center space-x-2 bg-black/60 hover:bg-black/90 text-white px-5 py-2.5 rounded-full backdrop-blur-md transition-all shadow-lg border border-white/10">
                 <i data-lucide="arrow-left" class="w-5 h-5"></i><span class="font-semibold">Volver</span>
             </button>
             
             <div id="details-media-container" class="relative w-full h-[40vh] md:h-[70vh] transition-all duration-300">
                 <!-- Reproductor en línea unificado para todo el contenido -->
-                <div id="details-inline-player-wrapper" class="flex w-full h-full pt-20 px-4 lg:px-12 pb-4">
+                <div id="details-inline-player-wrapper" class="flex w-full h-full pt-24 px-4 lg:px-12 pb-2">
                     <iframe id="details-inline-player" class="w-full h-full rounded-xl shadow-2xl bg-black border border-white/10" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
             </div>
 
-            <div id="details-content-container" class="relative z-10 px-6 lg:px-12 mt-8 max-w-7xl mx-auto transition-all duration-300">
-                <h2 id="details-title" class="text-3xl md:text-5xl font-extrabold tracking-tight mb-3 text-white drop-shadow-lg line-clamp-2"></h2>
+            <!-- Contenedor alineado a lo ancho del reproductor para aprovechar el espacio -->
+            <div id="details-content-container" class="relative z-10 px-4 lg:px-12 mt-6 w-full transition-all duration-300">
                 
-                <div class="flex flex-wrap items-center gap-4 text-gray-300 text-sm mb-6 font-medium">
-                    <span class="flex items-center space-x-1"><i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i><span id="details-rating" class="text-white text-lg font-bold"></span></span>
-                    <span id="details-year"></span>
-                    <span class="text-gray-500">•</span>
-                    <span id="details-duration"></span>
-                </div>
-                
-                <div id="details-genres" class="flex flex-wrap gap-2 mb-8"></div>
-                
-                <div id="details-grid-layout" class="grid grid-cols-1 gap-12">
-                    <div id="details-main-column" class="col-span-1">
-                        <p id="details-description" class="text-gray-300 mb-8 text-base md:text-lg leading-relaxed"></p>
+                <!-- Sistema de cuadrícula para separar info principal de info secundaria -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+                    
+                    <!-- Columna Principal Izquierda (Ocupa 8 o 9 de 12 columnas) -->
+                    <div class="lg:col-span-8 xl:col-span-9 flex flex-col">
+                        <h2 id="details-title" class="text-3xl md:text-5xl font-extrabold tracking-tight mb-3 text-white drop-shadow-lg line-clamp-2"></h2>
                         
-                        <!-- Reparto unificado -->
-                        <div id="details-cast-section" class="hidden mb-8">
-                            <h4 class="text-xl font-bold mb-3 text-white">Reparto Principal</h4>
-                            <p id="details-cast" class="text-gray-400 text-base leading-relaxed"></p>
+                        <div class="flex flex-wrap items-center gap-4 text-gray-300 text-sm mb-6 font-medium">
+                            <span class="flex items-center space-x-1"><i data-lucide="star" class="w-5 h-5 text-yellow-400 fill-yellow-400"></i><span id="details-rating" class="text-white text-lg font-bold"></span></span>
+                            <span id="details-year"></span>
+                            <span class="text-gray-500">•</span>
+                            <span id="details-duration"></span>
                         </div>
-
+                        
                         <div id="details-buttons" class="flex flex-col sm:flex-row gap-3 mb-8">
                             <button id="details-mylist-button" class="flex items-center justify-center space-x-2 px-6 py-2.5 bg-sidebar-bg hover:bg-white/10 border border-gray-600 text-white text-base font-semibold rounded-full transition duration-200 w-full sm:w-auto"><i data-lucide="bookmark" class="w-5 h-5"></i><span>Mi Lista</span></button>
                         </div>
 
-                        <div id="details-episodes-section" class="hidden mt-8">
+                        <p id="details-description" class="text-gray-300 mb-8 text-base md:text-lg leading-relaxed max-w-4xl"></p>
+
+                        <div id="details-episodes-section" class="hidden mt-2">
                             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 border-b border-gray-700 pb-4">
                                 <h4 class="text-2xl font-bold">Episodios y Temporadas</h4>
                                 <select id="season-selector" class="bg-card-bg border border-gray-600 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-blue font-semibold text-white"></select>
@@ -228,6 +226,20 @@
                             <div id="episodes-list" class="space-y-2"></div>
                         </div>
                     </div>
+                    
+                    <!-- Columna Secundaria Derecha (Metadatos) -->
+                    <div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-5">
+                        <div id="details-genres-section" class="bg-card-bg/40 p-5 rounded-2xl border border-white/5 hidden">
+                            <h4 class="text-xs font-bold mb-3 text-gray-400 uppercase tracking-wider">Géneros</h4>
+                            <div id="details-genres" class="flex flex-wrap gap-2"></div>
+                        </div>
+
+                        <div id="details-cast-section" class="bg-card-bg/40 p-5 rounded-2xl border border-white/5 hidden">
+                            <h4 class="text-xs font-bold mb-3 text-gray-400 uppercase tracking-wider">Reparto Principal</h4>
+                            <p id="details-cast" class="text-gray-300 text-sm leading-relaxed"></p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -878,16 +890,20 @@
                 castSection.classList.add('hidden');
             }
             
+            const genresSection = document.getElementById('details-genres-section');
             const genresContainer = document.getElementById('details-genres'); 
             genresContainer.innerHTML = ''; 
-            if (item.genres) { 
+            if (item.genres && item.genres.length > 0) { 
                 item.genres.forEach(genre => { 
                     const genreEl = document.createElement('span'); 
-                    genreEl.className = 'bg-white/10 text-white text-xs font-semibold px-4 py-1.5 rounded-full border border-white/10'; 
+                    genreEl.className = 'bg-white/10 text-white text-xs font-semibold px-3 py-1.5 rounded-full border border-white/10'; 
                     genreEl.textContent = genre.charAt(0).toUpperCase() + genre.slice(1); 
                     genresContainer.appendChild(genreEl); 
                 }); 
-            } 
+                genresSection.classList.remove('hidden');
+            } else {
+                genresSection.classList.add('hidden');
+            }
             
             const episodesSection = document.getElementById('details-episodes-section'); 
             const inlinePlayer = document.getElementById('details-inline-player');
