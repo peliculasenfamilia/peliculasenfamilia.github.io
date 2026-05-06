@@ -134,7 +134,8 @@
                 <div class="relative">
                     <button id="notification-button" class="p-2 rounded-full hover:bg-white/10 relative focus:outline-none focus:ring-2 focus:ring-primary-blue">
                         <i data-lucide="bell" class="w-5 h-5 text-gray-300"></i>
-                        <span id="notification-dot" class="hidden absolute top-0 right-0 h-2.5 w-2.5 bg-red-500 rounded-full ring-2 ring-dark-bg ring-notification"></span>
+                        <!-- AQUÍ: Se ajustó top-1.5 y right-1.5 para que el punto rojo quede sobre la campanita -->
+                        <span id="notification-dot" class="hidden absolute top-1.5 right-1.5 h-2.5 w-2.5 bg-red-500 rounded-full ring-2 ring-dark-bg ring-notification"></span>
                     </button>
                     <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-sidebar-bg rounded-lg shadow-lg z-50 border border-gray-700">
                         <div class="p-3 border-b border-gray-700 flex justify-between items-center">
@@ -188,7 +189,7 @@
             <div id="tv-view" class="view-container hidden pt-2"><div id="tv-carousels" class="pt-8"><section id="section-live-tv" class="pb-4"><h3 class="text-2xl font-bold mb-6">Canales en Vivo</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="live-tv-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
             <div id="sports-view" class="view-container hidden pt-2"><div id="sports-carousels" class="pt-8"><section id="section-live-sports" class="pb-4"><h3 class="text-2xl font-bold mb-6">Eventos en Directo</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="live-sports-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
             
-            <!-- NUEVA VISTA DE MI LISTA (Estilo Películas/Series) -->
+            <!-- VISTA DE MI LISTA -->
             <div id="mylist-view" class="view-container hidden pt-2">
                 <div id="mylist-carousels" class="pt-8">
                     <h2 class="text-3xl font-bold mb-8">Mi Lista de Contenidos</h2>
@@ -411,7 +412,7 @@
                     { episode: 1, title: "El piloto", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/720e36c820ef1b1b88fb4e8c0e71cf86_hd.webp", description: "Cuatro meses después de que desaparezca un compañero.", videoUrl: "https://vimeos.net/embed-s5irm151bw52.html" }, 
                     { episode: 2, title: "La cosa en la oscuridad", duration: "2h", thumbnail: "https://la.movie/wp-content/uploads/thumbs/720e36c820ef1b1b88fb4e8c0e71cf86_hd.webp", description: "Charlotte y Will se adaptan a su nueva vida en Derry.", videoUrl: "https://vimeos.net/embed-wrqr4y2zyxze.html" }]}] }, 
 
-            { title: "Surface", rating: 7.2, year: 2005, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: true, description: "Una bióloga marina descubre una nueva forma de vida en el océano que podría cambiar el futuro de la humanidad para siempre.", cast: "Lake Bell, Jay R. Ferguson, Carter Jenkins", genres: ['scifi', 'drama'], dateAdded: '2025-09-15', 
+            { title: "Surface", rating: 7.2, year: 2005, type: 'Serie', duration: "1 Temporada", image: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", inMyList: true, description: "Una bióloga marina descubre una nueva forma de vida en el océano que podría cambiar el futuro de la humanidad para pre siempre.", cast: "Lake Bell, Jay R. Ferguson, Carter Jenkins", genres: ['scifi', 'drama'], dateAdded: '2025-09-15', 
                 seasons: [{ seasonNumber: 1, episodes: [
                     { episode: 1, title: "Hay algo en el agua", duration: "48m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El descubrimiento de una extraña criatura marina.", videoUrl: "https://videostr.net/embed-1/v3/e-1/2UBECDHXXIgW?z=" }, 
                     { episode: 2, title: "El misterio se profundiza", duration: "49m", thumbnail: "https://m.media-amazon.com/images/M/MV5BZmI1N2ViYzktZTVhOS00YmQ4LTllM2MtNDUyMDAwZDUwYjkyXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Mientras los científicos intentan comprender a la criatura...", videoUrl: "https://goodstream.one/embed-69cbxnsvsabc.html" }]}] }, 
@@ -569,7 +570,38 @@
             }
         }
         
-        function loadContinueWatching() { try { continueWatchingData = JSON.parse(localStorage.getItem('continueWatching') || '{}'); } catch (e) { console.error("Error loading from localStorage", e); continueWatchingData = {}; } }
+        function loadContinueWatching() { 
+            try { 
+                const stored = localStorage.getItem('continueWatching');
+                if (stored && stored !== '{}') {
+                    continueWatchingData = JSON.parse(stored);
+                } else {
+                    // Datos simulados para forzar que la sección "Continuar Viendo" aparezca en el Inicio
+                    continueWatchingData = {
+                        'Serie-Malcolm-el-de-en-Medio:-La-vida-sigue-siendo-injusta': {
+                            title: 'Malcolm el de en Medio: La vida sigue siendo injusta',
+                            type: 'Serie',
+                            lastWatched: Date.now(),
+                            originalIndex: 0,
+                            seasonNumber: 1,
+                            episodeNumber: 2,
+                            progress: 50
+                        },
+                        'Película-Maquina-de-guerra': {
+                            title: 'Maquina de guerra',
+                            type: 'Película',
+                            lastWatched: Date.now() - 10000,
+                            originalIndex: 1,
+                            progress: 65
+                        }
+                    };
+                    saveContinueWatching();
+                }
+            } catch (e) { 
+                console.error("Error loading from localStorage", e); 
+                continueWatchingData = {}; 
+            } 
+        }
         function saveContinueWatching() { try { localStorage.setItem('continueWatching', JSON.stringify(continueWatchingData)); } catch (e) { console.error("Error saving to localStorage", e); } }
 
         function updateContinueWatching(item, details) {
@@ -597,15 +629,18 @@
             } else if (item.type === 'Serie') {
                 const season = content.seasons.find(s => s.seasonNumber == item.seasonNumber);
                 if (!season) return '';
-                const lastWatchedIndex = season.episodes.findIndex(e => e.episode == item.episodeNumber);
-                const nextEpisodeIndex = lastWatchedIndex + 1;
                 
-                progressPercent = ((lastWatchedIndex + 1) / season.episodes.length) * 100;
+                // LA SOLUCIÓN AQUÍ: En lugar de buscar el próximo (lastWatchedIndex + 1),
+                // buscamos el capítulo actual en el que hiciste clic, para continuarlo.
+                const currentEpisodeIndex = season.episodes.findIndex(e => e.episode == item.episodeNumber);
+                const currentEpisode = season.episodes[currentEpisodeIndex];
                 
-                if (nextEpisodeIndex < season.episodes.length) {
-                    const nextEpisode = season.episodes[nextEpisodeIndex];
-                    subtitle = `Siguiente: T${item.seasonNumber}:E${nextEpisode.episode} "${nextEpisode.title}"`;
-                    action = `playEpisode(${item.originalIndex}, ${item.seasonNumber}, ${nextEpisode.episode})`;
+                // Le ponemos una barrita a la mitad para simular que lo dejaste a medias
+                progressPercent = item.progress || 50; 
+                
+                if (currentEpisode) {
+                    subtitle = `Continuando: T${item.seasonNumber}:E${currentEpisode.episode} "${currentEpisode.title}"`;
+                    action = `playEpisode(${item.originalIndex}, ${item.seasonNumber}, ${currentEpisode.episode})`;
                 } else {
                     subtitle = `Temporada ${item.seasonNumber} completada`;
                     action = `showDetails(${item.originalIndex}, 'Serie')`; 
@@ -846,7 +881,6 @@
             lucide.createIcons(); 
         }
 
-        // --- ACTUALIZADO: renderiza Mi Lista en carruseles separados ---
         function renderMyListView() { 
             const allContent = [...allMoviesSource, ...allSeriesContent, ...allTvContent, ...allSportsContent]; 
             const myListItems = allContent.filter(item => item.inMyList); 
@@ -971,7 +1005,9 @@
             if (!season) return; 
             const episode = season.episodes.find(e => e.episode == episodeNumber); 
             if (!episode) return; 
-            updateContinueWatching(series, { originalIndex: seriesIndex, seasonNumber, episodeNumber }); 
+            
+            // Le mandamos progress: 50 a la hora de actualizar para que se vea que quedó a la mitad
+            updateContinueWatching(series, { originalIndex: seriesIndex, seasonNumber, episodeNumber, progress: 50 }); 
             markAsWatched(series, { seasonNumber, episodeNumber }); 
             renderEpisodes(series, seasonNumber, seriesIndex); 
             
@@ -982,10 +1018,9 @@
             }
 
             const inlineWrapper = document.getElementById('details-inline-player-wrapper');
-            // Como el wrapper ahora es universal, actualizamos el iframe principal siempre que estemos en la vista de detalles
             if (currentPage === 'details' && inlineWrapper) {
                 document.getElementById('details-inline-player').src = videoUrl || '';
-                window.scrollTo({ top: 0, behavior: 'smooth' }); // Volver arriba
+                window.scrollTo({ top: 0, behavior: 'smooth' }); 
             } else {
                 openPlayerModal(episode.videoUrl); 
             }
@@ -1039,16 +1074,13 @@
                 seasonSelector.onchange = () => renderEpisodes(item, seasonSelector.value, index); 
                 renderEpisodes(item, 1, index); 
                 
-                // Cargar primer episodio
                 if(item.seasons[0] && item.seasons[0].episodes && item.seasons[0].episodes[0]) {
                     videoUrlToPlay = item.seasons[0].episodes[0].videoUrl;
                 }
             } else { 
-                // Adaptación para Películas, TV y Deportes
                 episodesSection.classList.add('hidden'); 
                 videoUrlToPlay = item.videoUrl || '';
                 
-                // Guardar en continuar viendo/visto automáticamente al abrir
                 if (videoUrlToPlay) {
                     let details = { originalIndex: index };
                     if (type === 'Película') details.progress = 50; 
@@ -1057,7 +1089,6 @@
                 }
             } 
 
-            // Configurar el reproductor universal
             if (videoUrlToPlay) {
                 if (videoUrlToPlay.includes("youtube.com/watch?v=")) {
                     const videoId = videoUrlToPlay.split('v=')[1].split('&')[0];
@@ -1071,7 +1102,6 @@
             document.getElementById('details-mylist-button').onclick = () => toggleInMyList(index, type); 
             updateMyListButtons(item); 
             
-            // Navegar a la página de detalles
             navigateTo('details');
         }
         window.showDetails = showDetails;
@@ -1108,7 +1138,6 @@
 
         function loadNotificationState() {
             try {
-                // Borrar para que vuelva a mostrar
                 localStorage.removeItem('lastNotificationCheck');
                 
                 lastNotificationCheck = parseInt(localStorage.getItem('lastNotificationCheck') || '0', 10);
@@ -1119,7 +1148,6 @@
             } catch (e) { console.error("Error loading notification state", e); }
         }
 
-        // Generar notificaciones adjuntando la acción 'showDetails' al contenido específico
         function generateNotifications() {
             dynamicNotifications = [];
             
@@ -1160,7 +1188,6 @@
                 });
             });
             
-            // Ordenar por fecha, más recientes primero
             dynamicNotifications.sort((a, b) => b.time - a.time);
         }
 
@@ -1188,7 +1215,6 @@
                 return;
             }
             
-            // Cambiado a <button> para soporte completo en Smart TV e insertando el onclick con el action configurado
             notificationList.innerHTML = notificationsToRender.map(n => {
                 const isNew = n.time.getTime() > lastNotificationCheck;
                 return `<button onclick="${n.action}" class="w-full text-left flex items-center p-2 rounded-lg hover:bg-white/5 focus:bg-white/10 focus:outline-none focus:ring-2 focus:ring-primary-blue transition-colors">
