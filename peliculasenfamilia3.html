@@ -35,7 +35,7 @@
         .hero-section::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient( to right, rgba(27, 36, 51, 1) 0%, rgba(27, 36, 51, 1) 25%, rgba(27, 36, 51, 0.8) 50%, rgba(27, 36, 51, 0.3) 75%, rgba(27, 36, 51, 0) 100% ); }
         .hero-content { position: relative; z-index: 10; }
         .ring-notification { animation: ring-pulse 1.5s infinite; }
-        @keyframes ring-pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(255, 69, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); } }
+        @keyframes ring-pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
         
         /* Ajuste de Sidebar para permitir scroll nativo en el body (TV Fix) */
         .sidebar { transform: translateX(-100%); transition: transform 0.3s ease-in-out; z-index: 50; }
@@ -51,8 +51,8 @@
         @media (min-width: 640px) { .movie-row .movie-card-container { width: 160px; } }
         @media (min-width: 1024px) { .movie-row .movie-card-container { width: 180px; } }
         
-        /* En la grilla de Mi Lista y búsqueda, ocupan todo el ancho de su columna */
-        #mylist-grid .movie-card-container, #search-results .movie-card-container { width: 100%; flex-shrink: 1; }
+        /* SOLUCIÓN: min-width: 0 evita el desbordamiento en grillas de búsqueda */
+        #search-results .movie-card-container { width: 100%; flex-shrink: 1; min-width: 0; }
         
         .play-button-overlay { opacity: 0; transition: opacity 0.3s; width: 50px; height: 50px; border-radius: 9999px; background-color: rgba(255, 255, 255, 0.2); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); }
         .movie-card-container:hover .play-button-overlay, .movie-card-container:focus .play-button-overlay { opacity: 1; }
@@ -134,7 +134,7 @@
                 <div class="relative">
                     <button id="notification-button" class="p-2 rounded-full hover:bg-white/10 relative focus:outline-none focus:ring-2 focus:ring-primary-blue">
                         <i data-lucide="bell" class="w-5 h-5 text-gray-300"></i>
-                        <span id="notification-dot" class="hidden absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full ring-2 ring-dark-bg ring-notification"></span>
+                        <span id="notification-dot" class="hidden absolute top-0 right-0 h-2.5 w-2.5 bg-red-500 rounded-full ring-2 ring-dark-bg ring-notification"></span>
                     </button>
                     <div id="notifications-panel" class="hidden absolute right-0 mt-2 w-80 bg-sidebar-bg rounded-lg shadow-lg z-50 border border-gray-700">
                         <div class="p-3 border-b border-gray-700 flex justify-between items-center">
@@ -187,7 +187,50 @@
             <div id="movies-view" class="view-container hidden pt-2"><div id="movies-carousels" class="pt-8"><section class="pb-4"><h3 class="text-2xl font-bold mb-6">Películas Destacadas</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="featured-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas de Comedia</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="comedy-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Dramáticas</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="drama-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Fantasía y Ciencia Ficción</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="fantasy-scifi-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Familiares</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="family-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section><section class="pt-8 pb-4"><h3 class="text-2xl font-bold mb-6">Películas Románticas</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="romance-movies-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
             <div id="tv-view" class="view-container hidden pt-2"><div id="tv-carousels" class="pt-8"><section id="section-live-tv" class="pb-4"><h3 class="text-2xl font-bold mb-6">Canales en Vivo</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="live-tv-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
             <div id="sports-view" class="view-container hidden pt-2"><div id="sports-carousels" class="pt-8"><section id="section-live-sports" class="pb-4"><h3 class="text-2xl font-bold mb-6">Eventos en Directo</h3><div class="relative"><button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button><div class="movie-row"><div class="movie-row-inner" id="live-sports-inner"></div></div><button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button></div></section></div></div>
-            <div id="mylist-view" class="view-container hidden pt-2"><div class="pt-8 pb-4"><h2 class="text-3xl font-bold mb-8">Mi Lista de Contenidos</h2><div id="mylist-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6"></div></div></div>
+            
+            <!-- NUEVA VISTA DE MI LISTA (Estilo Películas/Series) -->
+            <div id="mylist-view" class="view-container hidden pt-2">
+                <div id="mylist-carousels" class="pt-8">
+                    <h2 class="text-3xl font-bold mb-8">Mi Lista de Contenidos</h2>
+
+                    <!-- Mensaje si la lista está vacía -->
+                    <div id="mylist-empty-state" class="hidden text-center py-12 text-gray-400">
+                        <i data-lucide="list-video" class="w-12 h-12 mx-auto mb-4 text-primary-blue"></i>
+                        <p class="text-xl font-semibold">Tu lista está vacía.</p>
+                        <p>Añade películas y series para verlas aquí.</p>
+                    </div>
+
+                    <!-- Carrusel: Películas en Mi Lista -->
+                    <section id="mylist-movies-section" class="pb-8 hidden">
+                        <h3 class="text-2xl font-bold mb-6">Películas Guardadas</h3>
+                        <div class="relative">
+                            <button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button>
+                            <div class="movie-row"><div class="movie-row-inner" id="mylist-movies-inner"></div></div>
+                            <button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button>
+                        </div>
+                    </section>
+
+                    <!-- Carrusel: Series en Mi Lista -->
+                    <section id="mylist-series-section" class="pb-8 hidden">
+                        <h3 class="text-2xl font-bold mb-6">Series Guardadas</h3>
+                        <div class="relative">
+                            <button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button>
+                            <div class="movie-row"><div class="movie-row-inner" id="mylist-series-inner"></div></div>
+                            <button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button>
+                        </div>
+                    </section>
+
+                    <!-- Carrusel: TV y Deportes en Mi Lista -->
+                    <section id="mylist-tv-section" class="pb-8 hidden">
+                        <h3 class="text-2xl font-bold mb-6">Televisión y Deportes</h3>
+                        <div class="relative">
+                            <button onclick="scrollCarousel(this, -500)" class="nav-arrow absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-left" class="w-6 h-6 text-white"></i></button>
+                            <div class="movie-row"><div class="movie-row-inner" id="mylist-tv-inner"></div></div>
+                            <button onclick="scrollCarousel(this, 500)" class="nav-arrow right absolute top-1/2 -translate-y-1/2 -mt-8 z-20 hover:bg-black/70 p-3 transition-colors hidden lg:block focus:outline-none focus:ring-2 focus:ring-white"><i data-lucide="chevron-right" class="w-6 h-6 text-white"></i></button>
+                        </div>
+                    </section>
+                </div>
+            </div>
             
             <div id="no-results" class="hidden text-center py-12 text-gray-400">
                 <i data-lucide="frown" class="w-12 h-12 mx-auto mb-4 text-primary-blue"></i>
@@ -298,7 +341,7 @@
             { title: "Primitive War", rating: 5.9, year: 2025, duration: "1h 40m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/egDAs0vh2SzTR07eUzdcC1XYkTS.jpg", genres: ['scifi', 'horror'], description: "Un equipo de soldados de élite es enviado a una jungla remota para una misión de rescate, solo para descubrir que están siendo cazados por dinosaurios modificados genéticamente.", cast: "Ryan Kwanten, Tricia Helfer, Jeff Fahey", inMyList: false, videoUrl: "https://vimeos.net/embed-mrywycuhxu5z.html", dateAdded: '2025-09-12' },
             { title: "Scream 7", rating:5.5, year: 2026, duration: "1h 54m", type: 'Película', image: "https://pics.filmaffinity.com/scream_7-360043376-mmed.jpg", genres: ['terrir', 'crimen','destacada' ], description: "Cuando un nuevo asesino Ghostface aparece en el tranquilo pueblo donde Sidney Prescott (Neve Campbell) ha construido una nueva vida, sus peores miedos se hacen realidad cuando su hija (Isabel May) se convierte en el siguiente objetivo.", cast: "Neve Campbell, Courteney Cox, Isabel May", inMyList: false, videoUrl: "https://vibuxer.com/e/vwzv8lol3mg7", dateAdded: '2026-05-05' },
             { title: "Trol 2", rating:5.5, year: 2025, duration: "1h 42m", type: 'Película', image: "https://la.movie/wp-content/uploads/thumbs/be63bd049a45e596c9be7079dd937943_hd.webp", genres: ['accion', 'suspenso', 'fantasia', ], description: "Cuando otro despiadado trol desata una ola de destrucción en su país, Nora, Andreas y el comandante Kris se embarcan en la misión más peligrosa de sus vidas.", cast: "Ine Marie Wilmann, Kim S. Falck-Jørgensen, Mads Sjøgård Pettersen", inMyList: false, videoUrl: "https://vimeos.net/embed-mmwf2qetgghv.html", dateAdded: '2026-02-09' },
-            { title: "Xeno", rating: 5.5, year: 2025, duration: "1h 43m", type: 'Película', image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fa173ryH3yQXvP2y0jriL3dYjWfX.jpg&w=256&q=75", genres: ['scifi', 'accion', 'drama', 'destacada'], description: "Una adolescente convierte en su amiga a un aterrador extraterrestre después de que se estrella cerca del desierto.", cast: " Lulu Wilson, Omari Hardwick, Paul Schneider, Trae Romano, Wrenn Schmidt, Josh Cooke.", videoUrl: "https://vimeos.net/embed-mbz2fvbnvtv6.html", inMyList: false, dateAdded: '2025-09-01' },
+            { title: "Xeno", rating: 5.5, year: 2025, duration: "1h 43m", type: 'Película', image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fa173ryH3yQXvP2y0jriL3dYjWfX.jpg&w=256&q=75", genres: ['scifi', 'accion', 'drama', 'destacada'], description: "Una adolescente convierte en su amiga a un aterrador extraterrestre después de que se estrella cerca del desierto. La joven logra lidiar con su triste madre y con el violento novio de ella y, al mismo tiempo, protege a su nuevo amigo.", cast: " Lulu Wilson, Omari Hardwick, Paul Schneider, Trae Romano, Wrenn Schmidt, Josh Cooke.", videoUrl: "https://vimeos.net/embed-mbz2fvbnvtv6.html", inMyList: false, dateAdded: '2025-09-01' },
             { title: "Hipnosis: Arma Invisible", rating: 5.5, year: 2025, duration: "2h 00m", type: 'Película', image: "https://image.tmdb.org/t/p/w342/3IhGkkalwXguTlceGSl8XUJZOVI.jpg", genres: ['accion', 'thriller'], description: "Un detective debe resolver una serie de atracos de alto riesgo mientras se enfrenta a un misterioso villano que utiliza la hipnosis para controlar a la gente.", cast: "Ben Affleck, Alice Braga, William Fichtner", inMyList: false, videoUrl: "https://vimeos.net/embed-mrywycuhxu5z.html", dateAdded: '2025-09-10' },
             { title: "El gran diluvio", rating:5.4, year: 2025, duration: "1h 49m", type: 'Película', image: "https://image.tmdb.org/t/p/w342//qIzSyT2AmDxkcQ0zOAeTbtZR9EQ.jpg", genres: ['accion', 'aventura', 'scifi','destacada', ], description: "Una inundación catastrófica inunda el planeta. En lo que podría ser el último día en la Tierra, se libra una lucha desesperada por salvar a un niño de un piso inundado.", cast: " 권민경, 권은성, 김강빈, 김규나, 김다미.", inMyList: false, videoUrl: "https://vimeos.net/embed-j6ydgnuluroa.html", dateAdded: '2025-12-27' },
             { title: "El sonido de la muerte", rating:5.2, year: 2025, duration: "1h 40m", type: 'Película', image: "https://pics.filmaffinity.com/whistle-618638107-mmed.jpg", genres: ['horror','destacada','suspenso', ], description: "Un grupo de inadaptados estudiantes de instituto tropiezan con un objeto maldito, un antiguo silbato azteca de la muerte. Descubren que al soplar el silbato y oír el aterrador sonido que emite, sus futuras muertes les perseguirán.", cast: "Dafne Keen, Sophie Nélisse, Sky Yang.", inMyList: false, videoUrl: "https://vimeos.net/embed-y2b4bmk3iqti.html", dateAdded: '2026-04-27' },
@@ -442,7 +485,7 @@
                     { episode: 7, title: "Kaiju No. 9", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Reno e Iharu se encuentran con un poderoso Kaiju humanoide.", videoUrl: "https://jkanime.net/jkplayer/um?e=WDZHSDNRSmNDWVNxeXp2MmRUbEI0RUdlOUtCTnhDUFFLRVMxNzJodzZ5RERLT3dNMVkwaGNrL0tLM2s5YmZkMEdVRitHTktWR3luMitGYmthUzQxR2c9PTo6M4Mb7_RPMZf.DbSDJamEiA--&t=a9caa102e190108baff515c9407a46a4&op=NTczNjM=" },
                     { episode: 8, title: "Bienvenido a la Fuerza de Defensa", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Transformado en Kaiju para salvar a sus amigos.", videoUrl: "https://jkanime.net/jkplayer/um?e=UGR0VHRvOTFGNk8xcUpHcUdQamJ1KzU0My9ubUMvNzhjdkR6aGdqUlNmNEppZU4rZThkY1RUTGxGdTBjWjFLUXN0REVJekJSZldySDZOSm9DeG5PdkE9PTo6hBJOBw0Fco8m.Ccs_8QIoA--&t=aadb192a01447c8bcc3b4c1a46d3bd82&op=NTc0NTg=" },
                     { episode: 9, title: "Incursión en la base de Tachikawa", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "La base de Tachikawa sufre un devastador ataque aéreo.", videoUrl: "https://jkanime.net/jkplayer/um?e=d2lLeTlCc3kyUEVhaDFCL1hDbGYxVkVRcWlyaDlnRlc5N3VmR2ZjMWdJTHJNZzM5cWJsSGFBS1oxeDZQY3pFU1VyMmZaV2pFZklaVUhRWmYxSFlyQmc9PTo6D0lpjHca6t61FKJaYEcjoA--&t=7969148322e18aa856fb28f259cfa26a&op=NTc1MzU=" },
-                    { episode: 10, title: "Secreto revelado", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Cuando la Fuerza de Defensa está en peligro, Kafka se ve obligado a elegir.", videoUrl: "https://jkanime.net/jkplayer/um?e=Z1VDQkZLZTZWc2g5UjY3bXZWVWVwY3R2OHZSbHROek41U2FJQ2ladFNRTHRVdUlKa2JNM3VVTWNoMGQrbzU1K2pXVktzTkx0UnNKZ21wZVBnT3MyYXc9PTo6rANkFoLNgmoNH.Tebb8M2Q--&t=33e07b135d8b8aedf1adc9a015ade640&op=NTc2MTc=" },
+                    { episode: 10, title: "Secreto revelado", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "Cuando la Fuerza de Defensa está en peligro, Kafka se ve obligado a elegir.", videoUrl: "https://jkanime.net/jkplayer/um?e=Z1VDQkZLZTZWc2g5UjY3bXZWVWVwY3R2OHZSbHROek41U2FJQ2ladFNRTHRVdUlKa2JNM3VVTWNoMGQrbzU1K2pXVktzTkx0UnNKZ21wZVBnT3MyYXc9PTo6rANkFoLNgmoNH.Tebb8M2Q--&t=33e07b135d8b8aedf1adc9a015ade640&op=NTcxMTc=" },
                     { episode: 11, title: "Capturado", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El Kaiju No. 8 es capturado y Kafka está a merced de los líderes.", videoUrl: "https://jkanime.net/jkplayer/um?e=SUNvSysvdFBwYlhBc2hZOWFDVGM3L3kzQUY1K3BNV1g5cVZoeDJkdmdGeUY4ZVVXbGVqWWhYOVJCVEJWN1VvWDlDVnM4a2VSUDBIMTZGSnVveGFQRWc9PTo6qkGxpZi.P3l7UaBUbzp59A--&t=82bda4dbf019370015554328a37ac6d1&op=NTc2ODI=" },
                     { episode: 12, title: "Kafka Hibino", duration: "24m", thumbnail: "https://m.media-amazon.com/images/M/MV5BM2VmNTc3OWQtOTVmMy00MGZlLTk3N2QtM2YwZDE5MWVjZmM5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg", description: "El destino final de Kafka se determina.", videoUrl: "https://jkanime.net/jkplayer/um?e=cjh4TkgyZjRUZ0ZQS0VhdS9wY0dJZTNwKzJ2QWx0ZDJCcm5DcThUbldiNHNBWXVEcjZDUlJWS0pQcDZSTVZtSXhBZkVORHBmajdrTmI4TS9hN1hNbUE9PTo68K_Av7LqT6aeUVzra4AiDQ--&t=f858adc11c1878a45688173540a2933f&op=NTc3Mzc=" },
                 ]}] },
@@ -453,9 +496,9 @@
                      { episode: 3, title: "The enemy within", duration: "46m", thumbnail: "https://pics.filmaffinity.com/stargate_sg_1-145480884-large.jpg", description: "Los médicos descubren que una larva Goa'uld se ha adherido al cerebro de Kawalsky.", videoUrl: "https://f16px.com/e/akl34o30sg20?sub.info=https://qqqcdn.cloud/subtitles/fm/token/2ux4tho3zf6i4.json" },
                      { episode: 4, title: "Emancipation", duration: "46m", thumbnail: "https://pics.filmaffinity.com/stargate_sg_1-145480884-large.jpg", description: "Mientras explora un mundo poblado por descendientes de mongoles, la capitán Carter es secuestrada.", videoUrl: "https://f16px.com/e/xms3wl86rm5a?sub.info=https://qqqcdn.cloud/subtitles/fm/token/2ux4tho3zf6i3.json" },
                 ]}] },
-            { title: "Invasión", rating: 6.2, year: 2021, type: 'Serie', duration: "1 Temporada", image: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fwe6trvt9PfESlC4Td3SWQvmrmb3.jpg&w=256&q=75", inMyList: false, description: "La Tierra es visitada por una especie alienígena que amenaza la existencia de la humanidad.", cast: "Golshifteh Farahani, Shamier Anderson", genres: ['accion', 'scifi', 'drama','aventura', 'destacada'], dateAdded: '2025-07-15', 
+            { title: "Invasión", rating: 6.2, year: 2021, type: 'Serie', duration: "1 Temporada", image: "https://image.tmdb.org/t/p/w342/we6trvt9PfESlC4Td3SWQvmrmb3.jpg", inMyList: false, description: "La Tierra es visitada por una especie alienígena que amenaza la existencia de la humanidad.", cast: "Golshifteh Farahani, Shamier Anderson", genres: ['accion', 'scifi', 'drama','aventura', 'destacada'], dateAdded: '2025-07-15', 
                 seasons: [{ seasonNumber: 1, episodes: [
-                    { episode: 1, title: "Last Day", duration: "56m", thumbnail: "https://www.poseidonhd2.co/_next/image?url=https%3A%2F%2Fimage.tmdb.org%2Ft%2Fp%2Foriginal%2Fwe6trvt9PfESlC4Td3SWQvmrmb3.jpg&w=256&q=75", description: "En todo el mundo comienzan a desarrollarse sucesos extraños e inexplicables.", videoUrl: "https://auvexiug.com/e/ljzt1i3iwzx0" }]}] },
+                    { episode: 1, title: "Last Day", duration: "56m", thumbnail: "https://image.tmdb.org/t/p/w342/we6trvt9PfESlC4Td3SWQvmrmb3.jpg", description: "En todo el mundo comienzan a desarrollarse sucesos extraños e inexplicables.", videoUrl: "https://auvexiug.com/e/ljzt1i3iwzx0" }]}] },
             { title: "Rumbo al infierno", rating: 6.6, year: 2021, type: 'Serie', duration: "1 Temporada", image: "https://www.verseriesonline.net/storage/poster/series/rumbo-al-infierno.jpg", inMyList: false, description: "La gente escucha predicciones sobre cuándo morirá. Cuando llega ese momento, un ángel de la muerte aparece frente a ellos.", cast: "Kim Dong-wook, Lee Jae-sung", genres: ['scifi', 'drama', 'destacada'], dateAdded: '2025-10-22', 
                 seasons: [{ seasonNumber: 1, episodes: [
                     { episode: 1, title: "Episodio #1.1", duration: "51m", thumbnail: "https://www.verseriesonline.net/storage/poster/series/rumbo-al-infierno-saison-1.jpg", description: "Los espectadores horrorizados observan cómo bestias sobrenaturales persiguen y matan a un hombre.", videoUrl: "https://streamwish.to/e/vhrg7m4h8urj" }]}] },
@@ -617,7 +660,7 @@
             const isWatched = watchedContent.has(key);
             const watchedClass = isWatched ? 'is-watched' : '';
             return `
-                <button class="movie-card-container group cursor-pointer hover:scale-[1.03] transition-transform duration-300 text-left focus:outline-none focus:ring-4 focus:ring-primary-blue rounded-xl flex flex-col" onclick="showDetails(${index}, '${type}')">
+                <button class="movie-card-container group cursor-pointer hover:scale-[1.03] transition-transform duration-300 text-left focus:outline-none focus:ring-4 focus:ring-primary-blue rounded-xl flex flex-col min-w-0" onclick="showDetails(${index}, '${type}')">
                     <div class="relative aspect-[2/3] overflow-hidden rounded-xl shadow-lg bg-card-bg w-full ${watchedClass}">
                         <img src="${item.image}" alt="${item.title}" onerror="this.onerror=null;this.src='https://placehold.co/300x450/444/white?text=${item.title.split(' ').slice(0, 2).join('+')}'" class="w-full h-full object-cover group-hover:opacity-80 transition-opacity duration-300">
                         ${isWatched ? `<div class="watched-overlay"><i data-lucide="check-circle-2" class="w-10 h-10 text-white opacity-90"></i></div>` : ''}
@@ -684,12 +727,11 @@
                 updateActiveLink(page);
                 document.getElementById('main-header').classList.remove('hidden');
             } else {
-                // Quitar foco del menu activo cuando estemos en la vista de detalles
                 document.querySelectorAll('.nav-link').forEach(link => { 
                     link.classList.remove('bg-primary-blue', 'text-white', 'shadow-lg', 'shadow-primary-blue/30', 'font-semibold'); 
                     link.classList.add('text-gray-300', 'hover:bg-white/10'); 
                 });
-                document.getElementById('main-header').classList.add('hidden'); // Ocultar barra superior en detalles
+                document.getElementById('main-header').classList.add('hidden'); 
             }
             
             currentPage = page; 
@@ -716,7 +758,6 @@
 
         function filterContent() { 
             if (currentPage === 'details') {
-                // Si busca estando en detalles, mandarlo a inicio
                 navigateTo(previousPage || 'home');
                 return;
             }
@@ -805,21 +846,68 @@
             lucide.createIcons(); 
         }
 
+        // --- ACTUALIZADO: renderiza Mi Lista en carruseles separados ---
         function renderMyListView() { 
             const allContent = [...allMoviesSource, ...allSeriesContent, ...allTvContent, ...allSportsContent]; 
             const myListItems = allContent.filter(item => item.inMyList); 
-            const container = document.getElementById('mylist-grid'); 
-            if (!container) return; 
             
+            const emptyState = document.getElementById('mylist-empty-state');
+            const moviesSection = document.getElementById('mylist-movies-section');
+            const seriesSection = document.getElementById('mylist-series-section');
+            const tvSection = document.getElementById('mylist-tv-section');
+
+            if (!emptyState) return;
+
+            // Si está vacía, mostramos el mensaje y ocultamos las secciones
             if (myListItems.length === 0) { 
-                container.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400"><i data-lucide="list-video" class="w-12 h-12 mx-auto mb-4 text-primary-blue"></i><p class="text-xl font-semibold">Tu lista está vacía.</p><p>Añade películas y series para verlas aquí.</p></div>`; 
+                emptyState.classList.remove('hidden');
+                moviesSection.classList.add('hidden');
+                seriesSection.classList.add('hidden');
+                tvSection.classList.add('hidden');
             } else { 
+                // Ocultar mensaje vacío
+                emptyState.classList.add('hidden');
+                
+                // Dividir contenido por categorías
+                const myMovies = myListItems.filter(item => item.type === 'Película');
+                const mySeries = myListItems.filter(item => item.type === 'Serie');
+                const myTv = myListItems.filter(item => item.type === 'TV' || item.type === 'Deporte');
+
                 const dataSources = { 'Película': allMoviesSource, 'Serie': allSeriesContent, 'TV': allTvContent, 'Deporte': allSportsContent }; 
-                container.innerHTML = myListItems.map(item => { 
-                    const source = dataSources[item.type]; 
-                    const originalIndex = source.findIndex(si => si.title === item.title); 
-                    return createMovieCard(item, originalIndex, item.type); 
-                }).join(''); 
+
+                // Mostrar/Ocultar y Renderizar Películas
+                if(myMovies.length > 0) {
+                    moviesSection.classList.remove('hidden');
+                    document.getElementById('mylist-movies-inner').innerHTML = myMovies.map(item => {
+                        const originalIndex = allMoviesSource.findIndex(si => si.title === item.title); 
+                        return createMovieCard(item, originalIndex, item.type); 
+                    }).join('');
+                } else {
+                    moviesSection.classList.add('hidden');
+                }
+
+                // Mostrar/Ocultar y Renderizar Series
+                if(mySeries.length > 0) {
+                    seriesSection.classList.remove('hidden');
+                    document.getElementById('mylist-series-inner').innerHTML = mySeries.map(item => {
+                        const originalIndex = allSeriesContent.findIndex(si => si.title === item.title); 
+                        return createMovieCard(item, originalIndex, item.type); 
+                    }).join('');
+                } else {
+                    seriesSection.classList.add('hidden');
+                }
+
+                // Mostrar/Ocultar y Renderizar TV/Deportes
+                if(myTv.length > 0) {
+                    tvSection.classList.remove('hidden');
+                    document.getElementById('mylist-tv-inner').innerHTML = myTv.map(item => {
+                        const source = dataSources[item.type]; 
+                        const originalIndex = source.findIndex(si => si.title === item.title); 
+                        return createMovieCard(item, originalIndex, item.type); 
+                    }).join('');
+                } else {
+                    tvSection.classList.add('hidden');
+                }
             } 
             lucide.createIcons(); 
         }
@@ -1012,7 +1100,7 @@
         }
         window.closePlayerModal = closePlayerModal;
         
-        // --- Notification System Mejorado ---
+        // --- Notification System ---
         const notificationButton = document.getElementById('notification-button');
         const notificationsPanel = document.getElementById('notifications-panel');
         const notificationDot = document.getElementById('notification-dot');
@@ -1020,6 +1108,9 @@
 
         function loadNotificationState() {
             try {
+                // Borrar para que vuelva a mostrar
+                localStorage.removeItem('lastNotificationCheck');
+                
                 lastNotificationCheck = parseInt(localStorage.getItem('lastNotificationCheck') || '0', 10);
                 if (lastNotificationCheck === 0) {
                     lastNotificationCheck = Date.now() - 7 * 24 * 60 * 60 * 1000;
