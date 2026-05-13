@@ -312,6 +312,14 @@
                             <h4 class="text-[10px] font-bold mb-2 text-gray-500 uppercase tracking-wider">Reparto Principal</h4>
                             <p id="details-cast" class="text-gray-300 text-xs md:text-sm leading-relaxed"></p>
                         </div>
+                        
+                        <!-- NUEVO: Sección de Contenido Similar (Recomendados) -->
+                        <div id="details-recommendations-section" class="bg-card-bg/30 p-4 rounded-xl border border-white/5 hidden">
+                            <h4 class="text-[10px] font-bold mb-3 text-gray-500 uppercase tracking-wider">Títulos Similares</h4>
+                            <div id="details-recommendations-grid" class="grid grid-cols-2 gap-3">
+                                <!-- Las tarjetas se insertan desde JS -->
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -533,14 +541,14 @@
                      { episode: 4, title: "El documento", duration: "45m", thumbnail: "https://pics.filmaffinity.com/early_edition-460610563-mmed.jpg", description: "Mientras busca respuestas sobre el periódico, Gary se ve envuelto con un reportero que sospecha de su aparente conocimiento sobre cierta historia.", videoUrl: "https://mega.nz/embed/rQFhjKQY#h4DUDRKytC1w_fKCAkLQ-ZlJjh88bDMo3fT6WyqW4tA" },
                 ]}] },
             
-            { title: "Xena, Princesa Guerrera", rating: 6.8, year: 1995, type: 'Serie', duration: "6 Temporadas", image: "https://pics.filmaffinity.com/xena_warrior_princess-880208288-mmed.jpg", inMyList: false, description: " Xena (Lucy Lawless) es una bella guerrera cuyos orígenes se remontan a la antigua Grecia. Siempre acompañada de su fiel amiga Gabrielle (Renée O'Connor) y de su poderoso disco mágico, protagoniza numerosas aventuras que la llevan a recorrer distintas regiones en su eterna lucha contra el mal.", cast: "Lucy Lawles, Renée O'connor, Tad Raimi.", genres: ['accion', 'aventura', 'drama', 'scifi','retro', 'destacada',], dateAdded: '2026-05-13', 
+            { title: "Xena, Princesa Guerrera", rating: 6.8, year: 1995, type: 'Serie', duration: "6 Temporadas", image: "https://pics.filmaffinity.com/xena_warrior_princess-880208288-mmed.jpg", inMyList: false, description: " Xena (Lucy Lawless) es una bella guerrera cuyos orígenes se remontan a la antigua Grecia. Siempre acompañada de su fiel amiga Gabrielle (Renée O'Connor) y de su poderoso disco mágico, protagoniza numerosas aventuras que la llevan a recorrer distintas regiones en su eterna lucha contra el mal.", cast: "Lucy Lawles, Renée O'connor, Tad Raimi.", genres: ['accion','retro', 'aventura', 'drama', 'scifi', 'destacada',], dateAdded: '2026-05-13', 
                 seasons: [{ seasonNumber: 1, episodes: [
                     { episode: 1, title: "Pecados del pasado", duration: "44m", thumbnail: "https://pics.filmaffinity.com/xena_warrior_princess-880208288-mmed.jpg", description: "Xena, antes una despiadada caudilla, aparece en escena para demostrar que ha cambiado. Mientras lucha por proteger a los inocentes, rescata a una joven aspirante a barda, Gabrielle, quien se convierte en su compañera de viaje.", videoUrl: "https://ok.ru/videoembed/2760778320470" },
                      { episode: 2, title: "Carros de guerra", duration: "44m", thumbnail: "https://pics.filmaffinity.com/xena_warrior_princess-880208288-mmed.jpg", description: "Xena resulta herida al defender a un grupo de campesinos y es llevada a casa de Darío para recuperarse. Gabrielle, que la espera, es rescatada por el hijo del caudillo que aterroriza a los campesinos.", videoUrl: "https://mega.nz/embed/AcJyXBIa#48ZifMlyUbyGKawsUjx1oCOoKoaco1u9BCK9mgwxRm8" },
                      { episode: 3, title: "El pasadizo de los sueños", duration: "44m", thumbnail: "https://pics.filmaffinity.com/xena_warrior_princess-880208288-mmed.jpg", description: "Gabrielle es secuestrada para convertirse en la novia de Morfeo, el dios de los sueños, por lo que Xena tiene que atravesar su Pasaje del Paisaje Onírico", videoUrl: "https://mega.nz/embed/EYBEzZgY#FWk9wnlZ7WwjhoZApQ9414kqQZja5uVEBCI5tDvLxsE" },
                 ]}] },
 
-            { title: "Walker, Texas Ranger", rating: 5.7, year: 1993, type: 'Serie', duration: "9 Temporadas", image: "https://pics.filmaffinity.com/walker_texas_ranger-418151503-mmed.jpg", inMyList: false, description: "Cordell Walker (Chuck Norris) es un agente de los Rangers de Texas (cuerpo de investigación) que ha sido criado por los indios. Es, además, un veterano de la guerra de Vietnam y un experto en artes marciales que desempeña el papel de shérif de la vieja escuela.", cast: "Chuck Norris, Sheree J. Wilson, Noble Willingham", genres: ['accion', 'policial','retro', 'destacada'], dateAdded: '2026-05-13', 
+            { title: "Walker, Texas Ranger", rating: 5.7, year: 1993, type: 'Serie', duration: "9 Temporadas", image: "https://pics.filmaffinity.com/walker_texas_ranger-418151503-mmed.jpg", inMyList: false, description: "Cordell Walker (Chuck Norris) es un agente de los Rangers de Texas (cuerpo de investigación) que ha sido criado por los indios. Es, además, un veterano de la guerra de Vietnam y un experto en artes marciales que desempeña el papel de shérif de la vieja escuela.", cast: "Chuck Norris, Sheree J. Wilson, Noble Willingham", genres: ['accion', 'policial', 'retro', 'destacada'], dateAdded: '2026-05-13', 
                 seasons: [{ seasonNumber: 1, episodes: [
                     { episode: 1, title: "Un disturbio, un ranger", duration: "45m", thumbnail: "https://pics.filmaffinity.com/walker_texas_ranger-418151503-mmed.jpg", description: "Entre los problemas con los que Walker tiene que lidiar se incluyen un nuevo socio llamado Trivette, un grupo de hombres que aterrorizan a una familia de circo que acampa en su casa y unos maleantes que planean el atraco bancario.", videoUrl: "https://mega.nz/embed/qZV03ArC#etz3N7maiacRy7YhieOn0oJtWiNq7Pf21w4RWED2K_M" },
                      { episode: 2, title: "Límite", duration: "45m", thumbnail: "https://pics.filmaffinity.com/walker_texas_ranger-418151503-mmed.jpg", description: "Walker introduce a un nuevo compañero mientras protege a Alex de un ex sheriff convertido en prisionero que culpa a Alex de haberlo metido en la prisión.", videoUrl: "https://mega.nz/embed/HEF0QC5Q#vqINByeXEeUin_reOZoGJRt9AmUkK9Ap2s9CcFnQH8I" },
@@ -1144,6 +1152,58 @@
             } else {
                 inlinePlayer.src = '';
             }
+
+            // --- LÓGICA DE RECOMENDADOS (TÍTULOS SIMILARES) ---
+            const recSection = document.getElementById('details-recommendations-section');
+            const recGrid = document.getElementById('details-recommendations-grid');
+            if (recGrid) recGrid.innerHTML = '';
+
+            if (item.genres && item.genres.length > 0 && recSection && recGrid) {
+                // Unimos películas y series para buscar en todo el catálogo
+                const allContent = [
+                    ...allMoviesSource.map((m, i) => ({...m, originalIndex: i, type: 'Película'})), 
+                    ...allSeriesContent.map((s, i) => ({...s, originalIndex: i, type: 'Serie'}))
+                ];
+
+                // Filtramos el título actual y los que no tienen géneros
+                let recommendations = allContent.filter(c => c.title !== item.title && c.genres);
+
+                // Calculamos cuántos géneros en común tienen
+                recommendations.forEach(c => {
+                    const intersection = c.genres.filter(g => item.genres.includes(g));
+                    c.matchScore = intersection.length;
+                });
+
+                // Ordenamos por mayor coincidencia y luego por rating
+                recommendations.sort((a, b) => {
+                    if (b.matchScore !== a.matchScore) return b.matchScore - a.matchScore;
+                    return (b.rating || 0) - (a.rating || 0);
+                });
+
+                // Nos quedamos con los 4 mejores
+                const topRecs = recommendations.filter(c => c.matchScore > 0).slice(0, 4);
+
+                if (topRecs.length > 0) {
+                    recGrid.innerHTML = topRecs.map(rec => `
+                        <button onclick="showDetails(${rec.originalIndex}, '${rec.type}')" class="group text-left focus:outline-none focus:ring-2 focus:ring-primary-blue rounded-lg">
+                            <div class="relative aspect-[2/3] rounded-lg overflow-hidden mb-1.5 shadow-md bg-card-bg">
+                                <img src="${rec.image}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <i data-lucide="play" class="w-8 h-8 text-white fill-white transition-transform group-hover:scale-110"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-white font-semibold line-clamp-1" title="${rec.title}">${rec.title}</p>
+                            <p class="text-[10px] text-gray-400">${rec.type}</p>
+                        </button>
+                    `).join('');
+                    recSection.classList.remove('hidden');
+                } else {
+                    recSection.classList.add('hidden');
+                }
+            } else if (recSection) {
+                recSection.classList.add('hidden');
+            }
+            // --- FIN LÓGICA DE RECOMENDADOS ---
 
             document.getElementById('details-mylist-button').onclick = () => toggleInMyList(index, type); 
             updateMyListButtons(item); 
